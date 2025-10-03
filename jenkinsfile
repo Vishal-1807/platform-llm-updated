@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    tools {
-        nodejs "NodeJS-18"  // Name from Jenkins NodeJS configuration
-    }
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
         AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
@@ -31,6 +28,8 @@ pipeline {
         stage('Build Application') {
             steps {
                 sh '''
+                curl -fsSL https://deb.nodesource.com/setup_18.x | bash -
+                apt-get install -y nodejs
                 npm install
                 npm run build
                 '''
