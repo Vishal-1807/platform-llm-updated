@@ -31,6 +31,7 @@ pipeline {
         stage('Build Application') {
             steps {
                 sh '''
+                npm config set cache $(pwd)/.npm-cache
                 npm install
                 npm run build
                 '''
