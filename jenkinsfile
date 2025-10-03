@@ -1,76 +1,30 @@
 pipeline {
-    agent {
-        docker {
-            image 'node:16.20-bullseye'  // Stable Node.js version
-            args '-u root:root'  // Run as root for Azure CLI installation
-        }
-    }
-    environment {
-        AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
-        AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
-        AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
-        AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
+    agent any
 
-        STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
-        RESOURCE_GROUP                 = 'awone-rg-terraform'
+    environment {
+        AZURE_CREDENTIALS = credentials('azure-service-principal-credentials') 
+        STORAGE_ACCOUNT_NAME = 'yourstorageaccount'
+        STORAGE_CONTAINER_NAME = 'yourcontainer'
+        BUILD_DIR = 'build'  // update to your build output directory
     }
+
     stages {
-        stage('Install Azure CLI') {
+        stage('Build') {
             steps {
-                sh '''
-                # Install Azure CLI
-                curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-                az --version
-                '''
+                echo 'Building static files...'
+                // Example using npm build, adapt if using other tools
+                sh 'npm install'
+                sh 'npm run build'
             }
         }
-        stage('Azure Login') {
+        stage('Upload to Azure Storage') {
             steps {
+                echo 'Logging into Azure CLI'
                 sh """
-                az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
-                az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                    az login --service-principal -u ${AZURE_CREDENTIALS_USR} -p ${AZURE_CREDENTIALS_PSW} --tenant ${AZURE_CREDENTIALS_TENANT}
+                    az storage blob upload-batch --account-name ${STORAGE_ACCOUNT_NAME} --destination ${STORAGE_CONTAINER_NAME} --source ${BUILD_DIR} --overwrite
                 """
             }
-        }
-        stage('Checkout') {
-            steps {
-                checkout scm
-            }
-        }
-        stage('Build Static Application') {
-            steps {
-                sh '''
-                echo "Building npm static application..."
-                npm config set cache $(pwd)/.npm-cache
-                npm ci --silent
-                npm run build
-                ls -la build/
-                '''
-            }
-        }
-        stage('Deploy to Azure Storage') {
-            steps {
-                sh """
-                echo "Deploying to Azure Storage static website..."
-                az storage blob upload-batch \\
-                    --account-name ${STORAGE_ACCOUNT_NAME} \\
-                    --source build/ \\
-                    --destination \\$web \\
-                    --overwrite
-                """
-            }
-        }
-    }
-    post {
-        success {
-            echo "✅ Static website deployed successfully to Azure Storage!"
-            sh """
-            echo "Website URL:"
-            az storage account show -n ${STORAGE_ACCOUNT_NAME} -g ${RESOURCE_GROUP} --query 'primaryEndpoints.web' -o tsv
-            """
-        }
-        failure {
-            echo "❌ Deployment failed. Check build logs above."
         }
     }
 }
