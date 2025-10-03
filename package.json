@@ -1,0 +1,51 @@
+{
+  "name": "mlops-ui-2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --mode dev",
+    "stage": "vite --mode stage",
+    "prod": "vite --mode prod",
+    "build": "vite build",
+    "build:dev": "vite build --mode dev",
+    "build:stage": "vite build --mode stage",
+    "build:prod": "vite build --mode prod",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "@fortawesome/free-solid-svg-icons": "^6.5.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
+    "@mui/icons-material": "^5.15.3",
+    "@mui/material": "^5.15.3",
+    "@mui/x-data-grid": "^6.18.7",
+    "@mui/x-data-grid-generator": "^6.18.7",
+    "ace-builds": "^1.38.0",
+    "ag-grid-react": "^31.0.1",
+    "axios": "^1.6.5",
+    "highcharts": "^11.3.0",
+    "highcharts-react-official": "^3.2.1",
+    "react": "^18.2.0",
+    "react-ace": "^10.1.0",
+    "react-copy-to-clipboard": "^5.1.0",
+    "react-dom": "^18.2.0",
+    "react-js-cron": "^5.0.1",
+    "react-router-dom": "^6.21.1",
+    "react-syntax-highlighter": "^15.5.0",
+    "react-zoom-pan-pinch": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.43",
+    "@types/react-dom": "^18.2.17",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.55.0",
+    "eslint-plugin-react": "^7.33.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.5",
+    "vite": "^5.0.8",
+    "vite-plugin-svgr": "^4.2.0"
+  }
+}

@@ -1,0 +1,274 @@
+.UploadSection {
+  padding: 0px;
+}
+.tagline {
+  color: #3f3f50;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.section {
+  width: 100%;
+  display: flex;
+}
+.left-section {
+  width: 48%;
+  margin: 8px 15px 15px 0;
+  border-radius: 8px;
+  height: 500px;
+}
+.uploadtitle {
+  border-bottom: 1px solid #d3d3ea;
+  padding: 10px;
+  display: flex;
+  width: 96.5%;
+  justify-content: space-between;
+}
+.EF-Img {
+  width: 20px;
+  height: 20px;
+  margin: 5px 10px;
+  border-radius: 6px;
+  background: #fff;
+  padding: 10px;
+}
+.EngFeatures {
+  color: #5420e8;
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.uploadtitle h4 {
+  color: #101016;
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 800;
+  line-height: normal;
+}
+.uploadfile {
+  padding: 10px;
+}
+.supportfile {
+  color: #5420e8;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  padding: 5px 10px;
+}
+.draganddrop {
+  background: var(
+    --Primary-Gradient,
+    linear-gradient(80deg, #5b32d0 0%, #e04ef8 96.35%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-decoration-line: underline;
+}
+.uploaddetails h2 {
+  color: var(--Shades-Black, #101016);
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  padding: 10px 20px;
+  margin: 0;
+}
+.uploaddetails p {
+  color: var(--Shades-Black-3, #6e6e88);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 23px; /* 164.286% */
+  padding: 0px 20px;
+  margin: 0;
+  text-align: justify;
+}
+.FileName {
+  width: fit-content;
+  padding: 10px;
+  border-radius: 8px;
+  color: var(--Shades-Black-2, #3f3f50);
+  /* Button-Small/Medium/16 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.close {
+  margin-top: 8px;
+  margin-right: 8px;
+  height: 20px;
+  padding: 3px;
+  border-radius: 6px;
+  border: 1px solid var(--Shades-Black-6, #d3d3ea);
+}
+.add-record {
+  display: flex;
+  float: right;
+  background: #fff;
+  padding: 6px 23px;
+  cursor: pointer;
+  height: 28px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--Shades-Black-5, #b7b7d2);
+  margin-top: 4px;
+}
+.plus-img {
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+}
+.record {
+  color: #1E90FF;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 4px;
+}
+.play-title {
+  color: var(--Shades-Black, #101016);
+  font-family: "Plus Jakarta Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 34.2px;
+  margin: 0 !important;
+}
+.models {
+  display: flex;
+  margin-bottom: 20px;
+}
+.modeltype {
+  display: flex;
+  margin: 0 10px;
+  border-radius: 6px;
+  border: 1px solid var(--Shades-Black-7, #eeeef8);
+  background: var(--Secondary-White, #fff);
+  cursor: pointer;
+  &:hover {
+    box-shadow: 0px 11px 20px 0px rgba(5, 16, 55, 0.1);
+    border-radius: 6px;
+    border: transparent solid 1px;
+    background: linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(to right, #5b32d0, #e04ef8) border-box;
+    border-color: transparent;
+  }
+
+  svg {
+    padding: 10px;
+  }
+  img {
+    width: 36px;
+    height: 36px;
+    padding: 10px;
+  }
+  p {
+    color: #000;
+    font-family: "Plus Jakarta Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
+.input-tokens {
+  width: 98%;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #d3d3ea;
+  padding-left: 6px;
+}
+
+.s3input {
+  padding: 10px;
+}
+.s3input input,
+textarea,
+select {
+  width: 98%;
+  height: 36px;
+  border-radius: 8px;
+  border: 1px solid #d3d3ea;
+  height: 40px;
+  padding: 5px;
+}
+.range-section {
+  padding: 5px;
+  background-color: #eeeef8;
+  margin-top: 5px;
+  width: 95%;
+  margin: 0 auto;
+  border-radius: 8px;
+}
+.slider {
+  width: 90%;
+  margin-left: 20px;
+}
+.buttons {
+  display: flex;
+  width: 93%;
+  justify-content: flex-end;
+  padding: 0 20px;
+  margin: 0 auto;
+}
+.leftbnts {
+  float: left;
+  width: 50%;
+  display: flex;
+}
+.runbnt {
+  border-radius: 8px;
+  border: 1px solid var(--Primary-Gradient, #1E90FF);
+  background: var(--Shades-white, #fff);
+  background: var(
+    --Primary-Gradient,
+    linear-gradient(80deg, #1E90FF 0%, #FFA500 96.35%)
+  );
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 5px;
+}
+.cancelbnt {
+  display: flex;
+  padding: 9px 23px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  background: var(--Shades-Black-4, #8d8dac);
+  margin: 5px;
+  color: #fff;
+}
+.rightbnts {
+  float: right;
+}
+.answer{
+  padding: 10px;
+}

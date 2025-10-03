@@ -1,0 +1,93 @@
+
+
+
+.mui-focused.muioutlinedinput-notchedoutline {
+    border: "0px";
+    border-image-width: 0px;
+}
+
+.CreExp{
+    text-align: left;
+    width: 180px;
+    margin: 0 auto;
+    border: 1px solid #ccc6;
+    float: right;
+    padding: 10px;
+    position: relative;
+    margin-left: 40px;
+    background: #fff;
+}
+.expinput{
+    padding: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    margin-top: 10px;
+    width: 160px;
+}
+.page-action-btn{
+    margin: 5px 0 2px 0 !important;
+}
+
+
+.page-title-ctn{
+    border-radius: 16px;
+    border: 1px solid var(--Shades-Black-7, #EEEEF8);
+    background: var(--Shades-white, #FFF);
+    min-height: 44px;
+    padding:20px 24px;
+    color: #6E6E88;
+    .page-title{
+        color:  #101016;
+        font-size: 20px;
+        font-weight: 600;
+        line-height: 34.2px; /* 171% */
+    }
+
+    .card-label {
+        color: #6E6E88;
+        /* Text/Medium/12 */
+        font-family: Plus Jakarta Sans;
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+      .card-description {
+          color: var(--Shades-Black-3, #6E6E88);
+      
+          /* P/Regular/12 */
+          font-family: "Plus Jakarta Sans";
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: 141%; /* 16.92px */
+          /* white-space: nowrap; */
+          overflow: hidden;
+      }
+
+      
+    .page-action {
+        text-align: end;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+      .page-action-btn {
+        padding: 9px 23px;
+        border-radius: 8px;
+        background: linear-gradient(80deg, #5B32D0 0%, #E04EF8 96.35%);
+        color:  #FFF ;
+        margin: 10px 0 2px 0;
+        text-transform: capitalize;
+        gap:5px;
+        color:  #FFF ;
+        /* Label-Forms/Medium/16 */
+        font-family: Plus Jakarta Sans;
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: normal;
+      }
+      
+}
+

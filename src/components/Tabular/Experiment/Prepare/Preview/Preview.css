@@ -1,0 +1,8 @@
+.data-table {
+  border-radius: 11.521px 11.521px 0px 0px;
+  background: var(--Shades-black-1, #1f1f29);
+}
+.ag-picker-field-wrapper {
+  background: "#5420E8" !important;
+  color: "#fff" !important;
+}

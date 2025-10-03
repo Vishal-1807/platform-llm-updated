@@ -1,0 +1,68 @@
+.CreateProject {
+  color: #000;
+
+  /* H3/Semi-Bold/24 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Text_creExp{
+  color: var(--Shades-Black-2, #3F3F50);
+/* Button-Small/Medium/16 */
+font-family: "Plus Jakarta Sans";
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+.FormLabels {
+  color:  #3f3f50 ;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.AddExp {
+  color:  #1E90FF ;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin-left: 2px;
+}
+
+/* Enhanced glassmorphism button styles for Create Experiment */
+.liquid-glass-btn.disabled {
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(84,32,232,0.05) 50%, rgba(224,78,248,0.08) 100%) !important;
+  color: rgba(84,32,232,0.4) !important;
+  box-shadow: 0 4px 16px rgba(84,32,232,0.1), inset 0 1px 0 rgba(255,255,255,0.3) !important;
+  transform: none !important;
+  cursor: not-allowed !important;
+}
+
+.liquid-glass-btn.disabled::before {
+  display: none !important;
+}
+
+.liquid-glass-btn.disabled span,
+.liquid-glass-btn.disabled svg {
+  opacity: 0.5 !important;
+}
+
+/* Enhanced modal backdrop */
+.liquid-glass-modal {
+  position: relative;
+}
+
+.liquid-glass-modal::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(84,32,232,0.05) 100%);
+  border-radius: 24px;
+  pointer-events: none;
+}

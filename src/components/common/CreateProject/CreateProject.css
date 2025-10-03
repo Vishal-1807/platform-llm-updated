@@ -1,0 +1,88 @@
+/* Modern Create Project Styles */
+.CreateProject {
+  color: #1F1F29;
+  font-family: "Plus Jakarta Sans";
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  background: linear-gradient(135deg, #1F1F29 0%, #5420E8 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.Text_creExp {
+  color: #1F1F29;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.FormLabels {
+  color: #1F1F29;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.AddExp {
+  color: #5420E8;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+
+.create-disable-field {
+  opacity: 0.3;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+/* Custom scrollbar for multiline text areas */
+.MuiInputBase-inputMultiline::-webkit-scrollbar {
+  width: 6px;
+}
+
+.MuiInputBase-inputMultiline::-webkit-scrollbar-track {
+  background: #F5F5F5;
+  border-radius: 3px;
+}
+
+.MuiInputBase-inputMultiline::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #5420E8 0%, #E04EF8 100%);
+  border-radius: 3px;
+}
+
+.MuiInputBase-inputMultiline::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #4A1CC7 0%, #C943D4 100%);
+}
+
+/* Animation keyframes */
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Focus ring animation */
+@keyframes focusRing {
+  0% {
+    box-shadow: 0 0 0 0 rgba(84, 32, 232, 0.4);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(84, 32, 232, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(84, 32, 232, 0);
+  }
+}

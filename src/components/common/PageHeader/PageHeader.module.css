@@ -1,0 +1,210 @@
+/* Legacy tab styles - keeping for backward compatibility */
+.selected .tab-number-ctn {
+    background:  #5420E8 ;
+}
+
+.tab-number-ctn{
+    background:  #B7B7D2 ;
+    border-radius: 100px;
+    width: 24px;
+    height: 24px;
+    color: #FFF;
+    margin-right:10px;
+}
+.tab{
+    display:flex;
+    flex-direction:row;
+    padding:10px 30px;
+    /* border-radius: 8px; */;
+    border: 1px solid  #D3D3EA ;
+    color:#1f1f29;
+    cursor: pointer;
+    &.disabled{
+      cursor: not-allowed;
+    }
+}
+.selected.tab{
+    border-bottom:2px solid #5420E8;
+}
+.tab-ctn{
+    display:flex;
+    text-align:center;
+    align-items:stretch;
+}
+
+/* Modern glassmorphism tab styles */
+.modern-tab-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.modern-tab {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 12px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    min-width: 120px;
+    justify-content: center;
+    gap: 8px;
+    font-family: "Plus Jakarta Sans";
+    font-weight: 600;
+    font-size: 14px;
+    color: #6E6E88;
+    text-transform: capitalize;
+}
+
+.modern-tab-number {
+    background: linear-gradient(135deg, #B7B7D2 0%, #8D8DAC 100%);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    color: #FFF;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    transition: all 0.3s ease;
+}
+
+.modern-tab-label {
+    font-family: "Plus Jakarta Sans";
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.modern-tab-selected {
+    color: #5420E8;
+    transform: translateY(-2px);
+}
+
+.modern-tab-selected .modern-tab-number {
+    background: linear-gradient(135deg, #5420E8 0%, #E04EF8 100%);
+    box-shadow: 0 4px 12px rgba(84, 32, 232, 0.3);
+}
+
+.modern-tab-selected .modern-tab-label {
+    color: #5420E8;
+    font-weight: 700;
+}
+
+.modern-tab-indicator {
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: linear-gradient(135deg, #5420E8 0%, #E04EF8 100%);
+    border-radius: 2px;
+    animation: slideIn 0.3s ease;
+}
+
+.modern-tab-disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.modern-tab:hover:not(.modern-tab-disabled):not(.modern-tab-selected) {
+    color: #5420E8;
+    transform: translateY(-1px);
+}
+
+.modern-tab:hover:not(.modern-tab-disabled):not(.modern-tab-selected) .modern-tab-number {
+    background: linear-gradient(135deg, #5420E8 0%, #E04EF8 100%);
+}
+
+@keyframes slideIn {
+    from {
+        width: 0%;
+        opacity: 0;
+    }
+    to {
+        width: 60%;
+        opacity: 1;
+    }
+}
+
+
+/* Legacy page title styles */
+.page-title{
+    color: #3F3F50;
+    /* H3/Semi-Bold/24 */
+    font-family: Plus Jakarta Sans;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+
+  }
+
+  .page-title-ctn{
+    /* border-radius: 16px; */
+    border: 1px solid  #EEEEF8 ;
+    background:  #FFF ;
+    padding:23px 24px;
+    width: -webkit-fill-available;
+    margin:0px;
+    /* transform: translate(-20px, -20px); */
+  }
+
+/* Modern page title styles */
+.modern-page-title {
+    padding: 16px 24px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: all 0.3s ease;
+    max-width: 400px;
+}
+
+.modern-page-title:hover {
+    transform: translateY(-1px);
+}
+  .page-root {
+    /* padding:10px; */
+  }
+  .page-action {
+    text-align: end;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  .page-action-btn {
+    padding: 9px 23px;
+    border-radius: 8px;
+    background: linear-gradient(80deg, #5B32D0 0%, #E04EF8 96.35%);
+    color:  #FFF ;
+    margin: 10px 0 2px 0;
+    text-transform: capitalize;
+    gap:5px;
+    color:  #FFF ;
+    /* Label-Forms/Medium/16 */
+    font-family: Plus Jakarta Sans;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+
+/* Modern page action styles */
+.modern-page-action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.modern-btn-disabled {
+    opacity: 0.5 !important;
+    cursor: not-allowed !important;
+    pointer-events: none;
+}

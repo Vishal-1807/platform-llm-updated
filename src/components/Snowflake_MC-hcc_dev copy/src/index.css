@@ -1,0 +1,18 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: white;
+  min-height: 100vh;
+  font-family: "Inter", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.glb-gradient-background {
+  color: #fff;
+  background: linear-gradient(80deg, #1E90FF 0%, #FFA500 96.35%);
+}

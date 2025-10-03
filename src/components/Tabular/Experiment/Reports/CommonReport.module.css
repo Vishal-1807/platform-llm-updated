@@ -1,0 +1,35 @@
+.feat-table-row {
+    margin-bottom: 12px;
+}
+.feat-table-row:nth-child(2n+1){
+    background:  #EEEEF8;
+    border-radius: 4px;
+}
+
+.feat-table-row:nth-child(2n){
+    border: 1px solid #EEEEF8;
+}
+
+
+.feat-name{
+    color: #3F3F50;
+    font-size: 14px;
+    font-weight: 500;
+    padding:12px 9px;
+    border-right: 1px solid #D3D3EA;
+}
+
+.feat-value {
+    color: #5420E8;
+    padding:12px 9px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.cm-label {
+    color: #1F1F29;
+    font-size:14px;
+    font-weight: 600;
+    padding: 10px;
+    border:1px solid #D3D3EA;
+}

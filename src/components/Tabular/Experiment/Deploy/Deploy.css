@@ -1,0 +1,21 @@
+.top-text {
+  color: #3f3f50;
+  /* Label-Forms/Medium/16 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 10px;
+  padding: 10px 0;
+}
+.tablabel {
+  color: var(--Primary-Blue, #5420e8);
+
+  /* H4/Bold/18 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}

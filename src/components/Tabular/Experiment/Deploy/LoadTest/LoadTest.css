@@ -1,0 +1,21 @@
+.Replica {
+  color: var(--Situation-success, #2f5711);
+  /* H4/Bold/18 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 10px 0;
+
+}
+.LoadTest {
+  color: var(--Shades-Black, #101016);
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  border-bottom: 1px solid #d3d3ea;
+  padding-bottom: 14px;
+}

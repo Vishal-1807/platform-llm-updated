@@ -1,0 +1,35 @@
+.TabFilename {
+  color: var(--Primary-Blue, #5420e8) !important;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.fname {
+  color: var(--Shades-black-1, #1f1f29);
+  /* P/Regular/12 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 141%; /* 16.92px */
+}
+.tabrows {
+  color: var(--Shades-Black-2, #3f3f50);
+  /* P/Regular/12 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 141%; /* 16.92px */
+}
+.tabrowcount{
+    color: var(--Shades-black-1, #1F1F29);
+/* Label-Forms/Medium/16 */
+font-family: "Plus Jakarta Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}

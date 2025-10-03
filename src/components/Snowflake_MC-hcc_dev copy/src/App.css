@@ -1,0 +1,367 @@
+/* App.css - Custom styles to complement Material-UI */
+
+/* Smooth transitions for all elements */
+* {
+  transition: all 0.2s ease-in-out;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* PDF viewer specific styles */
+.react-pdf__Page {
+  margin-bottom: 16px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-pdf__Page__canvas {
+  border-radius: 8px;
+}
+
+/* Chat interface animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.message {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* Typing indicator animation */
+@keyframes pulse {
+  0%,
+  60%,
+  100% {
+    transform: initial;
+  }
+  30% {
+    transform: translateY(-10px);
+  }
+}
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+}
+
+.typing-indicator span {
+  height: 8px;
+  width: 8px;
+  background-color: #1976d2;
+  border-radius: 50%;
+  animation: pulse 1.4s infinite ease-in-out;
+}
+
+.typing-indicator span:nth-child(1) {
+  animation-delay: -0.32s;
+}
+
+.typing-indicator span:nth-child(2) {
+  animation-delay: -0.16s;
+}
+
+/* Progress bar animation for status */
+@keyframes shimmer {
+  0% {
+    background-position: -200px 0;
+  }
+  100% {
+    background-position: calc(200px + 100%) 0;
+  }
+}
+
+.progress-bar {
+  width: 100%;
+  height: 4px;
+  background-color: #e0e0e0;
+  border-radius: 2px;
+  overflow: hidden;
+  margin-top: 8px;
+}
+
+.progress-value {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #e0e0e0 0px, #f0f0f0 40px, #e0e0e0 80px);
+  animation: shimmer 2s infinite;
+}
+
+/* Status badges */
+.status-completed .progress-value {
+  background: #4caf50;
+  animation: none;
+}
+
+.status-error .progress-value {
+  background: #f44336;
+  animation: none;
+}
+
+/* Drag and drop styling */
+.drag-active {
+  background-color: rgba(25, 118, 210, 0.08) !important;
+  border-color: #1976d2 !important;
+  transform: scale(1.02);
+}
+
+/* File upload hover effects */
+.upload-area:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(25, 118, 210, 0.2);
+}
+
+/* Table hover effects */
+.MuiTableRow-hover:hover {
+  background-color: rgba(25, 118, 210, 0.04) !important;
+}
+
+/* Button press effect */
+.MuiButton-root:active {
+  transform: scale(0.98);
+}
+
+/* Card hover effects */
+.MuiCard-root:hover {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  transform: translateY(-2px);
+}
+
+/* Chip animations */
+.MuiChip-root {
+  transition: all 0.2s ease-in-out;
+}
+
+.MuiChip-root:hover {
+  transform: scale(1.05);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Loading animation for PDF */
+.pdf-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 400px;
+  gap: 16px;
+}
+
+/* Floating Chat Styles */
+.floating-chat-fab {
+  position: fixed !important;
+  bottom: 24px !important;
+  right: 24px !important;
+  z-index: 1000 !important;
+  transition: all 0.3s ease !important;
+}
+
+.floating-chat-fab:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(25, 118, 210, 0.4) !important;
+}
+
+.floating-chat-window {
+  position: fixed !important;
+  bottom: 100px !important;
+  right: 24px !important;
+  width: 400px !important;
+  z-index: 1001 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12) !important;
+}
+
+.floating-chat-messages {
+  max-height: 300px;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #c1c1c1 #f1f1f1;
+}
+
+.floating-chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.floating-chat-messages::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+.floating-chat-messages::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+.floating-chat-header {
+  background: linear-gradient(135deg, #1976d2 0%, #1565c0 100%) !important;
+  color: white !important;
+  cursor: default !important;
+}
+
+.floating-chat-minimized .floating-chat-header {
+  cursor: pointer !important;
+}
+
+/* Floating chat animations */
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3) translateY(50px);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.floating-chat-enter {
+  animation: bounceIn 0.5s ease-out;
+}
+
+/* Pulse effect for new messages */
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(25, 118, 210, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(25, 118, 210, 0);
+  }
+}
+
+.floating-chat-fab.has-notification {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Mobile responsive adjustments for floating chat */
+@media (max-width: 768px) {
+  .floating-chat-window {
+    width: calc(100vw - 48px) !important;
+    right: 24px !important;
+    left: 24px !important;
+  }
+
+  .floating-chat-fab {
+    bottom: 20px !important;
+    right: 20px !important;
+  }
+}
+
+/* Accessibility improvements */
+.MuiButton-root:focus-visible {
+  outline: 2px solid #1E90FF;
+  outline-offset: 2px;
+}
+
+.MuiTextField-root:focus-within {
+  box-shadow: 0 0 0 2px rgba(30, 144, 255, 0.2);
+}
+
+/* Print styles */
+@media print {
+  .no-print {
+    display: none !important;
+  }
+
+  .MuiButton-root,
+  .MuiIconButton-root {
+    display: none !important;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .react-pdf__Page {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
+/* Custom Material-UI overrides */
+.MuiTableCell-head {
+  font-weight: 600 !important;
+  background-color: rgba(0, 0, 0, 0.04) !important;
+}
+
+.MuiAlert-root {
+  border-radius: 8px !important;
+}
+
+.MuiLinearProgress-root {
+  border-radius: 4px !important;
+  height: 6px !important;
+}
+
+/* Chat-specific styles */
+.chat-message-user {
+  background: linear-gradient(135deg, #1E90FF 0%, #0066CC 100%);
+  color: white;
+  margin-left: auto;
+  max-width: 70%;
+  border-radius: 18px 18px 4px 18px;
+}
+
+.chat-message-bot {
+  background: #f5f5f5;
+  color: #333;
+  margin-right: auto;
+  max-width: 70%;
+  border-radius: 18px 18px 18px 4px;
+}
+
+/* Smooth page transitions */
+.page-transition-enter {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.page-transition-enter-active {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 300ms, transform 300ms;
+}
+
+.page-transition-exit {
+  opacity: 1;
+}
+
+.page-transition-exit-active {
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 300ms, transform 300ms;
+}

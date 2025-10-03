@@ -1,0 +1,96 @@
+.type-title-ctn {
+  border-radius: 20px;
+  width: 100%;
+  margin: 0px;
+  /* Glassmorphism styling applied via liquid-glass-card-neutral class */
+}
+
+.type-page-caption {
+  padding: 0;
+  color: #3f3f50;
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-weight: 600;
+  text-align: center;
+}
+.cus-box {
+  padding: 24px;
+  width: 100%;
+  max-width: 320px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-weight: 600;
+  color: #1F1F29;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  /* Glassmorphism styling applied via liquid-glass-card-neutral class */
+
+  .img-box svg {
+    path {
+      fill: #8d8dac;
+      stroke: none;
+      transition: all 0.3s ease;
+    }
+  }
+
+  &:hover .img-box svg {
+    path {
+      fill: #5420E8;
+      stroke: none;
+    }
+    &.stroke-only path {
+      fill: none;
+      stroke: #5420E8;
+    }
+  }
+
+  .cus-ctn {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 16px;
+    height: auto;
+    flex: 1;
+  }
+
+  svg {
+    path {
+      stroke: #8d8dac;
+      transition: all 0.3s ease;
+    }
+    &.stroke-only path {
+      fill: none;
+      stroke: #8d8dac;
+    }
+  }
+}
+.img-box {
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 16px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.8) 0%, rgba(238,238,248,0.6) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(255,255,255,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+}
+
+.cus-box:hover .img-box {
+  background: linear-gradient(135deg, rgba(84,32,232,0.1) 0%, rgba(224,78,248,0.1) 100%);
+  border: 1px solid rgba(84,32,232,0.3);
+  transform: scale(1.05);
+  box-shadow: 0 8px 24px rgba(84,32,232,0.2);
+}

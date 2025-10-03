@@ -1,0 +1,11 @@
+.labelname {
+  color: var(--Primary-Blue, #1E90FF);
+  font-family: "Plus Jakarta Sans";
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.ant-btn{
+    background-color: #A8200D !important;
+}

@@ -1,0 +1,71 @@
+.Login-left {
+  background: #000000;
+  height: 100vh;
+}
+.Login-right {
+  width: 60%;
+  margin: 10% auto;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap:10px;
+}
+.cibilogo {
+}
+.welcome {
+  font-weight: bold;
+  font-size: 30px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: normal;
+  margin: 5px;
+}
+.loginform-box {
+  margin: 0px 60px 0px 60px;
+  width: 320px;
+}
+.Login-input {
+  padding: 10px;
+  width: 92%;
+  border-radius: 8px;
+  border: 1px solid var(--Shades-Black-6, #D3D3EA);
+}
+.eyeicon {
+  position: relative;
+  right: 0;
+  top: -28px;
+  left: 90%;
+}
+.donthaveaccount {
+  color: var(--Shades-Black-3, #6E6E88);
+  /* Button-Small/Medium/16 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.signup {
+  color: var(--Primary-Blue, #5420E8);
+  /* Body/Bold/16 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.credentials{
+  color: var(--Shades-Black-3, #6E6E88);
+text-align: center;
+/* Body/Regular/16 */
+font-family: "Plus Jakarta Sans";
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: 24px; /* 150% */
+}
+.page-root{
+  padding: 0;
+}

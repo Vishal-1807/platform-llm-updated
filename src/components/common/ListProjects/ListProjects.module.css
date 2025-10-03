@@ -1,0 +1,116 @@
+.card-ctn {
+  border-radius: 20px;
+  border: 1px solid rgba(255,255,255,0.4);
+  background: linear-gradient(135deg, rgba(255,255,255,0.35) 0%, rgba(248,249,255,0.25) 100%);
+  backdrop-filter: blur(16px) saturate(180%);
+  -webkit-backdrop-filter: blur(16px) saturate(180%);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.08);
+  /* width: 23%; */
+  width: calc(25% - 20px);
+  /* margin: 10px; */
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.card-ctn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%, rgba(248,249,255,0.1) 100%);
+  pointer-events: none;
+}
+
+.card-ctn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.12);
+  border: 1px solid rgba(255,255,255,0.6);
+}
+.card-header {
+  color: #101016;
+  /* H3/Semi-Bold/24 */
+  font-family: Plus Jakarta Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  height: 40px;
+  padding: 20px !important;
+}
+
+.card-data-bold {
+  color: #3f3f50;
+  /* P/14/bold */
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px;
+}
+
+.card-label {
+  color: #3f3f50;
+  /* Text/Medium/12 */
+  font-family: Plus Jakarta Sans;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.card-description {
+  color: var(--Shades-Black-3, #6e6e88);
+
+  /* P/Regular/12 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 141%; /* 16.92px */
+  /* white-space: nowrap; */
+  overflow: hidden;
+}
+
+.card-button {
+  background: white;
+  color: #1E90FF;
+  border-radius: 8px;
+  border: 1px solid #d3d3ea;
+  width: 100%;
+  color: #1E90FF;
+  /* Label-Forms/Medium/16 */
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  text-transform: capitalize;
+}
+
+.card-ctn:hover .card-button {
+  background: #1E90FF;
+  color: #fff;
+  stroke: #fff;
+  fill: #fff;
+  border: none;
+}
+.expicon {
+  display: flex;
+  width: 20px;
+  height: 20px;
+  padding: 1.547px 2.016px 1.598px 2.11px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  background-color: #ede8fc;
+  border-radius: 10px;
+  margin-right: 5px;
+}
+.viewprojects {
+  color: var(--Primary-Blue, #1E90FF);
+  /* Label-Forms/Medium/16 */
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}

@@ -1,0 +1,60 @@
+.Dashboard {
+  .tabs {
+    border: 1px solid #ccc;
+    color: #000;
+    padding: 10px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    border: transparent solid 1px;
+    background: linear-gradient(#fff, #fff) padding-box,
+      linear-gradient(to right, #1E90FF, #FFA500) border-box;
+    border-color: transparent;
+  }
+  .css-19kzrtu {
+    padding: 24px;
+    width: 100% !important;
+  }
+  .Exptittle {
+    text-align: left;
+
+    padding-bottom: 6px;
+    margin-bottom: 7px;
+  }
+
+  .active {
+    background: linear-gradient(80deg, #1E90FF 0%, #FFA500 96.35%);
+    color: #fff;
+  }
+  .table-title {
+    color: #000;
+    margin: 0 0 10px 0px;
+  }
+  .highcharts-label {
+    font-family: "Plus Jakarta Sans" !important;
+  }
+  table {
+    color: #000;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+  }
+  .highcharts-credits {
+    display: none !important;
+  }
+
+  th {
+    color: #333;
+    text-align: left;
+    font-size: 12px;
+    font-weight: bold;
+  }
+
+  td {
+    padding: 6px !important;
+    color: #000;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: left;
+  }
+}

@@ -1,0 +1,53 @@
+.label {
+    color: #000;
+    font-size: 16px;
+    font-weight: 500;
+    padding:16px 24px 0px 24px;
+}
+
+.chart-ctn {
+    border-radius: 12px;
+    border: 1px solid #EEEEF8;
+    background: #FFF;
+}
+
+
+.p-f-ctn {
+    height: 400px;
+    overflow-y: scroll;
+    .feat-ctn {
+      width: 100%;
+      overflow-y: hidden;
+      height: auto;
+      table {
+        width: 100%;
+      }
+    }
+  }
+
+  .feat-imp-ctn{
+    flex:"1 1 50%";
+    border-radius: 12px;
+    border: 1px solid #EEEEF8;
+    background: #FFF;
+    margin-top: 10px;
+    height: 517px;
+
+    .feat-imp-header {
+        text-align: center; 
+        width:-webkit-fill-available;
+        padding: 20px 22px;
+    }
+  }
+
+  .cfn-ctn {
+    flex:"1 1 50%";
+    height: 517px;
+
+    .cfn-header {
+        text-align: center; 
+        width:-webkit-fill-available;
+        padding: 20px 22px;
+    }
+    
+  }

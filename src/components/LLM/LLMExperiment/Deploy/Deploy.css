@@ -1,0 +1,26 @@
+.top-text {
+  color: #3f3f50;
+  font-family: "Plus Jakarta Sans";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+.tablabel {
+  color: #6E6E88;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  transition: all 0.3s ease;
+}
+
+.tablabel.Mui-selected {
+  color: #5420E8;
+  font-weight: 700;
+}
