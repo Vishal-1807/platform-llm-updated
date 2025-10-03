@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'mcr.microsoft.com/azure-cli'  
+            args '-u root' 
+        }
+    }
 
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
@@ -9,10 +14,21 @@ pipeline {
 
         STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
         RESOURCE_GROUP                 = 'awone-rg-terraform'
-        BUILD_DIR                     = 'build'  // Change to your actual build folder
+        BUILD_DIR                     = 'dist'  // Change to your build output folder
     }
 
     stages {
+        stage('Install Node and npm') {
+            steps {
+                echo 'Installing Node.js and npm'
+                sh '''
+                   apt-get update
+                   apt-get install -y nodejs npm
+                   node -v
+                   npm -v
+                '''
+            }
+        }
         stage('Build') {
             steps {
                 echo 'Building static files...'
