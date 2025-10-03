@@ -2,27 +2,42 @@ pipeline {
     agent any
 
     environment {
-        AZURE_CREDENTIALS = credentials('azure-service-principal-credentials') 
-        STORAGE_ACCOUNT_NAME = 'yourstorageaccount'
-        STORAGE_CONTAINER_NAME = 'yourcontainer'
-        BUILD_DIR = 'build'  // update to your build output directory
+        AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
+        AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
+        AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
+        AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
+
+        STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
+        RESOURCE_GROUP                 = 'awone-rg-terraform'
+        BUILD_DIR                     = 'build'  // Change to your actual build folder
     }
 
     stages {
         stage('Build') {
             steps {
                 echo 'Building static files...'
-                // Example using npm build, adapt if using other tools
                 sh 'npm install'
                 sh 'npm run build'
             }
         }
-        stage('Upload to Azure Storage') {
+        stage('Enable Static Website') {
             steps {
-                echo 'Logging into Azure CLI'
+                echo 'Enabling static website hosting in Azure Storage Account'
                 sh """
-                    az login --service-principal -u ${AZURE_CREDENTIALS_USR} -p ${AZURE_CREDENTIALS_PSW} --tenant ${AZURE_CREDENTIALS_TENANT}
-                    az storage blob upload-batch --account-name ${STORAGE_ACCOUNT_NAME} --destination ${STORAGE_CONTAINER_NAME} --source ${BUILD_DIR} --overwrite
+                    az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
+                    az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                """
+            }
+        }
+        stage('Upload to Azure Static Website') {
+            steps {
+                echo 'Uploading build files to $web container'
+                sh """
+                    az storage blob upload-batch \
+                        --account-name ${STORAGE_ACCOUNT_NAME} \
+                        --destination '$web' \
+                        --source ${BUILD_DIR} \
+                        --overwrite
                 """
             }
         }
