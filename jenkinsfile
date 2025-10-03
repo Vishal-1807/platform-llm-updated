@@ -40,8 +40,8 @@ pipeline {
                 az storage blob upload-batch \\
                     --account-name ${STORAGE_ACCOUNT_NAME} \\
                     --source build/ \\
-                    --destination \$web \\
-                    --account-key $(az storage account keys list --resource-group ${RESOURCE_GROUP} --account-name ${STORAGE_ACCOUNT_NAME} --query '[0].value' -o tsv)
+                    --destination \\$web \\
+                    --account-key \$(az storage account keys list --resource-group ${RESOURCE_GROUP} --account-name ${STORAGE_ACCOUNT_NAME} --query '[0].value' -o tsv)
                 """
             }
         }
