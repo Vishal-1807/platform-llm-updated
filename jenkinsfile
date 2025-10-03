@@ -1,7 +1,8 @@
 pipeline {
-    agent any
-    tools {
-        nodejs "NodeJS-18"
+    agent {
+        docker {
+            image 'node:18.16-bullseye'  // matches your local Node version
+        }
     }
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
@@ -11,8 +12,6 @@ pipeline {
 
         STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
         RESOURCE_GROUP                 = 'awone-rg-terraform'
-
-        BRANCH                        = "${env.CHANGE_BRANCH ?: env.BRANCH_NAME ?: env.GIT_BRANCH}"
     }
     stages {
         stage('Azure Login') {
@@ -40,10 +39,10 @@ pipeline {
         stage('Deploy to Azure Storage Static Website') {
             steps {
                 sh """
-                az storage blob upload-batch \\
-                    --account-name ${STORAGE_ACCOUNT_NAME} \\
-                    --source build/ \\
-                    --destination \\$web \\
+                az storage blob upload-batch \
+                    --account-name ${STORAGE_ACCOUNT_NAME} \
+                    --source build/ \
+                    --destination \$web \
                     --account-key \$(az storage account keys list --resource-group ${RESOURCE_GROUP} --account-name ${STORAGE_ACCOUNT_NAME} --query '[0].value' -o tsv)
                 """
             }
