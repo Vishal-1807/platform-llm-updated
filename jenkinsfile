@@ -1,8 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:18.16-bullseye'  // Keep Node.js for building
-            args '-u root:root'  // Run as root to install packages
+            image 'node:16.20-bullseye'  // Stable Node.js version
+            args '-u root:root'  // Run as root for Azure CLI installation
         }
     }
     environment {
@@ -13,8 +13,6 @@ pipeline {
 
         STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
         RESOURCE_GROUP                 = 'awone-rg-terraform'
-
-        BRANCH                        = "${env.CHANGE_BRANCH ?: env.BRANCH_NAME ?: env.GIT_BRANCH}"
     }
     stages {
         stage('Install Azure CLI') {
@@ -22,8 +20,6 @@ pipeline {
                 sh '''
                 # Install Azure CLI
                 curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-                
-                # Verify installation
                 az --version
                 '''
             }
@@ -41,33 +37,40 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build Application') {
+        stage('Build Static Application') {
             steps {
                 sh '''
+                echo "Building npm static application..."
                 npm config set cache $(pwd)/.npm-cache
-                npm install
+                npm ci --silent
                 npm run build
+                ls -la build/
                 '''
             }
         }
-        stage('Deploy to Azure Storage Static Website') {
+        stage('Deploy to Azure Storage') {
             steps {
                 sh """
+                echo "Deploying to Azure Storage static website..."
                 az storage blob upload-batch \\
                     --account-name ${STORAGE_ACCOUNT_NAME} \\
                     --source build/ \\
                     --destination \\$web \\
-                    --account-key \$(az storage account keys list --resource-group ${RESOURCE_GROUP} --account-name ${STORAGE_ACCOUNT_NAME} --query '[0].value' -o tsv)
+                    --overwrite
                 """
             }
         }
     }
     post {
         success {
-            echo "Static website deployed successfully to Azure Storage account ${STORAGE_ACCOUNT_NAME}"
+            echo "✅ Static website deployed successfully to Azure Storage!"
+            sh """
+            echo "Website URL:"
+            az storage account show -n ${STORAGE_ACCOUNT_NAME} -g ${RESOURCE_GROUP} --query 'primaryEndpoints.web' -o tsv
+            """
         }
         failure {
-            echo "Deployment failed. Check logs."
+            echo "❌ Deployment failed. Check build logs above."
         }
     }
 }
