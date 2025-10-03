@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        nodejs "NodeJS-18"
+    }
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
         AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
