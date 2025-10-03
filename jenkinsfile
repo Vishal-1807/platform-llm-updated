@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+    agent {
+        docker { image 'node:18' }
+    }
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
         AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
@@ -35,7 +37,6 @@ pipeline {
         }
         stage('Deploy to Azure Storage Static Website') {
             steps {
-                // Upload build folder content to $web container
                 sh """
                 az storage blob upload-batch \\
                     --account-name ${STORAGE_ACCOUNT_NAME} \\
