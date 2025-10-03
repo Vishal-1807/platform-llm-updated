@@ -1,0 +1,57 @@
+pipeline {
+    agent any
+    environment {
+        AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
+        AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
+        AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
+        AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
+
+        STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
+        RESOURCE_GROUP                 = 'awone-rg-terraform'
+
+        BRANCH                        = "${env.CHANGE_BRANCH ?: env.BRANCH_NAME ?: env.GIT_BRANCH}"
+    }
+    stages {
+        stage('Azure Login') {
+            steps {
+                sh """
+                az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
+                az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                """
+            }
+        }
+        stage('Checkout') {
+            steps {
+                checkout scm
+            }
+        }
+        stage('Build Application') {
+            steps {
+                sh '''
+                npm install
+                npm run build
+                '''
+            }
+        }
+        stage('Deploy to Azure Storage Static Website') {
+            steps {
+                // Upload build folder content to $web container
+                sh """
+                az storage blob upload-batch \\
+                    --account-name ${STORAGE_ACCOUNT_NAME} \\
+                    --source build/ \\
+                    --destination \$web \\
+                    --account-key $(az storage account keys list --resource-group ${RESOURCE_GROUP} --account-name ${STORAGE_ACCOUNT_NAME} --query '[0].value' -o tsv)
+                """
+            }
+        }
+    }
+    post {
+        success {
+            echo "Static website deployed successfully to Azure Storage account ${STORAGE_ACCOUNT_NAME}"
+        }
+        failure {
+            echo "Deployment failed. Check logs."
+        }
+    }
+}
