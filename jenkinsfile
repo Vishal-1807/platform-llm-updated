@@ -1,31 +1,30 @@
 pipeline {
     agent {
         docker {
-            image 'mcr.microsoft.com/azure-cli'  
-            args '-u root' 
+            image 'node:18-bullseye'  // Debian Linux with Node.js pre-installed
+            args '-u root'
         }
     }
-
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
         AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
         AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
         AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
-
         STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
-        RESOURCE_GROUP                 = 'awone-rg-terraform'
-        BUILD_DIR                     = 'dist'  // Change to your build output folder
+        BUILD_DIR                     = 'dist'
     }
-
     stages {
-        stage('Install Node and npm') {
+        stage('Install Azure CLI') {
             steps {
-                echo 'Installing Node.js and npm'
+                echo 'Installing Azure CLI'
                 sh '''
-                   apt-get update
-                   apt-get install -y nodejs npm
-                   node -v
-                   npm -v
+                    apt-get update && \
+                    apt-get install -y ca-certificates curl apt-transport-https lsb-release gnupg && \
+                    curl -sL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg && \
+                    install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft.gpg && \
+                    echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft.gpg] https://packages.microsoft.com/repos/azure-cli/ $(lsb_release -cs) main" | tee /etc/apt/sources.list.d/azure-cli.list && \
+                    apt-get update && \
+                    apt-get install -y azure-cli
                 '''
             }
         }
@@ -42,18 +41,15 @@ pipeline {
                 sh """
                     az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
                     az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                    az storage blob service-properties update --account-name ${STORAGE_ACCOUNT_NAME} --static-website --index-document index.html --404-document 404.html
                 """
             }
         }
         stage('Upload to Azure Static Website') {
             steps {
-                echo 'Uploading build files to $web container'
+                echo 'Uploading build files to \$web container'
                 sh """
-                    az storage blob upload-batch \
-                        --account-name ${STORAGE_ACCOUNT_NAME} \
-                        --destination '$web' \
-                        --source ${BUILD_DIR} \
-                        --overwrite
+                    az storage blob upload-batch --account-name ${STORAGE_ACCOUNT_NAME} --destination '\$web' --source ${BUILD_DIR} --overwrite
                 """
             }
         }
