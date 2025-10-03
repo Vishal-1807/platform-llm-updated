@@ -1,7 +1,8 @@
 pipeline {
     agent {
         docker {
-            image 'node:18.16-bullseye'  // matches your local Node version
+            image 'node:18.16-bullseye'  // Keep Node.js for building
+            args '-u root:root'  // Run as root to install packages
         }
     }
     environment {
@@ -12,8 +13,21 @@ pipeline {
 
         STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
         RESOURCE_GROUP                 = 'awone-rg-terraform'
+
+        BRANCH                        = "${env.CHANGE_BRANCH ?: env.BRANCH_NAME ?: env.GIT_BRANCH}"
     }
     stages {
+        stage('Install Azure CLI') {
+            steps {
+                sh '''
+                # Install Azure CLI
+                curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+                
+                # Verify installation
+                az --version
+                '''
+            }
+        }
         stage('Azure Login') {
             steps {
                 sh """
@@ -39,10 +53,10 @@ pipeline {
         stage('Deploy to Azure Storage Static Website') {
             steps {
                 sh """
-                az storage blob upload-batch \
-                    --account-name ${STORAGE_ACCOUNT_NAME} \
-                    --source build/ \
-                    --destination \$web \
+                az storage blob upload-batch \\
+                    --account-name ${STORAGE_ACCOUNT_NAME} \\
+                    --source build/ \\
+                    --destination \\$web \\
                     --account-key \$(az storage account keys list --resource-group ${RESOURCE_GROUP} --account-name ${STORAGE_ACCOUNT_NAME} --query '[0].value' -o tsv)
                 """
             }
