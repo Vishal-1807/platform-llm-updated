@@ -16,6 +16,18 @@ pipeline {
     }
     
     stages {
+        stage('Clean Workspace') {
+            steps {
+                cleanWs()
+            }
+        }
+        
+        stage('Checkout SCM') {
+            steps {
+                checkout scm
+            }
+        }
+        
         stage('Install Azure CLI') {
             steps {
                 echo 'Installing Azure CLI'
@@ -65,8 +77,8 @@ pipeline {
                                 -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
                                 --tenant ${AZURE_TENANT_ID}
                             
-                            az account set --subscription ${AZURE_SUBSCRIPTION_ID}                            
-                            # Upload files
+                            az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                            
                             az storage blob upload-batch \
                                 --account-name ${STORAGE_ACCOUNT_NAME} \
                                 --destination '\$web' \
@@ -76,6 +88,12 @@ pipeline {
                     }
                 }
             }
+        }
+    }
+    
+    post {
+        always {
+            cleanWs()
         }
     }
 }
