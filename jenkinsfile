@@ -5,57 +5,60 @@ pipeline {
             args '-u root --mount type=bind,source=/var/lib/jenkins/workspace/awone-frontend,target=/workspace'
         }
     }
+    
     environment {
         AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
         AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
         AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
         AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
-
         STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
-        BUILD_DIR                     = 'dist'  // Your build output directory
+        BUILD_DIR                     = 'dist'
     }
-    stage('Fix Case Sensitivity') {
-        steps {
-            sh '''
-                cd src/components/Tabular/Experiment/Deploy/Endpoint/
-                # Create symlink to handle case sensitivity
-                ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
-                ls -la
-            '''
+    
+    stages {
+        stage('Fix Case Sensitivity') {
+            steps {
+                sh '''
+                    cd src/components/Tabular/Experiment/Deploy/Endpoint/
+                    # Create symlink to handle case sensitivity
+                    ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
+                    ls -la
+                '''
+            }
         }
-    }
-    stage('Check Files') {
-        steps {
-            echo 'Listing files in endpoint directory to verify EndPoint.css presence'
-            sh 'ls -l src/components/Tabular/Experiment/Deploy/Endpoint/'
+        
+        stage('Check Files') {
+            steps {
+                echo 'Listing files in endpoint directory to verify EndPoint.css presence'
+                sh 'ls -l src/components/Tabular/Experiment/Deploy/Endpoint/'
+            }
         }
-    }
 
-    stage('Build') {
-        steps {
-            echo 'Installing Node modules and building static files'
-            sh 'npm install'
-            sh 'npm run build'
+        stage('Build') {
+            steps {
+                echo 'Installing Node modules and building static files'
+                sh 'npm install'
+                sh 'npm run build'
+            }
         }
-    }
 
-    stage('Enable Static Website') {
-        steps {
-            echo 'Enabling static website hosting on Azure Storage Account'
-            sh """
-                az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
-                az account set --subscription ${AZURE_SUBSCRIPTION_ID}
-            """
+        stage('Enable Static Website') {
+            steps {
+                echo 'Enabling static website hosting on Azure Storage Account'
+                sh """
+                    az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
+                    az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                """
+            }
         }
-    }
 
-    stage('Upload Static Files') {
-        steps {
-            echo 'Uploading built files to $web container'
-            sh """
-                az storage blob upload-batch --account-name ${STORAGE_ACCOUNT_NAME} --destination '\$web' --source ${BUILD_DIR} --overwrite
-            """
+        stage('Upload Static Files') {
+            steps {
+                echo 'Uploading built files to $web container'
+                sh """
+                    az storage blob upload-batch --account-name ${STORAGE_ACCOUNT_NAME} --destination '\$web' --source ${BUILD_DIR} --overwrite
+                """
+            }
         }
     }
-}
 }
