@@ -18,13 +18,12 @@ pipeline {
     stages {
         stage('Clean Workspace') {
             steps {
-                cleanWs()
-            }
-        }
-        
-        stage('Checkout SCM') {
-            steps {
-                checkout scm
+                sh '''
+                    echo "Cleaning workspace before checkout..."
+                    # Remove any existing dist folder that might cause permission issues
+                    rm -rf dist/ || true
+                    ls -la
+                '''
             }
         }
         
@@ -48,16 +47,36 @@ pipeline {
         stage('Fix Case Sensitivity') {
             steps {
                 sh '''
+                    echo "Fixing CSS import case sensitivity..."
                     cd src/components/Tabular/Experiment/Deploy/Endpoint/
                     ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
+                    echo "Case sensitivity fix applied"
                 '''
             }
         }
         
         stage('Build') {
             steps {
-                sh 'npm install'
-                sh 'npm run build'
+                sh '''
+                    echo "Installing dependencies..."
+                    npm install
+                    
+                    echo "Building project..."
+                    npm run build
+                    
+                    echo "Verifying dist folder creation..."
+                    if [ -d "dist" ]; then
+                        echo "SUCCESS: dist folder created!"
+                        echo "Dist folder contents:"
+                        ls -la dist/
+                        echo "Number of files in dist: $(find dist/ -type f | wc -l)"
+                    else
+                        echo "ERROR: dist folder was not created by build process"
+                        echo "Current directory contents:"
+                        ls -la
+                        exit 1
+                    fi
+                '''
             }
         }
 
@@ -72,6 +91,7 @@ pipeline {
                         )
                     ]) {
                         sh """
+                            echo "Starting Azure deployment..."
                             az login --service-principal \
                                 -u ${AZURE_SERVICE_PRINCIPAL_ID} \
                                 -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
@@ -79,11 +99,14 @@ pipeline {
                             
                             az account set --subscription ${AZURE_SUBSCRIPTION_ID}
                             
+                            echo "Uploading files from dist folder to Azure Storage..."
                             az storage blob upload-batch \
                                 --account-name ${STORAGE_ACCOUNT_NAME} \
                                 --destination '\$web' \
                                 --source ${BUILD_DIR} \
                                 --overwrite
+                            
+                            echo "Deployment completed successfully!"
                         """
                     }
                 }
@@ -93,7 +116,13 @@ pipeline {
     
     post {
         always {
-            cleanWs()
+            echo "Build pipeline execution completed"
+        }
+        success {
+            echo "SUCCESS: Build and deployment completed successfully!"
+        }
+        failure {
+            echo "FAILURE: Build or deployment failed - check logs above"
         }
     }
 }
