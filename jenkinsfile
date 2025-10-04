@@ -1,24 +1,91 @@
 pipeline {
     agent any
+    
     tools {
         nodejs 'Node_18' // Use the name configured in Global Tool Configuration
     }
+    
+    environment {
+        AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
+        AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
+        AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
+        AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
+        
+        // Azure Storage Configuration
+        AZURE_STORAGE_ACCOUNT          = 'yourstorageaccountname'  // Replace with your storage account name
+        AZURE_RESOURCE_GROUP           = 'your-resource-group'      // Replace with your resource group
+        STORAGE_CONTAINER              = '$web'                     // Default container for static websites
+    }
+    
     stages {
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
             }
         }
+        
         stage('Build') {
             steps {
-                sh 'npm run build' // If you have a build script in package.json
+                sh 'npm run build'
             }
         }
+        
         stage('Test') {
             steps {
                 sh 'npm test'
             }
         }
-        // Add more stages for deployment, etc.
+        
+        stage('Azure Login') {
+            steps {
+                script {
+                    sh '''
+                        az login --service-principal \
+                            -u ${AZURE_SERVICE_PRINCIPAL_ID} \
+                            -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
+                            --tenant ${AZURE_TENANT_ID}
+                        
+                        az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                    '''
+                }
+            }
+        }
+        
+        stage('Upload to Azure Storage') {
+            steps {
+                script {
+                    sh '''
+                        # Upload build files to Azure Storage
+                        az storage blob upload-batch \
+                            --account-name ${AZURE_STORAGE_ACCOUNT} \
+                            --auth-mode login \
+                            --destination ${STORAGE_CONTAINER} \
+                            --source ./dist \
+                            --overwrite
+                        
+                        echo "Files uploaded successfully to Azure Storage Static Website"
+                    '''
+                }
+            }
+        }
+        
+        stage('Azure Logout') {
+            steps {
+                sh 'az logout'
+            }
+        }
+    }
+    
+    post {
+        success {
+            echo 'Deployment to Azure Storage completed successfully!'
+        }
+        failure {
+            echo 'Deployment failed. Please check the logs.'
+        }
+        always {
+            // Cleanup
+            sh 'az logout || true'
+        }
     }
 }
