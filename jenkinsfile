@@ -3,8 +3,12 @@ pipeline {
         docker {
             image 'node:18-bullseye'
             args '-u root'
-            reuseNode true
         }
+    }
+    
+    // Disable automatic SCM checkout
+    options {
+        skipDefaultCheckout(true)
     }
     
     environment {
@@ -17,106 +21,112 @@ pipeline {
     }
     
     stages {
-        stage('Prepare Workspace') {
+        stage('Clean and Prepare Workspace') {
             steps {
                 sh '''
-                    echo "Creating fresh workspace..."
-                    # Create a temporary directory for our work
-                    mkdir -p /tmp/jenkins-build
-                    cd /tmp/jenkins-build
-                    
-                    # Clone the repository fresh
-                    git clone https://github.com/Vishal-1807/platform-llm-updated.git .
-                    git checkout dev
-                    
-                    echo "Workspace prepared successfully"
+                    echo "Cleaning existing workspace..."
+                    # Remove everything in current directory
+                    rm -rf * .git 2>/dev/null || true
                     ls -la
                 '''
-                dir('/tmp/jenkins-build') {
-                    // All subsequent steps will run in this directory
-                    script {
-                        env.WORKSPACE = '/tmp/jenkins-build'
-                    }
-                }
+            }
+        }
+        
+        stage('Manual Git Clone') {
+            steps {
+                sh '''
+                    echo "Cloning repository manually..."
+                    git clone https://github.com/Vishal-1807/platform-llm-updated.git .
+                    git checkout dev
+                    echo "Repository cloned successfully"
+                    ls -la
+                '''
             }
         }
         
         stage('Install Azure CLI') {
             steps {
-                dir(env.WORKSPACE) {
-                    echo 'Installing Azure CLI'
-                    sh '''
-                        apt-get update
-                        apt-get install -y curl gnupg lsb-release
-                        curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-                        az --version
-                    '''
-                }
+                echo 'Installing Azure CLI'
+                sh '''
+                    apt-get update
+                    apt-get install -y curl gnupg lsb-release
+                    curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+                    az --version
+                '''
             }
         }
         
         stage('Fix Case Sensitivity') {
             steps {
-                dir(env.WORKSPACE) {
-                    sh '''
-                        cd src/components/Tabular/Experiment/Deploy/Endpoint/
-                        ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
-                    '''
-                }
+                sh '''
+                    echo "Fixing CSS case sensitivity..."
+                    cd src/components/Tabular/Experiment/Deploy/Endpoint/
+                    ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
+                    echo "Case sensitivity fix applied"
+                '''
             }
         }
         
         stage('Build') {
             steps {
-                dir(env.WORKSPACE) {
-                    sh '''
-                        npm install
-                        npm run build
-                        echo "Build completed. Dist folder:"
+                sh '''
+                    echo "Installing dependencies..."
+                    npm install
+                    
+                    echo "Building project..."
+                    npm run build
+                    
+                    echo "Verifying dist folder creation..."
+                    if [ -d "dist" ]; then
+                        echo "SUCCESS: dist folder created!"
+                        echo "Dist folder contents:"
                         ls -la dist/
-                    '''
-                }
+                        echo "Number of files: $(find dist/ -type f | wc -l)"
+                    else
+                        echo "ERROR: dist folder not found after build"
+                        exit 1
+                    fi
+                '''
             }
         }
 
         stage('Deploy to Azure Storage') {
             steps {
-                dir(env.WORKSPACE) {
-                    script {
-                        withCredentials([
-                            usernamePassword(
-                                credentialsId: 'azure-sp-client-id',
-                                usernameVariable: 'AZURE_CLIENT_ID',
-                                passwordVariable: 'AZURE_CLIENT_SECRET'
-                            )
-                        ]) {
-                            sh """
-                                az login --service-principal \
-                                    -u ${AZURE_SERVICE_PRINCIPAL_ID} \
-                                    -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
-                                    --tenant ${AZURE_TENANT_ID}
-                                
-                                az account set --subscription ${AZURE_SUBSCRIPTION_ID}
-                                
-                                az storage blob upload-batch \
-                                    --account-name ${STORAGE_ACCOUNT_NAME} \
-                                    --destination '\$web' \
-                                    --source ${BUILD_DIR} \
-                                    --overwrite
-                            """
-                        }
+                script {
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'azure-sp-client-id',
+                            usernameVariable: 'AZURE_CLIENT_ID',
+                            passwordVariable: 'AZURE_CLIENT_SECRET'
+                        )
+                    ]) {
+                        sh """
+                            echo "Starting Azure deployment..."
+                            az login --service-principal \
+                                -u ${AZURE_SERVICE_PRINCIPAL_ID} \
+                                -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
+                                --tenant ${AZURE_TENANT_ID}
+                            
+                            az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                            
+                            echo "Uploading files to Azure Storage..."
+                            az storage blob upload-batch \
+                                --account-name ${STORAGE_ACCOUNT_NAME} \
+                                --destination '\$web' \
+                                --source ${BUILD_DIR} \
+                                --overwrite
+                            
+                            echo "Deployment completed successfully!"
+                        """
                     }
                 }
             }
         }
-        
-        stage('Cleanup') {
-            steps {
-                sh '''
-                    echo "Cleaning up temporary workspace..."
-                    rm -rf /tmp/jenkins-build || true
-                '''
-            }
+    }
+    
+    post {
+        always {
+            echo "Pipeline execution completed"
         }
     }
 }
