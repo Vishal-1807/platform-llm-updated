@@ -1,132 +1,24 @@
-pipeline {
-    agent {
-        docker {
-            image 'node:18-bullseye'
-            args '-u root'
+    pipeline {
+        agent any
+
+        tools {
+            nodejs 'Node_18' // Use the name configured in Global Tool Configuration
         }
-    }
-    
-    // Disable automatic SCM checkout
-    options {
-        skipDefaultCheckout(true)
-    }
-    
-    environment {
-        AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
-        AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
-        AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
-        AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
-        STORAGE_ACCOUNT_NAME           = 'awonefrontendstatic12312'
-        BUILD_DIR                     = 'dist'
-    }
-    
-    stages {
-        stage('Clean and Prepare Workspace') {
+        stage('Install Dependencies') {
             steps {
-                sh '''
-                    echo "Cleaning existing workspace..."
-                    # Remove everything in current directory
-                    rm -rf * .git 2>/dev/null || true
-                    ls -la
-                '''
+                sh 'npm install'
             }
         }
-        
-        stage('Manual Git Clone') {
-            steps {
-                sh '''
-                    echo "Cloning repository manually..."
-                    git clone https://github.com/Vishal-1807/platform-llm-updated.git .
-                    git checkout dev
-                    echo "Repository cloned successfully"
-                    ls -la
-                '''
-            }
-        }
-        
-        stage('Install Azure CLI') {
-            steps {
-                echo 'Installing Azure CLI'
-                sh '''
-                    apt-get update
-                    apt-get install -y curl gnupg lsb-release
-                    curl -sL https://aka.ms/InstallAzureCLIDeb | bash
-                    az --version
-                '''
-            }
-        }
-        
-        stage('Fix Case Sensitivity') {
-            steps {
-                sh '''
-                    echo "Fixing CSS case sensitivity..."
-                    cd src/components/Tabular/Experiment/Deploy/Endpoint/
-                    ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
-                    echo "Case sensitivity fix applied"
-                '''
-            }
-        }
-        
         stage('Build') {
             steps {
-                sh '''
-                    echo "Installing dependencies..."
-                    npm install
-                    
-                    echo "Building project..."
-                    npm run build
-                    
-                    echo "Verifying dist folder creation..."
-                    if [ -d "dist" ]; then
-                        echo "SUCCESS: dist folder created!"
-                        echo "Dist folder contents:"
-                        ls -la dist/
-                        echo "Number of files: $(find dist/ -type f | wc -l)"
-                    else
-                        echo "ERROR: dist folder not found after build"
-                        exit 1
-                    fi
-                '''
+                sh 'npm run build' // If you have a build script in package.json
             }
         }
-
-        stage('Deploy to Azure Storage') {
+        stage('Test') {
             steps {
-                script {
-                    withCredentials([
-                        usernamePassword(
-                            credentialsId: 'azure-sp-client-id',
-                            usernameVariable: 'AZURE_CLIENT_ID',
-                            passwordVariable: 'AZURE_CLIENT_SECRET'
-                        )
-                    ]) {
-                        sh """
-                            echo "Starting Azure deployment..."
-                            az login --service-principal \
-                                -u ${AZURE_SERVICE_PRINCIPAL_ID} \
-                                -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
-                                --tenant ${AZURE_TENANT_ID}
-                            
-                            az account set --subscription ${AZURE_SUBSCRIPTION_ID}
-                            
-                            echo "Uploading files to Azure Storage..."
-                            az storage blob upload-batch \
-                                --account-name ${STORAGE_ACCOUNT_NAME} \
-                                --destination '\$web' \
-                                --source ${BUILD_DIR} \
-                                --overwrite
-                            
-                            echo "Deployment completed successfully!"
-                        """
-                    }
-                }
+                sh 'npm test'
             }
         }
-    }
-    
-    post {
-        always {
-            echo "Pipeline execution completed"
-        }
+        // Add more stages for deployment, etc.
     }
 }
