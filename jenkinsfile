@@ -1,9 +1,9 @@
-    pipeline {
-        agent any
-
-        tools {
-            nodejs 'Node_18' // Use the name configured in Global Tool Configuration
-        }
+pipeline {
+    agent any
+    tools {
+        nodejs 'Node_18' // Use the name configured in Global Tool Configuration
+    }
+    stages {
         stage('Install Dependencies') {
             steps {
                 sh 'npm install'
