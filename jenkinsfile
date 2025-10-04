@@ -2,7 +2,7 @@ pipeline {
     agent {
         docker {
             image 'node:18-bullseye'
-            args '-u root --mount type=bind,source=/var/lib/jenkins/workspace/awone-frontend,target=/workspace'
+            args '-u root'
         }
     }
     
@@ -16,48 +16,65 @@ pipeline {
     }
     
     stages {
-        stage('Fix Case Sensitivity') {
+        stage('Install Azure CLI') {
             steps {
+                echo 'Installing Azure CLI'
                 sh '''
-                    cd src/components/Tabular/Experiment/Deploy/Endpoint/
-                    # Create symlink to handle case sensitivity
-                    ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
-                    ls -la
+                    # Install required dependencies
+                    apt-get update
+                    apt-get install -y curl gnupg lsb-release
+                    
+                    # Install Azure CLI
+                    curl -sL https://aka.ms/InstallAzureCLIDeb | bash
+                    
+                    # Verify installation
+                    az --version
                 '''
             }
         }
         
-        stage('Check Files') {
+        stage('Fix Case Sensitivity') {
             steps {
-                echo 'Listing files in endpoint directory to verify EndPoint.css presence'
-                sh 'ls -l src/components/Tabular/Experiment/Deploy/Endpoint/'
+                sh '''
+                    cd src/components/Tabular/Experiment/Deploy/Endpoint/
+                    ln -sf Endpoint.css EndPoint.css 2>/dev/null || true
+                '''
             }
         }
-
+        
         stage('Build') {
             steps {
-                echo 'Installing Node modules and building static files'
                 sh 'npm install'
                 sh 'npm run build'
             }
         }
 
-        stage('Enable Static Website') {
+        stage('Deploy to Azure Storage') {
             steps {
-                echo 'Enabling static website hosting on Azure Storage Account'
-                sh """
-                    az login --service-principal -u ${AZURE_SERVICE_PRINCIPAL_ID} -p ${AZURE_SERVICE_PRINCIPAL_SECRET} --tenant ${AZURE_TENANT_ID}
-                    az account set --subscription ${AZURE_SUBSCRIPTION_ID}
-                """
-            }
-        }
-
-        stage('Upload Static Files') {
-            steps {
-                echo 'Uploading built files to $web container'
-                sh """
-                    az storage blob upload-batch --account-name ${STORAGE_ACCOUNT_NAME} --destination '\$web' --source ${BUILD_DIR} --overwrite
-                """
+                script {
+                    withCredentials([
+                        usernamePassword(
+                            credentialsId: 'azure-sp-client-id',
+                            usernameVariable: 'AZURE_CLIENT_ID',
+                            passwordVariable: 'AZURE_CLIENT_SECRET'
+                        )
+                    ]) {
+                        sh """
+                            az login --service-principal \
+                                -u ${AZURE_SERVICE_PRINCIPAL_ID} \
+                                -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
+                                --tenant ${AZURE_TENANT_ID}
+                            
+                            az account set --subscription ${AZURE_SUBSCRIPTION_ID}                            
+                            # Upload files
+                            az storage blob upload-batch \
+                                --account-name ${STORAGE_ACCOUNT_NAME} \
+                                --destination '\$web' \
+                                --source ${BUILD_DIR} \
+                                --overwrite
+                        """
+                    }
+                }
             }
         }
     }
