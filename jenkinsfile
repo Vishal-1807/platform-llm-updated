@@ -12,8 +12,8 @@ pipeline {
         AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
         
         // Azure Storage Configuration
-        AZURE_STORAGE_ACCOUNT          = 'yourstorageaccountname'  // Replace with your storage account name
-        AZURE_RESOURCE_GROUP           = 'your-resource-group'      // Replace with your resource group
+        AZURE_STORAGE_ACCOUNT          = 'awonefrontendstatic12312'  // Replace with your storage account name
+        AZURE_RESOURCE_GROUP           = 'awone-rg-terraform'      // Replace with your resource group
         STORAGE_CONTAINER              = '$web'                     // Default container for static websites
     }
     
