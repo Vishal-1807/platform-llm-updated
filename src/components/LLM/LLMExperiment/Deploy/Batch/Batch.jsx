@@ -90,7 +90,6 @@ export default function Batch() {
     setScheduledValue(e.target.ScheduledValue);
   };
   const handleBatchSubmit = () => {
-    return 
     setLoader(true);
 
     const formData = {
@@ -98,8 +97,8 @@ export default function Batch() {
       lifestage: BatchInputs.lifestage,
       batch_input: BatchInputs.input,
       schedule: ScheduledValue,
-      min_memory: eval(BatchInputs.memMin),
-      max_memory: eval(BatchInputs.memMax),
+      min_memory: Number(BatchInputs.memMin),
+      max_memory: Number(BatchInputs.memMax),
       min_cpu: Number(BatchInputs.cpuMin),
       max_cpu: Number(BatchInputs.cpuMax),
       // stage_weight: Number(BatchInputs.StageWeight),

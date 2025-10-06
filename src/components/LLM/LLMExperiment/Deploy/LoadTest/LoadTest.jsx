@@ -55,7 +55,6 @@ export default function LoadTest() {
   };
   const navigate = useNavigate();
   const handleLTSubmit = () => {
-    return
     setLoader(true);
 
     const formData = {
@@ -90,7 +89,6 @@ export default function LoadTest() {
   };
 
   const ReplicaSubmit = () => {
-    return
     setReplicaLoader(true);
     seterrorMesg("");
     replica_suggestion(experimentId, NumberOfUsers)
