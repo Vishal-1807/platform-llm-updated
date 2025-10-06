@@ -2,19 +2,17 @@ pipeline {
     agent any
     
     tools {
-        nodejs 'Node_18' // Use the name configured in Global Tool Configuration
+        nodejs 'Node_18'
     }
     
     environment {
-        AZURE_SERVICE_PRINCIPAL_ID     = credentials('azure-sp-client-id')
-        AZURE_SERVICE_PRINCIPAL_SECRET = credentials('azure-sp-client-secret')
-        AZURE_TENANT_ID                = credentials('azure-sp-tenant-id')
-        AZURE_SUBSCRIPTION_ID          = credentials('azure-subscription-id')
-        
-        // Azure Storage Configuration
-        AZURE_STORAGE_ACCOUNT          = 'awonefrontendstatic12312'  // Replace with your storage account name
-        AZURE_RESOURCE_GROUP           = 'awone-rg-terraform'      // Replace with your resource group
-        STORAGE_CONTAINER              = '$web'                     // Default container for static websites
+        AZURE_CLIENT_ID       = credentials('azure-sp-client-id')
+        AZURE_CLIENT_SECRET   = credentials('azure-sp-client-secret')
+        AZURE_TENANT_ID       = credentials('azure-sp-tenant-id')
+        AZURE_SUBSCRIPTION_ID = credentials('azure-subscription-id')
+        AZURE_STORAGE_ACCOUNT = 'awonefrontendstatic12312'
+        AZURE_RESOURCE_GROUP  = 'your-resource-group'
+        STORAGE_CONTAINER     = '$web'
     }
     
     stages {
@@ -41,11 +39,40 @@ pipeline {
                 script {
                     sh '''
                         az login --service-principal \
-                            -u ${AZURE_SERVICE_PRINCIPAL_ID} \
-                            -p ${AZURE_SERVICE_PRINCIPAL_SECRET} \
+                            -u ${AZURE_CLIENT_ID} \
+                            -p ${AZURE_CLIENT_SECRET} \
                             --tenant ${AZURE_TENANT_ID}
                         
                         az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+                        
+                        # Verify login and permissions
+                        echo "=== Checking Azure Authentication ==="
+                        az account show
+                        
+                        echo "=== Checking Storage Account Access ==="
+                        az storage account show \
+                            --name ${AZURE_STORAGE_ACCOUNT} \
+                            --resource-group ${AZURE_RESOURCE_GROUP}
+                    '''
+                }
+            }
+        }
+        
+        stage('Verify Permissions') {
+            steps {
+                script {
+                    sh '''
+                        echo "=== Checking Role Assignments ==="
+                        # List role assignments for the storage account
+                        az role assignment list \
+                            --scope "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${AZURE_RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${AZURE_STORAGE_ACCOUNT}" \
+                            --output table || true
+                        
+                        echo "=== Testing Container Access ==="
+                        # Test if we can list containers (basic read permission test)
+                        az storage container list \
+                            --account-name ${AZURE_STORAGE_ACCOUNT} \
+                            --auth-mode login || echo "Cannot list containers - permissions issue"
                     '''
                 }
             }
@@ -55,7 +82,7 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Upload build files to Azure Storage
+                        echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
                             --account-name ${AZURE_STORAGE_ACCOUNT} \
                             --auth-mode login \
@@ -68,12 +95,6 @@ pipeline {
                 }
             }
         }
-        
-        stage('Azure Logout') {
-            steps {
-                sh 'az logout'
-            }
-        }
     }
     
     post {
@@ -84,7 +105,6 @@ pipeline {
             echo 'Deployment failed. Please check the logs.'
         }
         always {
-            // Cleanup
             sh 'az logout || true'
         }
     }
