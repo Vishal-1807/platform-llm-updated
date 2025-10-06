@@ -11,7 +11,7 @@ pipeline {
         AZURE_TENANT_ID       = credentials('azure-sp-tenant-id')
         AZURE_SUBSCRIPTION_ID = credentials('azure-subscription-id')
         AZURE_STORAGE_ACCOUNT = 'awonefrontendstatic12312'
-        AZURE_RESOURCE_GROUP  = 'awone-rg-terraform'
+        AZURE_RESOURCE_GROUP  = 'your-resource-group'  // Replace with actual resource group name
         STORAGE_CONTAINER     = '$web'
     }
     
@@ -34,10 +34,11 @@ pipeline {
             }
         }
         
-        stage('Azure Login') {
+        stage('Azure Login and Upload') {
             steps {
                 script {
                     sh '''
+                        # Login to Azure
                         az login --service-principal \
                             -u ${AZURE_CLIENT_ID} \
                             -p ${AZURE_CLIENT_SECRET} \
@@ -45,52 +46,24 @@ pipeline {
                         
                         az account set --subscription ${AZURE_SUBSCRIPTION_ID}
                         
-                        # Verify login and permissions
-                        echo "=== Checking Azure Authentication ==="
-                        az account show
-                        
-                        echo "=== Checking Storage Account Access ==="
-                        az storage account show \
-                            --name ${AZURE_STORAGE_ACCOUNT} \
-                            --resource-group ${AZURE_RESOURCE_GROUP}
-                    '''
-                }
-            }
-        }
-        
-        stage('Verify Permissions') {
-            steps {
-                script {
-                    sh '''
-                        echo "=== Checking Role Assignments ==="
-                        # List role assignments for the storage account
-                        az role assignment list \
-                            --scope "/subscriptions/${AZURE_SUBSCRIPTION_ID}/resourceGroups/${AZURE_RESOURCE_GROUP}/providers/Microsoft.Storage/storageAccounts/${AZURE_STORAGE_ACCOUNT}" \
-                            --output table || true
-                        
-                        echo "=== Testing Container Access ==="
-                        # Test if we can list containers (basic read permission test)
-                        az storage container list \
+                        # Get storage account key
+                        echo "Getting storage account key..."
+                        STORAGE_KEY=$(az storage account keys list \
                             --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --auth-mode login || echo "Cannot list containers - permissions issue"
-                    '''
-                }
-            }
-        }
-        
-        stage('Upload to Azure Storage') {
-            steps {
-                script {
-                    sh '''
+                            --resource-group ${AZURE_RESOURCE_GROUP} \
+                            --query '[0].value' \
+                            --output tsv)
+                        
+                        # Upload using storage key
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
                             --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --auth-mode login \
+                            --account-key "$STORAGE_KEY" \
                             --destination ${STORAGE_CONTAINER} \
                             --source ./dist \
                             --overwrite
                         
-                        echo "Files uploaded successfully to Azure Storage Static Website"
+                        echo "Files uploaded successfully to Azure Storage Static Website!"
                     '''
                 }
             }
@@ -98,12 +71,6 @@ pipeline {
     }
     
     post {
-        success {
-            echo 'Deployment to Azure Storage completed successfully!'
-        }
-        failure {
-            echo 'Deployment failed. Please check the logs.'
-        }
         always {
             sh 'az logout || true'
         }
