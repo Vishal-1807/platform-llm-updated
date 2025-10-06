@@ -29,13 +29,14 @@ export default function SideBar() {
     }
   }, [isLLMPage, isLLMExpanded]);
 
-  // Only use LLM tab context if we're on an LLM page
+  // Always call the hook to maintain hook order
   let tabValue = 0;
   let setTabValue = () => {};
 
   try {
+    const llmTab = useLLMTab();
+    // Only use the values if we're on an LLM page
     if (isLLMPage) {
-      const llmTab = useLLMTab();
       tabValue = llmTab.tabValue;
       setTabValue = llmTab.setTabValue;
     }

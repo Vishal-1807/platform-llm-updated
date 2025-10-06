@@ -337,7 +337,7 @@ export const Dashboard = () => {
 
                 <div style={{ marginBottom: "10px" }}>
                   {experimentInformation.length >= 0 ? (
-                    <Grid xs={12} sx={{ p: 0 }}>
+                    <Grid item xs={12} sx={{ p: 0 }}>
                       <iframe
                         src={FinalURL}
                         width="100%"

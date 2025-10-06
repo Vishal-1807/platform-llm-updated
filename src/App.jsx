@@ -12,9 +12,9 @@ import Login from "./components/Login/Login";
 import LoginRes from "./components/Login/LoginRes";
 import { Logout } from "./components/Logout/Logout";
 import SideBar from "./components/SideBar/SideBar";
-import Experiment from "./components/Tabular/Experiment/Experiment";
-import Project from "./components/Tabular/Project/Project";
-import Tabular from "./components/Tabular/Tabular";
+// import Experiment from "./components/Tabular/Experiment/Experiment";
+// import Project from "./components/Tabular/Project/Project";
+// import Tabular from "./components/Tabular/Tabular";
 function App() {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
@@ -42,16 +42,16 @@ function App() {
           <Routes>
             {sessionStorage.getItem("token") &&
             sessionStorage.getItem("token") != "" ? (
-              <Route path="/" element={<Tabular />} />
+              <Route path="/" element={<Dashboard />} />
             ) : (
               <Route path="/" element={<Login updateToken={updateToken} />} />
             )}
-            <Route path="/tabular" element={<Tabular />} />
+            {/* <Route path="/tabular" element={<Tabular />} />
             <Route path="/tabular/:projectId" element={<Project />} />
             <Route
               path="/tabular/:projectId/Experiment/:experimentId/*"
               element={<Experiment />}
-            />
+            /> */}
             <Route
               path="/llm/:projectId/Experiment/:experimentId/*"
               element={<LLMExperiment />}
