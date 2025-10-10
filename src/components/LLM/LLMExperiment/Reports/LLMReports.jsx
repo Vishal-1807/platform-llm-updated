@@ -126,7 +126,7 @@ export default function LLMReports() {
                         display: "flex"
                     }}>
                         <iframe
-                            src={"https://cibi.ai/cibi/grafana/d/b711bbe2-1728-4234-977c-24f08947e994/model-metrics-llm?orgId=1&var-experiment="+experimentId+"&kiosk&theme=light&panelId=5"}
+                            src={"https://awone-api.axiomio.com/grafana/d/b711bbe2-1728-4234-977c-24f08947e994/model-metrics-llm?orgId=1&var-experiment="+experimentId+"&kiosk&theme=light&panelId=5"}
                             width="100%"
                             height="100%"
                             style={{
