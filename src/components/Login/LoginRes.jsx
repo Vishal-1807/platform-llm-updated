@@ -8,7 +8,7 @@ const LoginRes = ({ token, updateToken }) => {
   const navigate = useNavigate();
 
   const getAccessToken = async (code) => {
-    const res = await fetch(`https://cibi.ai/cibi/tabular-dev/auth/getToken`, {
+    const res = await fetch(`https://awone-api.axiomio.com/auth/getToken`, {
       method: "POST",
       body: JSON.stringify({
         code: code,
