@@ -44,7 +44,7 @@ export default function Login({ updateToken }) {
 
     try {
       const Loginurl = await axios.post(
-        `https://cibi.ai/cibi/tabular/login`,
+        `https://awone-api.axiomio.com/login`,
         formData,
         {
           method: "POST",
@@ -68,7 +68,7 @@ export default function Login({ updateToken }) {
   const MicrosoftLogin = async () => {
     try {
       const response = await fetch(
-        `https://cibi.ai/cibi/tabular-dev/auth/login?organisation=awone`
+        `https://awone-api.axiomio.com/auth/login?organisation=awone`
       );
       const result = await response.json();
       console.log("result", result);
