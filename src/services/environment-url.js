@@ -5,9 +5,9 @@ export const TabularBaseUrls = {
 };
 
 export const LLMBaseUrls = {
-  development: `https://cibi.ai/cibi/llm`,
-  stage: `https://cibi.ai/cibi/llm-test`,
-  production: `https://cibi.ai/cibi/llm`,
+  development: `https://awone-api.axiomio.com/llm`,
+  stage: `https://awone-api.axiomio.com/llm-test`,
+  production: `https://awone-api.axiomio.com/llm`,
 };
 
 export const ConsumptionBaseUrls = {
