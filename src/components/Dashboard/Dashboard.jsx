@@ -66,11 +66,11 @@ export const Dashboard = () => {
     if (ProjectFilter === "llm") {
       const selectedValue = e.target.value.toLowerCase();
       setexpid(e.target.value);
-      const single = `https://cibi.ai/cibi/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const single = `https://awone-api.axiomio.com/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     } else {
       const selectedValue = ProjectID.toLowerCase();
-      const single = `https://cibi.ai/cibi/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const single = `https://awone-api.axiomio.com/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     }
   };
