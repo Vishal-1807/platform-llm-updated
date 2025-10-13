@@ -81,7 +81,7 @@ export default function LLMReports() {
                     display: "flex"
                 }}>
                     <iframe
-                        src={"https://cibi.ai/cibi/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&from=1705047988397&to=1705048031454&var-experiment="+experimentId+"&kiosk&refresh=5s&theme=light"}
+                        src={"https://awone-api.axiomio.com/cibi/llm-dev/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&from=1705047988397&to=1705048031454&var-experiment="+experimentId+"&kiosk&refresh=5s&theme=light"}
                         width="100%"
                         height="100%"
                         style={{
