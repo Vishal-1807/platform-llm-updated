@@ -68,7 +68,7 @@ export default function Login({ updateToken }) {
   const MicrosoftLogin = async () => {
     try {
       const response = await fetch(
-        `https://awone-api.axiomio.com/auth/login?organisation=awone`
+        `https://awone-api.axiomio.com/tabular/auth/login?organisation=awone`
       );
       const result = await response.json();
       console.log("result", result);
