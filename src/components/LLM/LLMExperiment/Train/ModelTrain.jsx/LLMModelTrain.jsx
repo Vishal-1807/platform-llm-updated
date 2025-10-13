@@ -265,7 +265,7 @@ export default function LLMModelTrain({ initialConfigs = {} }) {
         <Box className={styles["chart-ctn"]}>
           <iframe
             src={
-              "https://awone-api.axiomio.com/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&from=1705047988397&to=1705048031454&var-experiment=" +
+              "https://awone-api.axiomio.com/cibi/llm-dev/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&from=1705047988397&to=1705048031454&var-experiment=" +
               experimentId +
               "&kiosk&refresh=5s&theme=light"
             }
