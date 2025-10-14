@@ -43,19 +43,27 @@ function logoutUser() {
   window.location.href = "/logout";
 }
 
-const refreshToken = async (token) => {
+const refreshToken = async () => {
   try {
-    const response = await axios.post(
-      `${LLMApiUrl}/extend_token?old_token=${token}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const refreshToken = sessionStorage.getItem("refresh_token");
+    const sessionToken = sessionStorage.getItem("session_token");
+    
+    const response = await fetch(`${TabularBaseUrls[environment]}/auth/refresh_token`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        refresh_token: refreshToken,
+        session_token: sessionToken
+      })
+    });
 
-    return response;
+    if (!response.ok) {
+      throw new Error('Token refresh failed');
+    }
+
+    return await response.json();
   } catch (error) {
     throw error;
   }
