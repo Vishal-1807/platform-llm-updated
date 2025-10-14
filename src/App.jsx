@@ -21,6 +21,7 @@ function App() {
   const updateToken = (value) => {
     sessionStorage.setItem("token", value);
     setToken(value);
+    console.log(value,"Token");
   };
 
   const logout = () => {
