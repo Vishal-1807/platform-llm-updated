@@ -18,6 +18,40 @@ import SideBar from "./components/SideBar/SideBar";
 function App() {
   const [token, setToken] = useState(sessionStorage.getItem("token"));
 
+// Function to log all session storage key-value pairs
+  const logSessionStorage = () => {
+    console.log("=== SESSION STORAGE CONTENTS ===");
+    console.log("Number of items:", sessionStorage.length);
+ 
+    if (sessionStorage.length === 0) {
+      console.log("Session storage is empty");
+      return;
+    }
+ 
+    // Log all key-value pairs
+    for (let i = 0; i < sessionStorage.length; i++) {
+      const key = sessionStorage.key(i);
+      const value = sessionStorage.getItem(key);
+      console.log(`${key}:`, value);
+    }
+ 
+    // Alternative method - get all keys and values
+    const allKeys = Object.keys(sessionStorage);
+    console.log("All keys:", allKeys);
+ 
+    const allData = {};
+    allKeys.forEach(key => {
+      allData[key] = sessionStorage.getItem(key);
+    });
+    console.log("All session storage data:", allData);
+    console.log("=== END SESSION STORAGE ===");
+  };
+ 
+  // Log session storage on component mount and when token changes
+  useEffect(() => {
+    logSessionStorage();
+  }, [token]);
+
   const updateToken = (value) => {
     sessionStorage.setItem("token", value);
     setToken(value);
