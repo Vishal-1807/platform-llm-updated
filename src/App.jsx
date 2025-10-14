@@ -81,32 +81,38 @@ function App() {
           {isAuthenticated() && <Header />}
           <div className="ta-main-content">
             <Routes>
-              {/* CHANGED: Use isAuthenticated() helper */}
+              {/* Authentication-based routing */}
               {isAuthenticated() ? (
-                <Route path="/" element={<Dashboard />} />
+                <>
+                  {/* Protected routes - only accessible when authenticated */}
+                  <Route path="/" element={<Dashboard />} />
+                  <Route path="/Dashboard" element={<Dashboard />} />
+                  <Route path="/cv" element={<div>CV</div>} />
+                  <Route path="/nlp" element={<div>NLP</div>} />
+                  <Route path="/llm" element={<LLM />} />
+                  <Route path="/llm/:projectId" element={<LLMProject />} />
+                  <Route
+                    path="/llm/:projectId/Experiment/:experimentId/*"
+                    element={<LLMExperiment />}
+                  />
+                  <Route path="/logout" element={<Logout logout={logout} />} />
+                </>
               ) : (
-                <Route path="/" element={<Login updateToken={updateToken} />} />
+                <>
+                  {/* Public routes - only accessible when not authenticated */}
+                  <Route path="/" element={<Login updateToken={updateToken} />} />
+                  <Route
+                    path="/login"
+                    element={<Login updateToken={updateToken} />}
+                  />
+                  <Route
+                    path="/callback"
+                    element={<LoginRes token={token} updateToken={updateToken} />}
+                  />
+                  {/* Redirect any other route to login when not authenticated */}
+                  <Route path="*" element={<Login updateToken={updateToken} />} />
+                </>
               )}
-              
-              <Route
-                path="/llm/:projectId/Experiment/:experimentId/*"
-                element={<LLMExperiment />}
-              />
-
-              <Route path="/cv" element={<div>CV</div>} />
-              <Route path="/nlp" element={<div>NLP</div>} />
-              <Route path="/llm" element={<LLM />} />
-              <Route path="/llm/:projectId" element={<LLMProject />} />
-              <Route path="/logout" element={<Logout logout={logout} />} />
-              <Route
-                path="/login"
-                element={<Login updateToken={updateToken} />}
-              />
-              <Route
-                path="/callback"
-                element={<LoginRes token={token} updateToken={updateToken} />}
-              />
-              <Route path="/Dashboard" element={<Dashboard />} />
             </Routes>
           </div>
         </div>

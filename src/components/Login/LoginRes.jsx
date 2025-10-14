@@ -25,7 +25,8 @@ const LoginRes = ({ token, updateToken }) => {
     if (Object.keys(result).length !== 0) {
       setCount(count + 1);
       console.log(result);
-      updateToken(result.id_token);
+      // Use access_token for API calls, not id_token
+      updateToken(result.access_token);
       //   const username = result.id_token_claims.name.trim();
       //   const email = result.id_token_claims.preferred_username.trim();
       //   sessionStorage.setItem("username", username.trim());
