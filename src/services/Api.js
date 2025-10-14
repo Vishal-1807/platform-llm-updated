@@ -75,7 +75,7 @@ API.interceptors.request.use(
     const session_token = sessionStorage.getItem("session_token");
     if (id_token) {
       config.headers.Authorization = `Bearer ${id_token}`;
-      config.headers["x-session-token"] = session_token;
+      config.headers["session-token"] = session_token;
     }
     return config;
   },
@@ -108,7 +108,7 @@ API.interceptors.response.use(
           // Update headers
           API.defaults.headers.common["Authorization"] = `Bearer ${data.token_response.id_token}`;
           originalRequest.headers.Authorization = `Bearer ${data.token_response.id_token}`;
-          originalRequest.headers["x-session-token"] = data.session_token;
+          originalRequest.headers["session-token"] = data.session_token;
           
           return API.request(originalRequest);
         } else {
@@ -184,7 +184,7 @@ LLMAPI.interceptors.request.use(
     
     if (id_token) {
       config.headers.Authorization = `Bearer ${id_token}`;
-      config.headers["x-session-token"] = session_token;
+      config.headers["session-token"] = session_token;
     }
     return config;
   },
@@ -219,7 +219,7 @@ LLMAPI.interceptors.response.use(
           
           LLMAPI.defaults.headers.common["Authorization"] = `Bearer ${data.token_response.id_token}`;
           originalRequest.headers.Authorization = `Bearer ${data.token_response.id_token}`;
-          originalRequest.headers["x-session-token"] = data.session_token;
+          originalRequest.headers["session-token"] = data.session_token;
           
           console.log("✅ Retrying LLMAPI request with new token");
           return LLMAPI.request(originalRequest);
