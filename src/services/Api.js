@@ -43,10 +43,28 @@ function logoutUser() {
   window.location.href = "/logout";
 }
 
+const refreshToken = async (token) => {
+  try {
+    const response = await axios.post(
+      `${LLMApiUrl}/extend_token?old_token=${token}`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return response;
+  } catch (error) {
+    throw error;
+  }
+};
+
 // Add a request interceptor to include the authentication token in the headers
 API.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("access_token");
+    const access_token = sessionStorage.getItem("token");
     const session_token = sessionStorage.getItem("session_token");
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
@@ -65,11 +83,24 @@ API.interceptors.response.use(
     return response;
   },
   async (error) => {
+    const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      console.log("401 Unauthorized - Token expired or invalid");
-      // For Microsoft OAuth, we'll just logout instead of trying to refresh
-      // This ensures a clean re-authentication flow
-      logoutUser();
+      const token = sessionStorage.getItem("token");
+      try {
+        const resp = await refreshToken(token);
+        if (resp.status === 200 && resp.data && resp.data.access_token) {
+          sessionStorage.setItem("token", resp.data.access_token);
+          API.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${resp.data.access_token}`;
+          return API.request(originalRequest);
+        } else {
+          logoutUser();
+        }
+      } catch (refreshError) {
+        console.error("Error refreshing token:", refreshError);
+        logoutUser();
+      }
     }
     return Promise.reject(error);
   }
@@ -78,7 +109,7 @@ API.interceptors.response.use(
 // Add a request interceptor to include the authentication token in the headers
 ConsumptionURL.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("access_token");
+    const access_token = sessionStorage.getItem("token");
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
     }
@@ -95,11 +126,24 @@ ConsumptionURL.interceptors.response.use(
     return response;
   },
   async (error) => {
+    const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      console.log("401 Unauthorized - Token expired or invalid");
-      // For Microsoft OAuth, we'll just logout instead of trying to refresh
-      // This ensures a clean re-authentication flow
-      logoutUser();
+      const token = sessionStorage.getItem("token");
+      try {
+        const resp = await refreshToken(token);
+        if (resp.status === 200 && resp.data && resp.data.access_token) {
+          sessionStorage.setItem("token", resp.data.access_token);
+          ConsumptionURL.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${resp.data.access_token}`;
+          return ConsumptionURL.request(originalRequest);
+        } else {
+          logoutUser();
+        }
+      } catch (refreshError) {
+        console.error("Error refreshing token:", refreshError);
+        logoutUser();
+      }
     }
     return Promise.reject(error);
   }
@@ -108,7 +152,7 @@ ConsumptionURL.interceptors.response.use(
 // Add a request interceptor to include the authentication token in the headers
 LLMAPI.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("access_token");
+    const access_token = sessionStorage.getItem("token");
     const session_token = sessionStorage.getItem("session_token");
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
@@ -127,11 +171,24 @@ LLMAPI.interceptors.response.use(
     return response;
   },
   async (error) => {
+    const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      console.log("401 Unauthorized - Token expired or invalid");
-      // For Microsoft OAuth, we'll just logout instead of trying to refresh
-      // This ensures a clean re-authentication flow
-      logoutUser();
+      const token = sessionStorage.getItem("token");
+      try {
+        const resp = await refreshToken(token);
+        if (resp.status === 200 && resp.data && resp.data.access_token) {
+          sessionStorage.setItem("token", resp.data.access_token);
+          LLMAPI.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${resp.data.access_token}`;
+          return LLMAPI.request(originalRequest);
+        } else {
+          logoutUser();
+        }
+      } catch (refreshError) {
+        console.error("Error refreshing token:", refreshError);
+        logoutUser();
+      }
     }
     return Promise.reject(error);
   }
@@ -140,7 +197,7 @@ LLMAPI.interceptors.response.use(
 // // Add a request interceptor to include the authentication token in the headers
 // NewLLMAPI.interceptors.request.use(
 //   (config) => {
-//     const access_token = sessionStorage.getItem("access_token");
+//     const access_token = sessionStorage.getItem("token");
 //     if (access_token) {
 //       config.headers.Authorization = `Bearer ${access_token}`;
 //     }

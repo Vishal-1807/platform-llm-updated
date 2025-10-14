@@ -12,13 +12,12 @@ import Login from "./components/Login/Login";
 import LoginRes from "./components/Login/LoginRes";
 import { Logout } from "./components/Logout/Logout";
 import SideBar from "./components/SideBar/SideBar";
-// import Experiment from "./components/Tabular/Experiment/Experiment";
-// import Project from "./components/Tabular/Project/Project";
-// import Tabular from "./components/Tabular/Tabular";
+
 function App() {
+  // CHANGED: Use "access_token" instead of "token"
   const [token, setToken] = useState(sessionStorage.getItem("access_token"));
 
-// Function to log all session storage key-value pairs
+  // Function to log all session storage key-value pairs
   const logSessionStorage = () => {
     console.log("=== SESSION STORAGE CONTENTS ===");
     console.log("Number of items:", sessionStorage.length);
@@ -53,7 +52,7 @@ function App() {
   }, [token]);
 
   const updateToken = (value) => {
-    // Store as "access_token" as the primary key
+    // CHANGED: Store as "access_token" to match Microsoft auth
     sessionStorage.setItem("access_token", value);
     // Also keep "token" for backward compatibility if needed
     sessionStorage.setItem("token", value);
@@ -76,46 +75,42 @@ function App() {
   return (
     <LLMTabProvider>
       <div className="ta-layout">
+        {/* CHANGED: Use isAuthenticated() helper */}
         {isAuthenticated() && <SideBar />}
         <div className="ta-main-wrapper">
           {isAuthenticated() && <Header />}
           <div className="ta-main-content">
+            <Routes>
+              {/* CHANGED: Use isAuthenticated() helper */}
+              {isAuthenticated() ? (
+                <Route path="/" element={<Dashboard />} />
+              ) : (
+                <Route path="/" element={<Login updateToken={updateToken} />} />
+              )}
+              
+              <Route
+                path="/llm/:projectId/Experiment/:experimentId/*"
+                element={<LLMExperiment />}
+              />
 
-          <Routes>
-            {isAuthenticated() ? (
-              <Route path="/" element={<Dashboard />} />
-            ) : (
-              <Route path="/" element={<Login updateToken={updateToken} />} />
-            )}
-            {/* <Route path="/tabular" element={<Tabular />} />
-            <Route path="/tabular/:projectId" element={<Project />} />
-            <Route
-              path="/tabular/:projectId/Experiment/:experimentId/*"
-              element={<Experiment />}
-            /> */}
-            <Route
-              path="/llm/:projectId/Experiment/:experimentId/*"
-              element={<LLMExperiment />}
-            />
-
-            <Route path="/cv" element={<div>CV</div>} />
-            <Route path="/nlp" element={<div>NLP</div>} />
-            <Route path="/llm" element={<LLM />} />
-            <Route path="/llm/:projectId" element={<LLMProject />} />
-            <Route path="/logout" element={<Logout logout={logout} />} />
-            <Route
-              path="/login"
-              element={<Login updateToken={updateToken} />}
-            />
-            <Route
-              path="/callback"
-              element={<LoginRes token={token} updateToken={updateToken} />}
-            />
-            <Route path="/Dashboard" element={<Dashboard />} />
-          </Routes>
+              <Route path="/cv" element={<div>CV</div>} />
+              <Route path="/nlp" element={<div>NLP</div>} />
+              <Route path="/llm" element={<LLM />} />
+              <Route path="/llm/:projectId" element={<LLMProject />} />
+              <Route path="/logout" element={<Logout logout={logout} />} />
+              <Route
+                path="/login"
+                element={<Login updateToken={updateToken} />}
+              />
+              <Route
+                path="/callback"
+                element={<LoginRes token={token} updateToken={updateToken} />}
+              />
+              <Route path="/Dashboard" element={<Dashboard />} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
     </LLMTabProvider>
   );
 }
