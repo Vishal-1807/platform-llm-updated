@@ -12,13 +12,12 @@ import Login from "./components/Login/Login";
 import LoginRes from "./components/Login/LoginRes";
 import { Logout } from "./components/Logout/Logout";
 import SideBar from "./components/SideBar/SideBar";
-// import Experiment from "./components/Tabular/Experiment/Experiment";
-// import Project from "./components/Tabular/Project/Project";
-// import Tabular from "./components/Tabular/Tabular";
-function App() {
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
 
-// Function to log all session storage key-value pairs
+function App() {
+  // CHANGED: Use "access_token" instead of "token"
+  const [token, setToken] = useState(sessionStorage.getItem("access_token"));
+
+  // Function to log all session storage key-value pairs
   const logSessionStorage = () => {
     console.log("=== SESSION STORAGE CONTENTS ===");
     console.log("Number of items:", sessionStorage.length);
@@ -53,9 +52,12 @@ function App() {
   }, [token]);
 
   const updateToken = (value) => {
+    // CHANGED: Store as "access_token" to match Microsoft auth
+    sessionStorage.setItem("access_token", value);
+    // Also keep "token" for backward compatibility if needed
     sessionStorage.setItem("token", value);
     setToken(value);
-    console.log(value,"Token");
+    console.log(value, "Token");
   };
 
   const logout = () => {
@@ -64,52 +66,51 @@ function App() {
     localStorage.clear();
   };
 
+  // Helper function to check if user is authenticated
+  const isAuthenticated = () => {
+    const accessToken = sessionStorage.getItem("access_token");
+    return accessToken && accessToken !== "null" && accessToken !== "";
+  };
+
   return (
     <LLMTabProvider>
       <div className="ta-layout">
-        {sessionStorage.getItem("token") &&
-          sessionStorage.getItem("token") !== "" && <SideBar />}
+        {/* CHANGED: Use isAuthenticated() helper */}
+        {isAuthenticated() && <SideBar />}
         <div className="ta-main-wrapper">
-          {sessionStorage.getItem("token") &&
-            sessionStorage.getItem("token") !== "" && <Header />}
+          {isAuthenticated() && <Header />}
           <div className="ta-main-content">
+            <Routes>
+              {/* CHANGED: Use isAuthenticated() helper */}
+              {isAuthenticated() ? (
+                <Route path="/" element={<Dashboard />} />
+              ) : (
+                <Route path="/" element={<Login updateToken={updateToken} />} />
+              )}
+              
+              <Route
+                path="/llm/:projectId/Experiment/:experimentId/*"
+                element={<LLMExperiment />}
+              />
 
-          <Routes>
-            {sessionStorage.getItem("token") &&
-            sessionStorage.getItem("token") != "" ? (
-              <Route path="/" element={<Dashboard />} />
-            ) : (
-              <Route path="/" element={<Login updateToken={updateToken} />} />
-            )}
-            {/* <Route path="/tabular" element={<Tabular />} />
-            <Route path="/tabular/:projectId" element={<Project />} />
-            <Route
-              path="/tabular/:projectId/Experiment/:experimentId/*"
-              element={<Experiment />}
-            /> */}
-            <Route
-              path="/llm/:projectId/Experiment/:experimentId/*"
-              element={<LLMExperiment />}
-            />
-
-            <Route path="/cv" element={<div>CV</div>} />
-            <Route path="/nlp" element={<div>NLP</div>} />
-            <Route path="/llm" element={<LLM />} />
-            <Route path="/llm/:projectId" element={<LLMProject />} />
-            <Route path="/logout" element={<Logout logout={logout} />} />
-            <Route
-              path="/login"
-              element={<Login updateToken={updateToken} />}
-            />
-            <Route
-              path="/callback"
-              element={<LoginRes token={token} updateToken={updateToken} />}
-            />
-            <Route path="/Dashboard" element={<Dashboard />} />
-          </Routes>
+              <Route path="/cv" element={<div>CV</div>} />
+              <Route path="/nlp" element={<div>NLP</div>} />
+              <Route path="/llm" element={<LLM />} />
+              <Route path="/llm/:projectId" element={<LLMProject />} />
+              <Route path="/logout" element={<Logout logout={logout} />} />
+              <Route
+                path="/login"
+                element={<Login updateToken={updateToken} />}
+              />
+              <Route
+                path="/callback"
+                element={<LoginRes token={token} updateToken={updateToken} />}
+              />
+              <Route path="/Dashboard" element={<Dashboard />} />
+            </Routes>
+          </div>
         </div>
       </div>
-    </div>
     </LLMTabProvider>
   );
 }
