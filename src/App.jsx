@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import "./App.css";
 import "./styles/liquidGlass.css";
 
@@ -14,8 +14,8 @@ import { Logout } from "./components/Logout/Logout";
 import SideBar from "./components/SideBar/SideBar";
 
 function App() {
-  // CHANGED: Use "access_token" instead of "token"
   const [token, setToken] = useState(sessionStorage.getItem("access_token"));
+  const location = useLocation();
 
   // Function to log all session storage key-value pairs
   const logSessionStorage = () => {
@@ -27,14 +27,12 @@ function App() {
       return;
     }
  
-    // Log all key-value pairs
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i);
       const value = sessionStorage.getItem(key);
       console.log(`${key}:`, value);
     }
  
-    // Alternative method - get all keys and values
     const allKeys = Object.keys(sessionStorage);
     console.log("All keys:", allKeys);
  
@@ -46,42 +44,47 @@ function App() {
     console.log("=== END SESSION STORAGE ===");
   };
  
-  // Log session storage on component mount and when token changes
   useEffect(() => {
     logSessionStorage();
   }, [token]);
 
   const updateToken = (value) => {
-    // CHANGED: Store as "access_token" to match Microsoft auth
+    console.log("🔵 updateToken called with:", value);
     sessionStorage.setItem("access_token", value);
-    // Also keep "token" for backward compatibility if needed
     sessionStorage.setItem("token", value);
     setToken(value);
-    console.log(value, "Token");
+    console.log("✅ Token state updated");
   };
 
   const logout = () => {
+    console.log("🔴 Logout called");
     updateToken(null);
     sessionStorage.clear();
     localStorage.clear();
   };
 
-  // Helper function to check if user is authenticated
   const isAuthenticated = () => {
     const accessToken = sessionStorage.getItem("access_token");
-    return accessToken && accessToken !== "null" && accessToken !== "";
+    const isAuth = accessToken && accessToken !== "null" && accessToken !== "";
+    console.log("🔍 isAuthenticated check:", isAuth, "token:", accessToken);
+    return isAuth;
   };
+
+  // Public routes that don't require authentication
+  const publicRoutes = ['/login', '/callback', '/logout'];
+  const isPublicRoute = publicRoutes.includes(location.pathname);
+
+  console.log("🔵 Current route:", location.pathname, "isPublic:", isPublicRoute, "isAuth:", isAuthenticated());
 
   return (
     <LLMTabProvider>
       <div className="ta-layout">
-        {/* CHANGED: Use isAuthenticated() helper */}
-        {isAuthenticated() && <SideBar />}
+        {/* Only show sidebar/header if authenticated AND not on public routes */}
+        {!isPublicRoute && isAuthenticated() && <SideBar />}
         <div className="ta-main-wrapper">
-          {isAuthenticated() && <Header />}
+          {!isPublicRoute && isAuthenticated() && <Header />}
           <div className="ta-main-content">
             <Routes>
-              {/* CHANGED: Use isAuthenticated() helper */}
               {isAuthenticated() ? (
                 <Route path="/" element={<Dashboard />} />
               ) : (
@@ -102,6 +105,7 @@ function App() {
                 path="/login"
                 element={<Login updateToken={updateToken} />}
               />
+              {/* Callback route - no auth check */}
               <Route
                 path="/callback"
                 element={<LoginRes token={token} updateToken={updateToken} />}
