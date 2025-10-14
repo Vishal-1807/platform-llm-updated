@@ -8,7 +8,6 @@ import {
 // Get environment with fallback to development
 const environment = import.meta.env.VITE_NODE_ENV || 'development';
 
-// Debug logging to verify environment configuration
 console.log('Environment configuration:', {
   VITE_NODE_ENV: import.meta.env.VITE_NODE_ENV,
   environment: environment,
@@ -20,9 +19,6 @@ console.log('Environment configuration:', {
 export const ApiUrl = TabularBaseUrls[environment];
 export const LLMApiUrl = LLMBaseUrls[environment];
 
-// // export const LLMApiUrl = "https://llmops-api.cibi.ai";
-// export const LLMApiUrl = "https://llmops-api-dev.cibi.ai";
-
 const API = axios.create({
   baseURL: ApiUrl,
 });
@@ -31,22 +27,22 @@ export const LLMAPI = axios.create({
   baseURL: LLMApiUrl,
 });
 
-// export const NewLLMAPI = axios.create({
-//   baseURL: NewLLMApiUrl,
-// });
-
 export const ConsumptionURL = axios.create({
   baseURL: ConsumptionBaseUrls[environment],
 });
 
 function logoutUser() {
-  window.location.href = "/logout";
+  console.log("🔴 Logging out user");
+  sessionStorage.clear();
+  window.location.href = "/login";
 }
 
 const refreshToken = async () => {
   try {
     const refreshToken = sessionStorage.getItem("refresh_token");
     const sessionToken = sessionStorage.getItem("session_token");
+    
+    console.log("🔄 Attempting token refresh...");
     
     const response = await fetch(`${TabularBaseUrls[environment]}/auth/refresh_token`, {
       method: "POST",
@@ -60,23 +56,26 @@ const refreshToken = async () => {
     });
 
     if (!response.ok) {
-      throw new Error('Token refresh failed');
+      throw new Error(`Token refresh failed: ${response.status}`);
     }
 
-    return await response.json();
+    const data = await response.json();
+    console.log("✅ Token refreshed successfully");
+    return data;
   } catch (error) {
+    console.error("❌ Token refresh error:", error);
     throw error;
   }
 };
 
-// Add a request interceptor to include the authentication token in the headers
+// API interceptor
 API.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("access_token");
+    const id_token = sessionStorage.getItem("id_token");
     const session_token = sessionStorage.getItem("session_token");
-    if (access_token) {
-      config.headers.Authorization = `Bearer ${access_token}`;
-      config.headers["session-token"] = `${session_token}`;
+    if (id_token) {
+      config.headers.Authorization = `Bearer ${id_token}`;
+      config.headers["x-session-token"] = session_token;
     }
     return config;
   },
@@ -85,30 +84,39 @@ API.interceptors.request.use(
   }
 );
 
-//Add a response interceptor
 API.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401) {
-      const token = sessionStorage.getItem("access_token");
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
       try {
-        const resp = await refreshToken(token);
-        if (resp.status === 200 && resp.data && resp.data.access_token) {
-          sessionStorage.setItem("access_token", resp.data.access_token);
-          // Also update the legacy "token" key for backward compatibility
-          sessionStorage.setItem("token", resp.data.access_token);
-          API.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${resp.data.access_token}`;
+        const data = await refreshToken();
+        
+        if (data && data.token_response && data.token_response.id_token) {
+          // Update tokens
+          sessionStorage.setItem("id_token", data.token_response.id_token);
+          sessionStorage.setItem("access_token", data.token_response.access_token);
+          sessionStorage.setItem("refresh_token", data.token_response.refresh_token);
+          sessionStorage.setItem("session_token", data.session_token);
+          sessionStorage.setItem("token", data.token_response.id_token);
+          
+          // Update headers
+          API.defaults.headers.common["Authorization"] = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers.Authorization = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers["x-session-token"] = data.session_token;
+          
           return API.request(originalRequest);
         } else {
+          console.error("❌ Invalid refresh response");
           logoutUser();
         }
       } catch (refreshError) {
-        console.error("Error refreshing token:", refreshError);
+        console.error("❌ Error refreshing token:", refreshError);
         logoutUser();
       }
     }
@@ -116,12 +124,12 @@ API.interceptors.response.use(
   }
 );
 
-// Add a request interceptor to include the authentication token in the headers
+// ConsumptionURL interceptor
 ConsumptionURL.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("access_token");
-    if (access_token) {
-      config.headers.Authorization = `Bearer ${access_token}`;
+    const id_token = sessionStorage.getItem("id_token");
+    if (id_token) {
+      config.headers.Authorization = `Bearer ${id_token}`;
     }
     return config;
   },
@@ -130,30 +138,34 @@ ConsumptionURL.interceptors.request.use(
   }
 );
 
-//Add a response interceptor
 ConsumptionURL.interceptors.response.use(
   (response) => {
     return response;
   },
   async (error) => {
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401) {
-      const token = sessionStorage.getItem("access_token");
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      
       try {
-        const resp = await refreshToken(token);
-        if (resp.status === 200 && resp.data && resp.data.access_token) {
-          sessionStorage.setItem("access_token", resp.data.access_token);
-          // Also update the legacy "token" key for backward compatibility
-          sessionStorage.setItem("token", resp.data.access_token);
-          ConsumptionURL.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${resp.data.access_token}`;
+        const data = await refreshToken();
+        
+        if (data && data.token_response && data.token_response.id_token) {
+          sessionStorage.setItem("id_token", data.token_response.id_token);
+          sessionStorage.setItem("access_token", data.token_response.access_token);
+          sessionStorage.setItem("session_token", data.session_token);
+          sessionStorage.setItem("token", data.token_response.id_token);
+          
+          ConsumptionURL.defaults.headers.common["Authorization"] = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers.Authorization = `Bearer ${data.token_response.id_token}`;
+          
           return ConsumptionURL.request(originalRequest);
         } else {
           logoutUser();
         }
       } catch (refreshError) {
-        console.error("Error refreshing token:", refreshError);
+        console.error("❌ Error refreshing token:", refreshError);
         logoutUser();
       }
     }
@@ -161,14 +173,18 @@ ConsumptionURL.interceptors.response.use(
   }
 );
 
-// Add a request interceptor to include the authentication token in the headers
+// LLMAPI interceptor
 LLMAPI.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("access_token");
+    const id_token = sessionStorage.getItem("id_token");
     const session_token = sessionStorage.getItem("session_token");
-    if (access_token) {
-      config.headers.Authorization = `Bearer ${access_token}`;
-      config.headers["session-token"] = `${session_token}`;
+    
+    console.log("🔵 LLMAPI Request:", config.url);
+    console.log("🔵 Using id_token:", id_token?.substring(0, 30) + "...");
+    
+    if (id_token) {
+      config.headers.Authorization = `Bearer ${id_token}`;
+      config.headers["x-session-token"] = session_token;
     }
     return config;
   },
@@ -177,30 +193,42 @@ LLMAPI.interceptors.request.use(
   }
 );
 
-//Add a response interceptor
 LLMAPI.interceptors.response.use(
   (response) => {
+    console.log("✅ LLMAPI Response:", response.config.url, response.status);
     return response;
   },
   async (error) => {
+    console.error("❌ LLMAPI Error:", error.config?.url, error.response?.status);
+    
     const originalRequest = error.config;
-    if (error.response && error.response.status === 401) {
-      const token = sessionStorage.getItem("access_token");
+    
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+      console.log("🔄 LLMAPI got 401, attempting refresh...");
+      
       try {
-        const resp = await refreshToken(token);
-        if (resp.status === 200 && resp.data && resp.data.access_token) {
-          sessionStorage.setItem("access_token", resp.data.access_token);
-          // Also update the legacy "token" key for backward compatibility
-          sessionStorage.setItem("token", resp.data.access_token);
-          LLMAPI.defaults.headers.common[
-            "Authorization"
-          ] = `Bearer ${resp.data.access_token}`;
+        const data = await refreshToken();
+        
+        if (data && data.token_response && data.token_response.id_token) {
+          sessionStorage.setItem("id_token", data.token_response.id_token);
+          sessionStorage.setItem("access_token", data.token_response.access_token);
+          sessionStorage.setItem("refresh_token", data.token_response.refresh_token);
+          sessionStorage.setItem("session_token", data.session_token);
+          sessionStorage.setItem("token", data.token_response.id_token);
+          
+          LLMAPI.defaults.headers.common["Authorization"] = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers.Authorization = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers["x-session-token"] = data.session_token;
+          
+          console.log("✅ Retrying LLMAPI request with new token");
           return LLMAPI.request(originalRequest);
         } else {
+          console.error("❌ Invalid refresh response");
           logoutUser();
         }
       } catch (refreshError) {
-        console.error("Error refreshing token:", refreshError);
+        console.error("❌ Error refreshing token:", refreshError);
         logoutUser();
       }
     }
@@ -208,30 +236,4 @@ LLMAPI.interceptors.response.use(
   }
 );
 
-// // Add a request interceptor to include the authentication token in the headers
-// NewLLMAPI.interceptors.request.use(
-//   (config) => {
-//     const access_token = sessionStorage.getItem("access_token");
-//     if (access_token) {
-//       config.headers.Authorization = `Bearer ${access_token}`;
-//     }
-//     return config;
-//   },
-//   (error) => {
-//     return Promise.reject(error);
-//   }
-// );
-
-// //Add a response interceptor
-// NewLLMAPI.interceptors.response.use(
-//   (response) => {
-//     return response;
-//   },
-//   (error) => {
-//     if (error.response && error.response.status === 401) {
-//       window.location.href = "/logout";
-//     }
-//     return Promise.reject(error);
-//   }
-// );
 export default API;
