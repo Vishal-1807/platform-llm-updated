@@ -1,7 +1,7 @@
 export const TabularBaseUrls = {
-  development: `https://cibi.ai`,
-  stage: `https://cibi.ai`,
-  production: `https://cibi.ai`,
+  development: `https://awone-api.axiomio.com/tabular`,
+  stage: `https://awone-api.axiomio.com/tabular`,
+  production: `https://awone-api.axiomio.com/tabular`,
 };
 
 export const LLMBaseUrls = {
