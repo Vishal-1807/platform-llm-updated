@@ -64,7 +64,7 @@ const refreshToken = async (token) => {
 // Add a request interceptor to include the authentication token in the headers
 API.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("token");
+    const access_token = sessionStorage.getItem("access_token");
     const session_token = sessionStorage.getItem("session_token");
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
@@ -85,10 +85,12 @@ API.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      const token = sessionStorage.getItem("token");
+      const token = sessionStorage.getItem("access_token");
       try {
         const resp = await refreshToken(token);
         if (resp.status === 200 && resp.data && resp.data.access_token) {
+          sessionStorage.setItem("access_token", resp.data.access_token);
+          // Also update the legacy "token" key for backward compatibility
           sessionStorage.setItem("token", resp.data.access_token);
           API.defaults.headers.common[
             "Authorization"
@@ -109,7 +111,7 @@ API.interceptors.response.use(
 // Add a request interceptor to include the authentication token in the headers
 ConsumptionURL.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("token");
+    const access_token = sessionStorage.getItem("access_token");
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
     }
@@ -128,10 +130,12 @@ ConsumptionURL.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      const token = sessionStorage.getItem("token");
+      const token = sessionStorage.getItem("access_token");
       try {
         const resp = await refreshToken(token);
         if (resp.status === 200 && resp.data && resp.data.access_token) {
+          sessionStorage.setItem("access_token", resp.data.access_token);
+          // Also update the legacy "token" key for backward compatibility
           sessionStorage.setItem("token", resp.data.access_token);
           ConsumptionURL.defaults.headers.common[
             "Authorization"
@@ -152,7 +156,7 @@ ConsumptionURL.interceptors.response.use(
 // Add a request interceptor to include the authentication token in the headers
 LLMAPI.interceptors.request.use(
   (config) => {
-    const access_token = sessionStorage.getItem("token");
+    const access_token = sessionStorage.getItem("access_token");
     const session_token = sessionStorage.getItem("session_token");
     if (access_token) {
       config.headers.Authorization = `Bearer ${access_token}`;
@@ -173,10 +177,12 @@ LLMAPI.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
     if (error.response && error.response.status === 401) {
-      const token = sessionStorage.getItem("token");
+      const token = sessionStorage.getItem("access_token");
       try {
         const resp = await refreshToken(token);
         if (resp.status === 200 && resp.data && resp.data.access_token) {
+          sessionStorage.setItem("access_token", resp.data.access_token);
+          // Also update the legacy "token" key for backward compatibility
           sessionStorage.setItem("token", resp.data.access_token);
           LLMAPI.defaults.headers.common[
             "Authorization"
@@ -197,7 +203,7 @@ LLMAPI.interceptors.response.use(
 // // Add a request interceptor to include the authentication token in the headers
 // NewLLMAPI.interceptors.request.use(
 //   (config) => {
-//     const access_token = sessionStorage.getItem("token");
+//     const access_token = sessionStorage.getItem("access_token");
 //     if (access_token) {
 //       config.headers.Authorization = `Bearer ${access_token}`;
 //     }

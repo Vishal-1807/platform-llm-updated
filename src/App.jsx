@@ -16,7 +16,7 @@ import SideBar from "./components/SideBar/SideBar";
 // import Project from "./components/Tabular/Project/Project";
 // import Tabular from "./components/Tabular/Tabular";
 function App() {
-  const [token, setToken] = useState(sessionStorage.getItem("token"));
+  const [token, setToken] = useState(sessionStorage.getItem("access_token"));
 
 // Function to log all session storage key-value pairs
   const logSessionStorage = () => {
@@ -53,9 +53,12 @@ function App() {
   }, [token]);
 
   const updateToken = (value) => {
+    // Store as "access_token" as the primary key
+    sessionStorage.setItem("access_token", value);
+    // Also keep "token" for backward compatibility if needed
     sessionStorage.setItem("token", value);
     setToken(value);
-    console.log(value,"Token");
+    console.log(value, "Token");
   };
 
   const logout = () => {
@@ -64,19 +67,22 @@ function App() {
     localStorage.clear();
   };
 
+  // Helper function to check if user is authenticated
+  const isAuthenticated = () => {
+    const accessToken = sessionStorage.getItem("access_token");
+    return accessToken && accessToken !== "null" && accessToken !== "";
+  };
+
   return (
     <LLMTabProvider>
       <div className="ta-layout">
-        {sessionStorage.getItem("token") &&
-          sessionStorage.getItem("token") !== "" && <SideBar />}
+        {isAuthenticated() && <SideBar />}
         <div className="ta-main-wrapper">
-          {sessionStorage.getItem("token") &&
-            sessionStorage.getItem("token") !== "" && <Header />}
+          {isAuthenticated() && <Header />}
           <div className="ta-main-content">
 
           <Routes>
-            {sessionStorage.getItem("token") &&
-            sessionStorage.getItem("token") != "" ? (
+            {isAuthenticated() ? (
               <Route path="/" element={<Dashboard />} />
             ) : (
               <Route path="/" element={<Login updateToken={updateToken} />} />
