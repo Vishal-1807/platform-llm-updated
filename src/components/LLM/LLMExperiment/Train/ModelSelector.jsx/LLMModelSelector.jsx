@@ -228,9 +228,13 @@ export default function LLMModelSelector() {
       seterrorMesg("Update Experiment failed please try again");
       return false;
     }
-
+  
     try {
+      // Get existing data config to preserve input, prompt, target
+      const existingDataConfig = experimentData.data_config || {};
+      
       const updateConfigRes = await UpdateConfigService(experimentId, "data", {
+        ...existingDataConfig,  // ← Preserve existing fields!
         base_model: configs.base_model,
       });
     } catch (error) {
