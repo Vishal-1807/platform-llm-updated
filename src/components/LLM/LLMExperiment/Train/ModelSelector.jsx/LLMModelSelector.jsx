@@ -347,9 +347,24 @@ export default function LLMModelSelector() {
     }
 
     const modelName = projectName + experimentData.exp_name;
+    
+    // Get data URI from existing upload or processed input
+    const dataUri = configs.data_uri || 
+                    experimentData.data_config?.input || 
+                    processedInput.current;
+    
+    if (!dataUri) {
+      setShowLoader(false);
+      seterrorMesg("Data path not found. Please re-upload your data.");
+      return;
+    }
+    
+    // Use Azure Blob Storage path for storage location
+    const storageLocation = `azure://awone/${experimentData.username}/${experimentId}/models`;
+    
     const payload = {
       base_model: configs.base_model,
-      data_uri: configs.data_uri || processedInput.current,
+      data_uri: dataUri,  // ← Use the resolved data URI
       model_uri: configs.model_uri,
       data_parellel: configs.data_parellel,
       type: configs.type,
@@ -358,13 +373,15 @@ export default function LLMModelSelector() {
       context_length: configs.context_length,
       log_steps: configs.log_steps,
       save_steps: configs.save_steps,
-      storage_location: configs.storage_location,
+      storage_location: storageLocation,  // ← Use Azure path
       scaling_config: { n_gpus: configs.n_gpus },
       peft_config: {},
       awq_quantization: configs.awq_quantization,
       openai_api_key: configs.openai_api_key,
       completions_only: true,
     };
+    
+    console.log('Training payload:', payload);
 
     //dummy
 
