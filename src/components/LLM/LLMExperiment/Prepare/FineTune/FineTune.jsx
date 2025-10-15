@@ -98,6 +98,9 @@ export default function FineTune(props) {
       // Extract Azure Blob URL and convert to expected format
 
       const azureBlobUrl = res.getUrlRes.data.split("?")[0]; // Remove SAS token
+      tempS3Location = azureBlobUrl;
+
+      console.log("Uploaded to:", tempS3Location); 
 
       // Convert Azure URL to storage path format
 
