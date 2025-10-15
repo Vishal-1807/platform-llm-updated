@@ -123,7 +123,20 @@ export default function DataPreview() {
       seterrorMesg("Prompt Missing");
       return;
     }
+    
+    // Get the input path from experiment data
+    const inputPath = experimentData.data_config?.input || experimentData.train_config?.data_uri;
+    
+    if (!inputPath) {
+      setNextLoader(false);
+      seterrorMesg("Data file path not found. Please re-upload the file.");
+      return;
+    }
+    
+    console.log('Saving data config with input:', inputPath);
+    
     UpdateConfig(experimentId, "data", {
+      input: inputPath,  // ← CRITICAL: Preserve the uploaded file path!
       prompt: prompt,
       target: target,
       type: taskType == "pretrain" ? "pretrain" : "sft",
