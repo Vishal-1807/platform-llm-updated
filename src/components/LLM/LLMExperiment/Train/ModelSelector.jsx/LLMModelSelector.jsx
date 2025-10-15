@@ -359,38 +359,46 @@ export default function LLMModelSelector() {
 
     //dummy
 
-    UpdateConfigService(experimentId, "train", payload)
-      .then((res) => {
-        if (res.status == 200) {
-          // ////console.log("UpdateConfigService", res.data);
-          setLoadStatusText("Triggering Training...");
-
-          Train(experimentId)
-            .then((res) => {
-              if (res.status == 200) {
-                // ////console.log(res.data);
-                UpdateExp(experimentId, "PREPARED").then(async (res) => {
-                  if (res.status == 200) {
-                    setIsPollingStatus(true);
-                    await isReady("PREPARED");
-                    setShowLoader(false);
-                    setIsPollingStatus(false);
-                    navigate("status", { configs: configs });
-                  }
-                });
-              }
-            })
-            .catch((err) => {
-              ////console.log(err);
-              setIsPollingStatus(false);
-              setShowLoader(false);
-              seterrorMesg("Training is stoping please try after sometime");
-            });
-        }
-      })
-      .catch((err) => {
-        ////console.log(err);
-      });
+    try {
+      // Save train configuration
+      console.log('Saving train config:', payload);
+      setLoadStatusText("Saving configuration...");
+      
+      const updateConfigRes = await UpdateConfigService(experimentId, "train", payload);
+      
+      if (updateConfigRes.status !== 200) {
+        throw new Error('Failed to save training configuration');
+      }
+      
+      console.log('✅ Config saved successfully');
+      
+      // Trigger training
+      setLoadStatusText("Starting training...");
+      const trainRes = await Train(experimentId);
+      
+      if (trainRes.status !== 200) {
+        throw new Error('Failed to start training');
+      }
+      
+      console.log('✅ Training started successfully');
+      
+      // Update experiment status
+      const updateExpRes = await UpdateExp(experimentId, "PREPARED");
+      
+      if (updateExpRes.status === 200) {
+        setIsPollingStatus(true);
+        await isReady("PREPARED");
+        setShowLoader(false);
+        setIsPollingStatus(false);
+        navigate("status", { configs: configs });
+      }
+      
+    } catch (err) {
+      console.error("❌ Training error:", err);
+      setIsPollingStatus(false);
+      setShowLoader(false);
+      seterrorMesg(err.message || "Training failed. Please try again.");
+    }
   };
 
   useEffect(() => {
