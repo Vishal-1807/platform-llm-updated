@@ -287,15 +287,7 @@ export default function LLMModelSelector() {
     // ////console.log("configsbase_mode", configs);
 
     if (configs.base_model != "bert") {
-      // Check if data already exists from upload
-      const existingDataInput = experimentData.data_config?.input;
-      
-      if (existingDataInput) {
-        // Data already uploaded, use it
-        updateConfigs("data_uri", existingDataInput);
-        console.log('✅ Using existing uploaded data:', existingDataInput);
-      } else if (configs.data_uri === null) {
-        // No data found, need to preprocess
+      if (configs.data_uri === null) {
         const preprocessSuccess = await preprocessData();
         if (!preprocessSuccess) {
           setShowLoader(false);
@@ -304,12 +296,12 @@ export default function LLMModelSelector() {
       }
     }
     
-    // Only wait for preprocessing if we actually triggered it
-    if (experimentStatus.current !== "PREPROCESSED" && configs.data_uri === null && !experimentData.data_config?.input) {
-      setIsPollingStatus(true);
-      await isReady("PREPROCESSED");
-      setIsPollingStatus(false);
+    if (configs.data_uri === null) {
+      await UpdateExp(experimentId, "PREPARED");
     }
+    setIsPollingStatus(true);
+    await isReady("PREPROCESSED");
+    setIsPollingStatus(false);
     if (configs.train_tokenizer) {
       setLoadStatusText("Training Tokenizer...");
       setShowLoader(true);
