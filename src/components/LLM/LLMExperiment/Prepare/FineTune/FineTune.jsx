@@ -68,76 +68,155 @@ export default function FineTune(props) {
   };
 
   const handleNext = async () => {
-    setShowLoader(true);
-    seterrorMesg("");
-    let tempS3Location = s3Location;
-    if (fileData) {
+
+  setShowLoader(true);
+
+  seterrorMesg("");
+
+  let tempS3Location = s3Location;
+
+  if (fileData) {
+
+    try {
+
       let res = await UploadFileTos3(fileData, experimentId, "PreparePage");
-      if (res?.s3Res?.status != 200) {
+
+      // Azure returns 201 Created on success
+
+      if (!res?.s3Res?.ok || (res.s3Res.status !== 200 && res.s3Res.status !== 201)) {
+
         console.log("Error in uploading file", res);
+
         setShowLoader(false);
+
         seterrorMesg("Upload failed please try again");
+
         return;
-      }
-      tempS3Location = decodeURIComponent(
-        res.s3Res.url
-          .split("?")[0]
-          .replace(".s3.amazonaws.com", "")
-          .replace("https://", "s3://")
-      );
-      setS3Location(tempS3Location);
-    }
-    if (
-      tempS3Location.endsWith(".csv") ||
-      tempS3Location.endsWith(".parquet")
-    ) {
-      console.log("Preprocessing");
-      let res2 = await UpdateConfig(experimentId, "data", {
-        input: tempS3Location,
-        // text:"sentence",
-        type: taskType == "pretrain" ? "pretrain" : "sft",
-      }).catch((err) => {
-        console.log(err);
-        setShowLoader(false);
-      });
-      if (res2.status != 200) {
-        console.log("Error in updating config", res2);
-        setShowLoader(false);
-        return;
-      }
-      let res3 = await UpdateExp(experimentId, "PREPARED").catch((err) => {
-        setShowLoader(false);
-        console.log(err);
-      });
-      if (res3.status != 200) {
-        console.log("Error in updating expeiment status", res2);
-        setShowLoader(false);
-        return;
+
       }
 
+      // Extract Azure Blob URL and convert to expected format
+
+      const azureBlobUrl = res.getUrlRes.data.split("?")[0]; // Remove SAS token
+
+      // Convert Azure URL to storage path format
+
+      // From: https://awonesa001dev.blob.core.windows.net/awone/user/exp/file.csv
+
+      // To: azure://awone/user/exp/file.csv
+
+      const urlParts = azureBlobUrl.replace("https://", "").split("/");
+
+      const containerAndPath = urlParts.slice(1).join("/"); // Get everything after domain
+
+      tempS3Location = `azure://${containerAndPath}`;
+
+      setS3Location(tempS3Location);
+
+    } catch (error) {
+
+      console.error("Upload error:", error);
+
       setShowLoader(false);
-      navigate("preview");
-      // await Preprocess(experimentId)
-      // await isReady()
-      // console.log("Preprocessing Done", experimentData)
-      // await UpdateConfig()
-    } else {
-      UpdateConfig(experimentId, "train", {
-        data_uri: tempS3Location,
-      })
-        .then((res) => {
-          if (res.status == 200) {
-            UpdateExp(experimentId, "PREPROCESSED");
-            navigate(`/llm/${projectId}/experiment/${experimentId}/sft/train`);
-          }
-        })
-        .catch((err) => {
-          setIsPollingStatus(false);
-          setShowLoader(false);
-          seterrorMesg("Update Config failed please try again");
-        });
+
+      seterrorMesg("Upload failed please try again");
+
+      return;
+
     }
-  };
+
+  }
+
+  if (
+
+    tempS3Location.endsWith(".csv") ||
+
+    tempS3Location.endsWith(".parquet")
+
+  ) {
+
+    console.log("Preprocessing");
+
+    let res2 = await UpdateConfig(experimentId, "data", {
+
+      input: tempS3Location,
+
+      type: taskType == "pretrain" ? "pretrain" : "sft",
+
+    }).catch((err) => {
+
+      console.log(err);
+
+      setShowLoader(false);
+
+    });
+
+    if (res2.status != 200) {
+
+      console.log("Error in updating config", res2);
+
+      setShowLoader(false);
+
+      return;
+
+    }
+
+    let res3 = await UpdateExp(experimentId, "PREPARED").catch((err) => {
+
+      setShowLoader(false);
+
+      console.log(err);
+
+    });
+
+    if (res3.status != 200) {
+
+      console.log("Error in updating experiment status", res3);
+
+      setShowLoader(false);
+
+      return;
+
+    }
+ 
+    setShowLoader(false);
+
+    navigate("preview");
+
+  } else {
+
+    UpdateConfig(experimentId, "train", {
+
+      data_uri: tempS3Location,
+
+    })
+
+      .then((res) => {
+
+        if (res.status == 200) {
+
+          UpdateExp(experimentId, "PREPROCESSED");
+
+          navigate(`/llm/${projectId}/experiment/${experimentId}/sft/train`);
+
+        }
+
+      })
+
+      .catch((err) => {
+
+        setIsPollingStatus(false);
+
+        setShowLoader(false);
+
+        seterrorMesg("Update Config failed please try again");
+
+      });
+
+  }
+
+};
+ 
 
   return (
     <Box sx={{

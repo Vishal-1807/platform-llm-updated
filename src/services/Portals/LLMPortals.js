@@ -101,13 +101,25 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
   try {
     let urlRes;
     if (uploadFilePage === "PreparePage") {
+      // Get signed URL from backend
       urlRes = await API.post(
         `/data_signed_url?filename=${file.name}&exp_id=${exp_id}`,
         {}
       );
       if (urlRes.status === 200) {
+        const signedUrl = urlRes.data; // Backend returns URL as string
+        // Upload to Azure Blob Storage with required headers
+        const azureResponse = await fetch(signedUrl, {
+          method: "PUT",
+          body: file,
+          headers: {
+            "Content-Type": file.type || "application/octet-stream",
+            "x-ms-blob-type": "BlockBlob" // REQUIRED for Azure!
+          }
+        });
+        // Return consistent response format
         return {
-          s3Res: await fetch(urlRes.data, { method: "PUT", body: file }),
+          s3Res: azureResponse, // Keep name for backward compatibility
           getUrlRes: urlRes,
         };
       } else {
@@ -115,7 +127,8 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
       }
     }
   } catch (err) {
-    console.log(err);
+    console.error("Upload error:", err);
+    throw err;
   }
 };
 
