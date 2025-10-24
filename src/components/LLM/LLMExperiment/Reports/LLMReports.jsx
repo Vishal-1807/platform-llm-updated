@@ -81,8 +81,11 @@ export default function LLMReports() {
                     display: "flex"
                 }}>
                     <iframe
-                        src={"https://awone-api.axiomio.com/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&from=1705047988397&to=1705048031454&var-experiment="+experimentId+"&kiosk&refresh=5s&theme=light"}
-                        width="100%"
+                        src={
+                            "https://awone-api.axiomio.com/grafana/d/af20maz50irk0f/mlflow?orgId=1&from=8850336827592&to=8865965558592&var-experiment=" +
+                            experimentId +
+                            "&kiosk&refresh=5s&theme=light"
+                          }
                         height="100%"
                         style={{
                             border: "none",
