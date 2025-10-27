@@ -107,7 +107,7 @@ export default function PlayGround(props) {
       headers: {
         "Content-Type": "application/json",
       },
-      // mode: "no-cors",
+      mode: "no-cors",
       body: data,
     }).then(async (response) => {
       // Creating a reader for the stream
