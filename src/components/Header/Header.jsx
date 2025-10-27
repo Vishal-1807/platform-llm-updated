@@ -12,7 +12,6 @@ export default function Header(){
         const sessionUsername = sessionStorage.getItem("username");
         const sessionEmail = sessionStorage.getItem("email");
         const localUsername = localStorage.getItem("username");
-
         // Return the first available username, with fallback to "User"
         return sessionUsername || sessionEmail || localUsername || "User";
     };

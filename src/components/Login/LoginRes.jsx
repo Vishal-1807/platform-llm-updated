@@ -27,10 +27,10 @@ const LoginRes = ({ token, updateToken }) => {
       console.log(result);
       // Use access_token for API calls, not id_token
       updateToken(result.access_token);
-      //   const username = result.id_token_claims.name.trim();
-      //   const email = result.id_token_claims.preferred_username.trim();
-      //   sessionStorage.setItem("username", username.trim());
-      //   sessionStorage.setItem("email", email.trim());
+      const username = result.id_token_claims.name.trim();
+      const email = result.id_token_claims.preferred_username.trim();
+      sessionStorage.setItem("username", username.trim());
+      sessionStorage.setItem("email", email.trim());
       sessionStorage.setItem("refresh_token", result.refresh_token);
       sessionStorage.setItem("id_token", result.id_token);
       sessionStorage.setItem("access_token", result.access_token);
