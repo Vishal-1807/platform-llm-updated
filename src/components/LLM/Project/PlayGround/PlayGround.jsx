@@ -101,8 +101,8 @@ export default function PlayGround(props) {
       top_p: top_p,
       top_k: top_k,
     });
-    //const url = `${ActiveDeployment.ingress}/infer`;
-    fetch('https://llm-infer.cibi.ai/infer', {
+    const url = `${ActiveDeployment.ingress}/infer`;
+    fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
