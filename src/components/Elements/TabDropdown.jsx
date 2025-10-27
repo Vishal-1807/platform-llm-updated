@@ -5,7 +5,7 @@ import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
 const tabOptions = [
   { label: "All Projects", value: 0 },
   { label: "Playground", value: 1 },
-  { label: "Model Catalogue", value: 2 },
+  // { label: "Model Catalogue", value: 2 }, // Commented out temporarily
 ];
 
 export default function TabDropdown({ value, onChange, variant = "default" }) {

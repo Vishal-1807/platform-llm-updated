@@ -11,7 +11,7 @@ import "./SideBar.css";
 const llmSubItems = [
   { label: "All Projects", value: 0, path: "/llm" },
   { label: "Playground", value: 1, path: "/llm" },
-  { label: "Model Catalogue", value: 2, path: "/llm" },
+  // { label: "Model Catalogue", value: 2, path: "/llm" }, // Commented out temporarily
 ];
 
 export default function SideBar() {
