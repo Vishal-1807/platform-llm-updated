@@ -84,12 +84,20 @@ export default function Login({ updateToken }) {
       overflow: "hidden",
       display: "flex",
       margin: 0,
-      padding: 0
+      padding: 0,
+      position: "fixed",
+      top: 0,
+      left: 0,
+      right: 0,
+      bottom: 0,
+      boxSizing: "border-box"
     }}>
       <div style={{
         width: "50%",
-        height: "100vh",
-        backgroundColor: "#000000"
+        height: "100%",
+        backgroundColor: "#000000",
+        overflow: "hidden",
+        boxSizing: "border-box"
       }}>
         <Box
           sx={{
@@ -97,10 +105,12 @@ export default function Login({ updateToken }) {
             flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "100vh",
+            height: "100%",
             backgroundColor: "white",
             padding: "20px",
             width: "100%",
+            boxSizing: "border-box",
+            overflow: "hidden"
           }}
         >
           <img
@@ -128,10 +138,26 @@ export default function Login({ updateToken }) {
           </Typography> */}
         </Box>
       </div>
+
+      {/* Vertical separation line in the exact middle */}
+      <div style={{
+        position: "absolute",
+        left: "50%",
+        top: "20px",
+        bottom: "20px",
+        width: "2px",
+        background: "linear-gradient(to bottom, #1E90FF, #FF6B35)",
+        transform: "translateX(-50%)",
+        zIndex: 10,
+        boxShadow: "0 0 10px rgba(30, 144, 255, 0.3)"
+      }}></div>
+
       <div style={{
         width: "50%",
-        height: "100vh",
-        backgroundColor: "white"
+        height: "100%",
+        backgroundColor: "white",
+        overflow: "hidden",
+        boxSizing: "border-box"
       }}>
         <Box className="Login-right">
           <Box className="welcome-box">
