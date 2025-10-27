@@ -6,6 +6,19 @@ export default function Header(){
     const dayName = currentDate.toLocaleDateString('en-US', { weekday: 'long' }).toUpperCase();
     const dateString = currentDate.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
+    // Get username from storage - try multiple sources
+    const getUsername = () => {
+        // Try sessionStorage first (most common in this app)
+        const sessionUsername = sessionStorage.getItem("username");
+        const sessionEmail = sessionStorage.getItem("email");
+        const localUsername = localStorage.getItem("username");
+
+        // Return the first available username, with fallback to "User"
+        return sessionUsername || sessionEmail || localUsername || "User";
+    };
+
+    const username = getUsername();
+
     return (
         <StyledEngineProvider injectFirst>
             <AppBar position='static' className="header-app-bar" color='inherit'>
@@ -24,11 +37,11 @@ export default function Header(){
                 <div className="header-right">
                     <div className="profile-section">
                         <div className="profile-avatar">
-                            <span className="avatar-text">U</span>
+                            <span className="avatar-text">{username.charAt(0).toUpperCase()}</span>
                         </div>
                         <div className="profile-text">
                             <div className="welcome-text">WELCOME BACK!</div>
-                            <div className="user-name">User</div>
+                            <div className="user-name">{username}</div>
                         </div>
                     </div>
                 </div>
