@@ -67,7 +67,7 @@ export default function PlayGround(props) {
   const GetDeploymentStatus = (data) => {
     Promise.all(
       data.map((dp) =>
-        fetch(`https://llm-infer.cibi.ai/docs`)
+        fetch(`${dp.ingress}/docs`)
           .then((res) => {
             if (res.status === 200) {
               return { ...dp, status: "active" };

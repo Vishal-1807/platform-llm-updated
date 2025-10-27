@@ -74,7 +74,7 @@ export default function PlayGroundTab(props) {
     // use url - ${dp.ingress}/docs for testing in local
     Promise.all(
       data.map((dp) =>
-        fetch(`https://llm-infer.cibi.ai/docs`)
+        fetch(`${dp.ingress}/docs`)
           .then((res) => {
             if (res.status === 200) {
               return { ...dp, status: "active" };
@@ -109,7 +109,7 @@ export default function PlayGroundTab(props) {
       top_k: top_k,
     });
     const url = `${ActiveDeployment.ingress}/infer`; //use this for testing in local
-    fetch('https://llm-infer.cibi.ai/infer', {
+    fetch(`${ActiveDeployment.ingress}/infer`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
