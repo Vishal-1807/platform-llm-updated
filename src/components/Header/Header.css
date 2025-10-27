@@ -115,10 +115,3 @@
     font-weight: 700;
     line-height: 1;
 }
-
-.aubrant-logo {
-    height: 20px;
-    width: auto;
-    object-fit: contain;
-    filter: brightness(0) invert(1); /* Makes the logo white to match the design */
-}

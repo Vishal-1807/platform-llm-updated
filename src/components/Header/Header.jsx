@@ -1,6 +1,5 @@
 import './Header.css'
 import { AppBar, StyledEngineProvider } from '@mui/material'
-import aubrantLogo from '../../assets/aubrantLogo.png'
 
 export default function Header(){
     const currentDate = new Date();
@@ -29,7 +28,7 @@ export default function Header(){
                         </div>
                         <div className="profile-text">
                             <div className="welcome-text">WELCOME BACK!</div>
-                            <img src={aubrantLogo} alt="Aubrant Digital" className="aubrant-logo" />
+                            <div className="user-name">User</div>
                         </div>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import React, { useState } from "react";
-import cibi from "../../assets/cibi.png";
+import aubrantLogo from "../../assets/aubrantLogo.png";
 import LLMIcon from "../../assets/icons/llm.svg?react";
 import LogoutIcon from "../../assets/icons/logout.svg?react";
 import TabularIcon from "../../assets/icons/tabular.svg?react";
@@ -64,8 +64,7 @@ export default function SideBar() {
   return (
     <aside className="ta-sidebar">
       <div className="ta-sidebar__logo-section">
-        <img src={cibi} alt="Aubrant Digital Logo" className="ta-sidebar__logo" />
-        <span className="ta-sidebar__brand">Aubrant Digital</span>
+        <img src={aubrantLogo} alt="Aubrant Digital Logo" className="ta-sidebar__logo" />
       </div>
       <nav className="ta-sidebar__nav">
         <div className="ta-sidebar__section-label">MENU</div>

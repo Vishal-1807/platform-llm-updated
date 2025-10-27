@@ -1,13 +1,12 @@
-import { Box, Checkbox, Grid, Typography } from "@mui/material";
+import { Box, Checkbox, Typography } from "@mui/material";
 import Alert from "@mui/material/Alert";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import CibiSmallIcon from "../../assets/icons/cibismall.svg?react";
 import EyeIcon from "../../assets/icons/eye.svg?react";
 import TickSquareIcon from "../../assets/icons/ticksquare.svg?react";
 import TickSquareCheckedIcon from "../../assets/icons/ticksquarechecked.svg?react";
-import Loginbg from "../../assets/LoginImages/loginBG.svg";
+import aubrantLogo from "../../assets/aubrantLogo.png";
 import Microsoft from "../../assets/LoginImages/Microsoft.png";
 import "./Login.css";
 
@@ -80,38 +79,63 @@ export default function Login({ updateToken }) {
     }
   };
   return (
-    <Grid container>
-      <Grid item xs={6} className="Login-left">
+    <div style={{
+      height: "100vh",
+      overflow: "hidden",
+      display: "flex",
+      margin: 0,
+      padding: 0
+    }}>
+      <div style={{
+        width: "50%",
+        height: "100vh",
+        backgroundColor: "#000000"
+      }}>
         <Box
           sx={{
-            width: "70%",
             display: "flex",
+            flexDirection: "column",
             justifyContent: "center",
             alignItems: "center",
-            height: "-webkit-fill-available",
-            margin: "0 auto",
+            height: "100vh",
+            backgroundColor: "white",
+            padding: "20px",
+            width: "100%",
           }}
         >
-          <img src={Loginbg} style={{ width: "32vw" }}></img>
+          <img
+            src={aubrantLogo}
+            alt="Aubrant Digital"
+            style={{
+              width: "400px",
+              height: "auto",
+              objectFit: "contain",
+              display: "block",
+              margin: "0 auto"
+            }}
+          />
+          {/* <Typography
+            variant="h6"
+            sx={{
+              color: "#1E90FF",
+              fontWeight: 500,
+              textAlign: "center",
+              fontSize: "18px",
+              fontFamily: "'Plus Jakarta Sans', sans-serif",
+            }}
+          >
+            Creating Digital Businesses
+          </Typography> */}
         </Box>
-      </Grid>
-      <Grid item xs={6} style={{ background: "white" }}>
+      </div>
+      <div style={{
+        width: "50%",
+        height: "100vh",
+        backgroundColor: "white"
+      }}>
         <Box className="Login-right">
           <Box className="welcome-box">
             <center>
-              <div
-                style={{
-                  width: "62px",
-                  height: "62px",
-                  background: "#F6F6FF",
-                  borderRadius: "50px",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <CibiSmallIcon style={{ width: "32px", height: "32px" }} />
-              </div>
               <p className="welcome">
                 <b>Welcome back</b>
               </p>
@@ -228,7 +252,7 @@ export default function Login({ updateToken }) {
             </center>
           )}
         </Box>
-      </Grid>
-    </Grid>
+      </div>
+    </div>
   );
 }

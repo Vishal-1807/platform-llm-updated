@@ -4,13 +4,15 @@
 }
 .Login-right {
   width: 60%;
-  margin: 10% auto;
+  margin: 0 auto;
   background-color: #fff;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap:10px;
+  gap: 10px;
+  height: 100vh;
+  padding: 20px 0;
 }
 .cibilogo {
 }
