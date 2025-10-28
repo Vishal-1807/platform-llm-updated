@@ -101,7 +101,11 @@ export default function PlayGround(props) {
       top_p: top_p,
       top_k: top_k,
     });
-    const url = `${ActiveDeployment.ingress}/infer`;
+    const ingressUrl = ActiveDeployment.ingress.startsWith("http")
+      ? ActiveDeployment.ingress
+      : `https://${ActiveDeployment.ingress.replace(/^\/+/, "")}`;
+ 
+    const url = `${ingressUrl}/infer`;
     fetch(url, {
       method: "POST",
       headers: {
