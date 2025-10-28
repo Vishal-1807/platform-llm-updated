@@ -65,9 +65,14 @@ export default function PlayGround(props) {
   }, []);
 
   const GetDeploymentStatus = (data) => {
+    const ingressUrl = ActiveDeployment.ingress.startsWith("http")
+  ? ActiveDeployment.ingress
+  : `https://${ActiveDeployment.ingress.replace(/^\/+/, "")}`;
+ 
+    const url = `${ingressUrl}/docs`;
     Promise.all(
       data.map((dp) =>
-        fetch(`${dp.ingress}/docs`)
+        fetch(url)
           .then((res) => {
             if (res.status === 200) {
               return { ...dp, status: "active" };

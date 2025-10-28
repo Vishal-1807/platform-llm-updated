@@ -72,9 +72,14 @@ export default function PlayGroundTab(props) {
 
   const GetDeploymentStatus = (data) => {
     // use url - ${dp.ingress}/docs for testing in local
+    const ingressUrl = ActiveDeployment.ingress.startsWith("http")
+  ? ActiveDeployment.ingress
+  : `https://${ActiveDeployment.ingress.replace(/^\/+/, "")}`;
+ 
+    const url = `${ingressUrl}/docs`;
     Promise.all(
       data.map((dp) =>
-        fetch(`${dp.ingress}/docs`)
+        fetch(url)
           .then((res) => {
             if (res.status === 200) {
               return { ...dp, status: "active" };
