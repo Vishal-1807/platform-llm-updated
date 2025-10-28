@@ -40,15 +40,19 @@ export const GetListExperiments = async (project_id = "", exp_id = "") => {
 };
 
 export const GetIngressURL = async (exp_id = "") => {
-  return await API.post(
-    `/ingress`,
-    { exp_id: exp_id },
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
+  // Construct the required payload for backend validation
+  const payload = {
+    exp_id: exp_id,
+    deployment_id: `${exp_id}-service`,
+    username: sessionStorage.getItem("user_email") || "vinay.maurya@awone.ai",
+    org_name: "awone"
+  };
+
+  return await API.post(`/ingress`, payload, {
+    headers: {
+      "Content-Type": "application/json", // ✅ JSON, not form-urlencoded
+    },
+  });
 };
 
 export const Models = async (modeltype) => {
@@ -237,16 +241,20 @@ export const Deploy = async (exp_id, Replicas, Downscale_delay) => {
 // };
 
 export const Ingress = async (exp_id) => {
-  return await API.post(
-    `/ingress`,
-    { exp_id: exp_id },
-    {
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    }
-  );
+  const payload = {
+    exp_id: exp_id,
+    deployment_id: `${exp_id}-service`,
+    username: sessionStorage.getItem("user_email") || "vinay.maurya@awone.ai",
+    org_name: "awone"
+  };
+
+  return await API.post(`/ingress`, payload, {
+    headers: {
+      "Content-Type": "application/json", // ✅ same here
+    },
+  });
 };
+
 
 export const Deployments = async (exp_id) => {
   return await API.post(`/deployments`, {});
