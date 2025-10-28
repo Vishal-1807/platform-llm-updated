@@ -65,30 +65,27 @@ export default function PlayGround(props) {
   }, []);
 
   const GetDeploymentStatus = (data) => {
-    const ingressUrl = ActiveDeployment.ingress.startsWith("http")
-  ? ActiveDeployment.ingress
-  : `https://${ActiveDeployment.ingress.replace(/^\/+/, "")}`;
+  Promise.all(
+    data.map((dp) => {
+      // Ensure the ingress URL is absolute
+      const ingressUrl = dp.ingress.startsWith("http")
+        ? dp.ingress
+        : `https://${dp.ingress.replace(/^\/+/, "")}`;
  
-    const url = `${ingressUrl}/docs`;
-    Promise.all(
-      data.map((dp) =>
-        fetch(url)
-          .then((res) => {
-            if (res.status === 200) {
-              return { ...dp, status: "active" };
-            } else {
-              return { ...dp, status: "inactive" };
-            }
-          })
-          .catch((err) => {
-            // console.log(err);
-            return { ...dp, status: "inactive" }; // Assuming error means inactive status
-          })
-      )
-    ).then((statusArray) => {
-      setFilteredDeployments(statusArray);
-    });
-  };
+      const docsUrl = `${ingressUrl}/docs`;
+ 
+      return fetch(docsUrl)
+        .then((res) =>
+          res.status === 200
+            ? { ...dp, status: "active", ingress: ingressUrl }
+            : { ...dp, status: "inactive", ingress: ingressUrl }
+        )
+        .catch(() => ({ ...dp, status: "inactive", ingress: ingressUrl }));
+    })
+  ).then((statusArray) => {
+    setFilteredDeployments(statusArray);
+  });
+};
 
   const prompt_question = async () => {
     if (!selectedDeployment && !qusetion) {
