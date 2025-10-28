@@ -248,13 +248,6 @@ export const Ingress = async (exp_id) => {
   );
 };
 
-  return await API.post(`/ingress`, payload, {
-    headers: {
-      "Content-Type": "application/json", // ✅ same here
-    },
-  });
-};
-
 
 export const Deployments = async (exp_id) => {
   return await API.post(`/deployments`, {});
