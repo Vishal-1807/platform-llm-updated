@@ -39,19 +39,11 @@ export const GetListExperiments = async (project_id = "", exp_id = "") => {
   );
 };
 
-export const GetIngressURL = async (exp_id = "") => {
-  // Construct the required payload for backend validation
-  const payload = {
-    exp_id: exp_id,
-    deployment_id: `${exp_id}-service`,
-    username: sessionStorage.getItem("user_email") || "vinay.maurya@awone.ai",
-    org_name: "awone"
-  };
-
-  return await API.post(`/ingress`, payload, {
-    headers: {
-      "Content-Type": "application/json", // ✅ JSON, not form-urlencoded
-    },
+export const GetIngressURL = async (deployment_id = "") => {
+  const formData = new URLSearchParams();
+  formData.append("deployment_id", deployment_id);
+  return await API.post(`/ingress`, formData, {
+    headers: { "Content-Type": "application/x-www-form-urlencoded" },
   });
 };
 
