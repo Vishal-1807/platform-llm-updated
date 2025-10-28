@@ -108,7 +108,11 @@ export default function PlayGroundTab(props) {
       top_p: top_p,
       top_k: top_k,
     });
-    const url = `${ActiveDeployment.ingress}/infer`; //use this for testing in local
+    const ingressUrl = ActiveDeployment.ingress.startsWith("http")
+      ? ActiveDeployment.ingress
+      : `https://${ActiveDeployment.ingress.replace(/^\/+/, "")}`;
+ 
+    const url = `${ingressUrl}/infer`;
     fetch(`${ActiveDeployment.ingress}/infer`, {
       method: "POST",
       headers: {
