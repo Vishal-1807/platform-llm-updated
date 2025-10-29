@@ -116,11 +116,18 @@ const Endpoint = ({ onChildClick }) => {
     GetIngressURL(experimentId).then(async (res) => {
       console.log("ingress-url", res.data.ingress);
       if (res.status === 200) {
-        if (isUrlValid("https://" + res.data.ingress + "/docs")) {
+        // Ensure the ingress URL is absolute
+        const ingressUrl = res.data.ingress.startsWith("http")
+          ? res.data.ingress
+          : `https://${res.data.ingress.replace(/^\/+/, "")}`;
+
+        const docsUrl = `${ingressUrl}/docs`;
+
+        if (isUrlValid(docsUrl)) {
           setingcheck(false);
-          console.log("valid url", res.data.ingress);
+          console.log("valid url", ingressUrl);
           setdocurl(true);
-          setingressUrl(res.data.ingress + "/docs");
+          setingressUrl(docsUrl);
         } else {
           setMessage(
             "Deployment is complete, please wait till the service is healthy."
