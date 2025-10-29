@@ -239,7 +239,7 @@ export const Deploy = async (exp_id, Replicas, Downscale_delay) => {
 export const Ingress = async (exp_id) => {
   return await API.post(
     `/ingress`,
-    { deployement_id: exp_id },
+    { deployment_id: exp_id },
     {
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
