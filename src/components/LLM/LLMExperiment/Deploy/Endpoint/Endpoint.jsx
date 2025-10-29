@@ -121,7 +121,7 @@ const Endpoint = ({ onChildClick }) => {
           ? res.data.ingress
           : `https://${res.data.ingress.replace(/^\/+/, "")}`;
 
-        const docsUrl = `${ingressUrl}/docs`;
+        const docsUrl = `${ingressUrl}`;
 
         if (isUrlValid(docsUrl)) {
           setingcheck(false);
