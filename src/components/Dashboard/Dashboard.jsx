@@ -67,11 +67,12 @@ export const Dashboard = () => {
     if (ProjectFilter === "llm") {
       const selectedValue = e.target.value.toLowerCase();
       setexpid(e.target.value);
-      const single = `https://awone-api.axiomio.com/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      // Use your panel link for better embedding
+      const single = `https://awone-api.axiomio.com/grafana/goto/L7oz4Cgvg?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
       setFinalURL(single);
     } else {
-      const selectedValue = ProjectID.toLowerCase();
-      const single = `https://awone-api.axiomio.com/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      // Use your panel link for better embedding
+      const single = `https://awone-api.axiomio.com/grafana/goto/L7oz4Cgvg?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
       setFinalURL(single);
     }
   };
@@ -102,7 +103,8 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      const finalUrl = `${baseUrl}${namespaces}&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      // Use your panel link for better embedding
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/L7oz4Cgvg?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
@@ -137,7 +139,8 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/y9dWnjgDg?orgId=1&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      // Try using the panel link you provided
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/L7oz4Cgvg?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
