@@ -66,11 +66,11 @@ export const Dashboard = () => {
     if (ProjectFilter === "llm") {
       const selectedValue = e.target.value.toLowerCase();
       setexpid(e.target.value);
-      const single = `https://awone-api.axiomio.com/grafana/d/2LaqbJ0Zk/kubecost?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const single = `https://awone-api.axiomio.com/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     } else {
       const selectedValue = ProjectID.toLowerCase();
-      const single = `https://awone-api.axiomio.com/grafana/d/2LaqbJ0Zk/kubecost?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const single = `https://awone-api.axiomio.com/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     }
   };
@@ -143,7 +143,7 @@ export const Dashboard = () => {
     }
   };
 
-  const baseUrl = `${GrafanaApiUrl}/grafana/d/2LaqbJ0Zk/kubecost?orgId=1&refresh=10s`;
+  const baseUrl = `${GrafanaApiUrl}/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s`;
   const generateNamespaces = (exp) => {
     const id =
       exp.proj_type === "tabular"
