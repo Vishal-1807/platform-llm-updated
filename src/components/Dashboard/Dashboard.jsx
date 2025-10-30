@@ -101,7 +101,7 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      const finalUrl = `${baseUrl}${namespaces}&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/L7oz4Cgvg?orgId=1`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
