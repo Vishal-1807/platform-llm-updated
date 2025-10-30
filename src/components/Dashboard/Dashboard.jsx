@@ -66,12 +66,11 @@ export const Dashboard = () => {
     if (ProjectFilter === "llm") {
       const selectedValue = e.target.value.toLowerCase();
       setexpid(e.target.value);
-      // Use aggressive panel-only parameters
-      const single = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv&viewPanel=true`;
+      const single = `https://awone-api.axiomio.com/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     } else {
-      // Use TV mode for panel-only view
-      const single = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv`;
+      const selectedValue = ProjectID.toLowerCase();
+      const single = `https://awone-api.axiomio.com/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     }
   };
@@ -102,8 +101,7 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      // Use TV mode for panel-only view
-      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv`;
+      const finalUrl = `${baseUrl}${namespaces}&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
@@ -138,8 +136,7 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      // Try using TV mode for panel-only view
-      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv`;
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/y9dWnjgDg?orgId=1&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
