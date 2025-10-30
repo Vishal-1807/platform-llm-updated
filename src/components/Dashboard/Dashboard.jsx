@@ -143,7 +143,7 @@ export const Dashboard = () => {
     }
   };
 
-  const baseUrl = `https://awone-api.axiomio.com/grafana/goto/gv4mMCgvg?orgId=1&refresh=10s`;
+  const baseUrl = `https://awone-api.axiomio.com/grafana/public-dashboards/a571b2ce8ed84a8d9a305d6e0f34a26a&refresh=10s`;
   const generateNamespaces = (exp) => {
     const id =
       exp.proj_type === "tabular"
