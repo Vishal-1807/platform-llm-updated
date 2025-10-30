@@ -24,7 +24,6 @@ export const Dashboard = () => {
   const [Hcc, setHcc] = useState(0);
   const [EB, setEB] = useState(0);
   const [pid, setid] = useState("");
-  const [iframeError, setIframeError] = useState(false);
 
   const getdeploy = () => {
     Deployments().then((res) => {
@@ -342,122 +341,15 @@ export const Dashboard = () => {
                 <div style={{ marginBottom: "10px" }}>
                   {experimentInformation.length >= 0 ? (
                     <Grid item xs={12} sx={{ p: 0 }}>
-                      {/* Try iframe first, fallback to clickable card if it fails */}
-                      {!iframeError ? (
-                        <div style={{ position: "relative" }}>
-                          <iframe
-                            src={FinalURL}
-                            width="100%"
-                            height="600px"
-                            style={{
-                              border: "none",
-                              padding: 0,
-                              borderRadius: "12px",
-                            }}
-                            onError={() => setIframeError(true)}
-                            onLoad={(e) => {
-                              // Check if iframe loaded successfully
-                              try {
-                                const iframe = e.target;
-                                iframe.contentWindow.location.href;
-                              } catch (error) {
-                                setIframeError(true);
-                              }
-                            }}
-                          />
-                          {/* Fallback button overlay */}
-                          <div
-                            onClick={() => window.open(FinalURL, '_blank')}
-                            style={{
-                              position: "absolute",
-                              top: "10px",
-                              right: "10px",
-                              padding: "8px 16px",
-                              background: "rgba(102, 126, 234, 0.9)",
-                              color: "white",
-                              borderRadius: "20px",
-                              cursor: "pointer",
-                              fontSize: "12px",
-                              fontWeight: "500",
-                              backdropFilter: "blur(10px)",
-                              border: "1px solid rgba(255, 255, 255, 0.2)",
-                              transition: "all 0.3s ease",
-                            }}
-                            onMouseEnter={(e) => {
-                              e.target.style.background = "rgba(102, 126, 234, 1)";
-                            }}
-                            onMouseLeave={(e) => {
-                              e.target.style.background = "rgba(102, 126, 234, 0.9)";
-                            }}
-                          >
-                            Open in New Tab ↗
-                          </div>
-                        </div>
-                      ) : (
-                        // Fallback clickable card when iframe fails
-                        <div
-                          onClick={() => window.open(FinalURL, '_blank')}
-                          style={{
-                            width: "100%",
-                            height: "600px",
-                            background: "linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%)",
-                            border: "2px dashed #667eea",
-                            borderRadius: "12px",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            cursor: "pointer",
-                            transition: "all 0.3s ease",
-                            backdropFilter: "blur(10px)",
-                            backgroundColor: "rgba(255, 255, 255, 0.1)",
-                          }}
-                          onMouseEnter={(e) => {
-                            e.target.style.transform = "scale(1.02)";
-                            e.target.style.boxShadow = "0 10px 30px rgba(102, 126, 234, 0.3)";
-                          }}
-                          onMouseLeave={(e) => {
-                            e.target.style.transform = "scale(1)";
-                            e.target.style.boxShadow = "none";
-                          }}
-                        >
-                          <div style={{
-                            fontSize: "48px",
-                            marginBottom: "20px",
-                            color: "#667eea"
-                          }}>
-                            📊
-                          </div>
-                          <h3 style={{
-                            color: "#333",
-                            marginBottom: "10px",
-                            fontFamily: "Plus Jakarta Sans",
-                            fontWeight: "600"
-                          }}>
-                            Open Grafana Dashboard
-                          </h3>
-                          <p style={{
-                            color: "#666",
-                            textAlign: "center",
-                            fontFamily: "Plus Jakarta Sans",
-                            fontSize: "14px"
-                          }}>
-                            Dashboard cannot be embedded due to security restrictions.<br/>
-                            Click to view in a new tab.
-                          </p>
-                          <div style={{
-                            marginTop: "20px",
-                            padding: "10px 20px",
-                            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-                            color: "white",
-                            borderRadius: "25px",
-                            fontSize: "14px",
-                            fontWeight: "500"
-                          }}>
-                            Open Dashboard →
-                          </div>
-                        </div>
-                      )}
+                      <iframe
+                        src={FinalURL}
+                        width="100%"
+                        height="600px"
+                        style={{
+                          border: "none",
+                          padding: 0,
+                        }}
+                      />
                     </Grid>
                   ) : (
                     <center>Loading..</center>
