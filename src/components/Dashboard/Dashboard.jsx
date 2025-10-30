@@ -338,7 +338,15 @@ export const Dashboard = () => {
                 <div style={{ marginBottom: "10px" }}>
                   {experimentInformation.length >= 0 ? (
                     <Grid item xs={12} sx={{ p: 0 }}>
-                      <iframe src="https://awone-api.axiomio.com/grafana/d-solo/2LaqbJ0Zk/kubecost?orgId=1&from=1761822344578&to=1761822644578&timezone=browser&var-namespace=prj-100002-69adbf93-infer&refresh=10s&panelId=36&__feature.dashboardSceneSolo" width="450" height="200" frameborder="0"></iframe>
+                      <iframe
+                        src={FinalURL}
+                        width="100%"
+                        height="600px"
+                        style={{
+                          border: "none",
+                          padding: 0,
+                        }}
+                      />
                     </Grid>
                   ) : (
                     <center>Loading..</center>
