@@ -66,12 +66,12 @@ export const Dashboard = () => {
     if (ProjectFilter === "llm") {
       const selectedValue = e.target.value.toLowerCase();
       setexpid(e.target.value);
-      // Use updated panel link for better embedding
-      const single = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
+      // Use aggressive panel-only parameters
+      const single = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv&viewPanel=true`;
       setFinalURL(single);
     } else {
-      // Use updated panel link for better embedding
-      const single = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
+      // Use TV mode for panel-only view
+      const single = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv`;
       setFinalURL(single);
     }
   };
@@ -102,8 +102,8 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      // Use updated panel link for better embedding
-      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
+      // Use TV mode for panel-only view
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
@@ -138,8 +138,8 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      // Try using the updated panel link
-      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk`;
+      // Try using TV mode for panel-only view
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/AS3OSjRDR?orgId=1&from=now-20d&to=now&theme=light&kiosk=tv`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
