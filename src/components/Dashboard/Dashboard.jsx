@@ -136,14 +136,14 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      const finalUrl = `${baseUrl}${namespaces}&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/y9dWnjgDg?orgId=1&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
     }
   };
 
-  const baseUrl = `https://awone-api.axiomio.com/grafana/public-dashboards/a571b2ce8ed84a8d9a305d6e0f34a26a&refresh=10s`;
+  const baseUrl = `${GrafanaApiUrl}/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s`;
   const generateNamespaces = (exp) => {
     const id =
       exp.proj_type === "tabular"
