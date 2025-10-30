@@ -143,7 +143,7 @@ export const Dashboard = () => {
     }
   };
 
-  const baseUrl = `${GrafanaApiUrl}/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s`;
+  const baseUrl = `https://awone-api.axiomio.com/grafana/goto/Z-pIerRDg?orgId=1`;
   const generateNamespaces = (exp) => {
     const id =
       exp.proj_type === "tabular"
