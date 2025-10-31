@@ -12,6 +12,9 @@ import Login from "./components/Login/Login";
 import LoginRes from "./components/Login/LoginRes";
 import { Logout } from "./components/Logout/Logout";
 import SideBar from "./components/SideBar/SideBar";
+import Tabular, { TabularTabProvider } from "./components/Tabular/Tabular";
+import TabularProject from "./components/Tabular/Project/TabularProject";
+import TabularExperiment from "./components/Tabular/Experiment/TabularExperiment";
 
 function App() {
   // CHANGED: Use "access_token" instead of "token"
@@ -74,12 +77,13 @@ function App() {
 
   return (
     <LLMTabProvider>
-      <div className="ta-layout">
-        {/* CHANGED: Use isAuthenticated() helper */}
-        {isAuthenticated() && <SideBar />}
-        <div className="ta-main-wrapper">
-          {isAuthenticated() && <Header />}
-          <div className="ta-main-content">
+      <TabularTabProvider>
+        <div className="ta-layout">
+          {/* CHANGED: Use isAuthenticated() helper */}
+          {isAuthenticated() && <SideBar />}
+          <div className="ta-main-wrapper">
+            {isAuthenticated() && <Header />}
+            <div className="ta-main-content">
             <Routes>
               {/* Authentication-based routing */}
               {isAuthenticated() ? (
@@ -89,6 +93,12 @@ function App() {
                   <Route path="/Dashboard" element={<Dashboard />} />
                   <Route path="/cv" element={<div>CV</div>} />
                   <Route path="/nlp" element={<div>NLP</div>} />
+                  <Route path="/tabular" element={<Tabular />} />
+                  <Route path="/tabular/:projectId" element={<TabularProject />} />
+                  <Route
+                    path="/tabular/:projectId/Experiment/:experimentId/*"
+                    element={<TabularExperiment />}
+                  />
                   <Route path="/llm" element={<LLM />} />
                   <Route path="/llm/:projectId" element={<LLMProject />} />
                   <Route
@@ -117,6 +127,7 @@ function App() {
           </div>
         </div>
       </div>
+      </TabularTabProvider>
     </LLMTabProvider>
   );
 }
