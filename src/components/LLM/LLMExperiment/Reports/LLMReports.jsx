@@ -82,7 +82,7 @@ export default function LLMReports() {
                 }}>
                     <iframe
                         src={
-                            "https://awone-api.axiomio.com/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&from=1705047988397&to=1705048031454&var-experiment=" +
+                            "https://awone-api.axiomio.com/grafana/d/ecddfeaf-d0de-4b10-8007-41143c/f7515f8?orgId=1&from=now-1h&to=now&timezone=browser&var-experiment=" +
                             experimentId +
                             "&kiosk&refresh=5s&theme=light"
                           }
