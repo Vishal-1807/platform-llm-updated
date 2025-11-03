@@ -22,7 +22,7 @@ import {
   DeployModel,
 } from "../../../../../services/Portals/MLopsPortals";
 import "react-js-cron/dist/styles.css";
-import "./EndPoint.css";
+import "./Endpoint.css";
 import CircularProgress from "@mui/material/CircularProgress";
 import Buttons from "../../../../Elements/Buttons";
 import { useParams, useNavigate } from "react-router-dom";
