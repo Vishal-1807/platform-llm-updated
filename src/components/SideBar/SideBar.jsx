@@ -72,10 +72,10 @@ export default function SideBar() {
           <TabularIcon className="ta-sidebar__icon" />
           <span>Dashboard</span>
         </NavLink>
-        {/* <NavLink to="/tabular" className="ta-sidebar__item">
+        <NavLink to="/tabular" className="ta-sidebar__item">
           <TabularIcon className="ta-sidebar__icon" />
           <span>Tabular</span>
-        </NavLink> */}
+        </NavLink>
 
         {/* Expandable LLM Menu */}
         <div>
