@@ -1,0 +1,66 @@
+.ReportTitle {
+  color: var(--Shades-Black, #101016);
+  font-family: "Plus Jakarta Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 900;
+  line-height: 34.2px;
+  margin: 10px !important;
+}
+.ReportName {
+  color: var(--Shades-Black-4, #8d8dac);
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+  width: auto;
+}
+.activeReport {
+  color: var(--Primary-Blue, #1E90FF) !important;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  cursor: pointer;
+  width: auto;
+  border-bottom: 2px solid #1E90FF;
+  padding-bottom: 10px;
+}
+.ReportList {
+  width: auto;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+.ReportBox {
+  float: left;
+  width: auto;
+  padding: 5px;
+  margin: 5px;
+}
+::-webkit-scrollbar {
+  width: 3px;
+  height: 0px !important;
+}
+.scrollRight {
+  float: right;
+  right: 29px;
+  margin-top: 4px;
+  z-index: 99999;
+  cursor: pointer;
+  margin-right: -8px;
+  padding-top: 4px;
+  color: #5420e8;
+}
+.scrollLeft {
+  float: left;
+  left: 111px;
+  margin-top: 4px;
+  z-index: 99999;
+  cursor: pointer;
+
+  padding-top: 4px;
+  color: #5420e8;
+}

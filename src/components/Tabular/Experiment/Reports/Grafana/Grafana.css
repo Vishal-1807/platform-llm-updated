@@ -1,0 +1,8 @@
+.Misprediction {
+  color: var(--Shades-Black, #101016);
+  font-family: "Plus Jakarta Sans";
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 34.2px;
+}

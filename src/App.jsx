@@ -12,6 +12,9 @@ import Login from "./components/Login/Login";
 import LoginRes from "./components/Login/LoginRes";
 import { Logout } from "./components/Logout/Logout";
 import SideBar from "./components/SideBar/SideBar";
+import Experiment from "./components/Tabular/Experiment/Experiment";
+import Project from "./components/Tabular/Project/Project";
+import Tabular from "./components/Tabular/Tabular";
 
 function App() {
   // CHANGED: Use "access_token" instead of "token"
@@ -87,6 +90,12 @@ function App() {
                   {/* Protected routes - only accessible when authenticated */}
                   <Route path="/" element={<Dashboard />} />
                   <Route path="/Dashboard" element={<Dashboard />} />
+                  <Route path="/tabular" element={<Tabular />} />
+                  <Route path="/tabular/:projectId" element={<Project />} />
+                  <Route
+                    path="/tabular/:projectId/Experiment/:experimentId/*"
+                    element={<Experiment />}
+                  />
                   <Route path="/cv" element={<div>CV</div>} />
                   <Route path="/nlp" element={<div>NLP</div>} />
                   <Route path="/llm" element={<LLM />} />

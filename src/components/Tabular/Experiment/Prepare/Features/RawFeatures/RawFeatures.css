@@ -1,0 +1,121 @@
+
+.FeaturesTitle  {
+  color: var(--Shades-Black-4, #8d8dac);
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 34.2px; /* 213.75% */
+}
+.step {
+  color: var(--Shades-Black-4, #8d8dac);
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34.2px; /* 213.75% */
+}
+.tagline {
+  color: var(--Shades-Black-2, #3f3f50);
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34.2px; /* 213.75% */
+}
+h4 {
+  color: #101016;
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 12px 0;
+}
+.add-record {
+  display: flex;
+  float: right;
+  background: #fff;
+  padding: 6px 23px;
+  margin: 12px 0;
+  cursor: pointer;
+  height: 28px;
+  font-weight: 600;
+  border-radius: 8px;
+  border: 1px solid var(--Shades-Black-5, #b7b7d2);
+}
+.plus-img {
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+}
+.record {
+  color: #1E90FF;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 4px;
+}
+.even-row {
+  background-color: #ccc; /* or any other color you prefer */
+}
+.rf-loader,
+.ef-loader {
+  margin-top: 20px;
+}
+.EF-Img {
+  width: 20px;
+  height: 20px;
+  margin: 5px 10px;
+  border-radius: 6px;
+  background: #fff;
+  padding: 10px;
+}
+.EngFeatures {
+  color: var(--Primary-Blue, #1E90FF) !important;
+  font-size: 19px !important;
+}
+
+.EF-section {
+  border-radius: 8px;
+  border: 1px solid #d3d3ea;
+  background: #eeeef8;
+}
+.engg-feat-ctn {
+  width: 100%;
+  height: 500px;
+  overflow-y: scroll;
+  padding: 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+  td {
+    border-bottom: 2px solid #D3D3EA;
+    text-align: left;
+    padding: 12px 8px;
+    color: #000;
+    font-family: Plus Jakarta Sans;
+    font-weight: 400;
+    font-size: 14px;
+  }
+}
+.engg-feat-ctn tr:hover {
+  background-color: #fff;
+}
+::-webkit-scrollbar {
+  width: 3px;
+  height: 4px;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #5420e8;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: #5420e8;
+}
+
+

@@ -1,0 +1,187 @@
+.page-caption {
+  padding: 10px;
+}
+
+.step {
+  color: var(--Shades-Black-4, #8d8dac);
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34.2px; /* 213.75% */
+}
+.tagline {
+  color: var(--Shades-Black-2, #3f3f50);
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 34.2px; /* 213.75% */
+}
+.Editor-Title {
+  color: #101016;
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  margin: 2px 5px;
+}
+
+.q-l-ctn {
+  position: relative;
+}
+.Query-Box {
+  border-radius: 8px;
+  background: #fff;
+  display: flex;
+  width: 100px;
+  margin-top: 5px;
+}
+.Preview {
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  width: 100px !important;
+  background: #eeeef8;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  text-align: center;
+  /* position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0; */
+  height: 25px;
+}
+.Preview img {
+  margin-left: 10px;
+}
+.edit_preview{
+  background: #fff !important;
+}
+.copy {
+  width: 100%;
+  text-align: right;
+  margin-top: 10px;
+}
+.token {
+  padding-top: 10px;
+}
+.copy-img {
+  width: 30px;
+  height: 30px;
+  float: right;
+  margin: 10px;
+  border: 1px solid #ccc;
+  cursor: pointer;
+}
+.copy-img img {
+  margin: 6px;
+}
+.Query-list {
+}
+.ag-header-row {
+  background: #3f3f50 !important;
+  color: #fff !important;
+}
+.queries {
+  border-radius: 8px;
+  border: 1px solid #d3d3ea;
+  background: #fff;
+  margin: 10px 0;
+  cursor: pointer;
+  overflow: scroll;
+}
+.queries pre {
+  background-color: #fff !important;
+  margin-top: 20px;
+  font-family: Plus Jakarta Sans;
+}
+.queries pre code {
+  background-color: #fff !important;
+  font-family: Plus Jakarta Sans;
+}
+.avail-l-ctn {
+  text-align: center;
+  margin-top: 30px;
+  width: 100%;
+}
+.queries pre code span {
+  color: var(--Primary-Blue, #5420e8);
+  /* Text/Medium/12 */
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.list-querys {
+  background-color: #fff;
+}
+
+.output {
+  display: "flex";
+  padding-top: 10px;
+}
+.output img {
+  float: left;
+  margin: 3px;
+}
+.output span {
+  color: #1f1f29;
+  /* Label-Forms/Medium/16 */
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  margin: 0 4px;
+}
+.edit-preview {
+  border-radius: 6px;
+  border: 1px solid #5b32d0;
+  color: #5420e8;
+  padding: 7px 23px;
+  font-size: 15px;
+  margin: 0px 18px;
+  background-color: #fff !important;
+}
+
+.query-preview {
+  width: 100%;
+  margin-top: 20px;
+}
+.AgGridReactHeader {
+  background-color: #000;
+  color: #fff;
+}
+.AgGridReactHeader:hover {
+  background-color: black; /* Set the same background color for hover to remove the default hover effect */
+}
+.Editor-img {
+  width: 15px;
+  height: 15px;
+  margin: 6px;
+}
+.editor_rec {
+  width: 25px;
+  height: 25px;
+  background-color: #d3d3ea;
+  border-radius: 10px;
+}
+.saveandexport {
+  display: flex;
+  height: 36px;
+  width: auto;
+  padding: 9px 23px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(
+    --Primary-Gradient,
+    linear-gradient(80deg, #1E90FF 0%, #FFA500 96.35%)
+  );
+}
