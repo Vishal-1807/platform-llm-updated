@@ -2,11 +2,11 @@ import axios from "axios";
 import API, { ApiUrl, ConsumptionURL } from "../Api";
 
 export const gettabularProjects = async () => {
-  return await API.post(`/cibi/tabular/projects`, {});
+  return await API.post(`/tabular/projects`, {});
 };
 
 export const getTabularProjectDetails = async (project_id) => {
-  return await API.post(`/cibi/tabular/projects`, {}).then(res=> {
+  return await API.post(`/tabular/projects`, {}).then(res=> {
     res.data = res.data.filter((project) => project.proj_id === project_id)[0]
     return res
   });
@@ -15,7 +15,7 @@ export const getTabularProjectDetails = async (project_id) => {
 
 export const CreateNewProject = async (project, description) => {
   return await API.post(
-    `/cibi/tabular/create_project`,
+    `/tabular/create_project`,
     { project_name: project, description: description },
     {
       headers: {
@@ -27,7 +27,7 @@ export const CreateNewProject = async (project, description) => {
 
 export const GetListExperiments = async (project_id = "", exp_id = "") => {
   return await API.post(
-    `/cibi/tabular/experiments`,
+    `/tabular/experiments`,
     { project_id: project_id, experiment_id: exp_id },
     {
       headers: {
@@ -39,7 +39,7 @@ export const GetListExperiments = async (project_id = "", exp_id = "") => {
 
 export const CreateExperiment = async (project_id, expName) => {
   return await API.post(
-    `/cibi/tabular/create_exp`,
+    `/tabular/create_exp`,
     { project_id: project_id, experiment_name: expName },
     {
       headers: {
@@ -55,19 +55,19 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
     let urlRes;
     if (uploadFilePage === "uploadPage") {
       urlRes = await API.post(
-        `/cibi/connectors/create_signed_url_experiment?filename=${file.name}&exp_id=${exp_id}`,
+        `/connectors/create_signed_url_experiment?filename=${file.name}&exp_id=${exp_id}`,
         {}
       );
     }
     if (uploadFilePage === "MeataDataPage") {
       urlRes = await API.post(
-        `/cibi/connectors/get_url?filename=${file.name}`,
+        `/connectors/get_url?filename=${file.name}`,
         {}
       );
     }
     if (uploadFilePage === "FeatureEnggPage") {
       urlRes = await API.post(
-        `/cibi/connectors/generate_signed_url?filename=${file.name}&exp_id=${exp_id}`,
+        `/connectors/generate_signed_url?filename=${file.name}&exp_id=${exp_id}`,
         {}
       );
     }
@@ -100,14 +100,14 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
 
 export const GetDataPreview = async (inputPath) => {
   return await API.post(
-    `/cibi/tabular/data_preview?input_path=${inputPath}`,
+    `/tabular/data_preview?input_path=${inputPath}`,
     {}
   );
 };
 
 export const UpdateConfig = async (exp_id, configType, formData) => {
   return await API.post(
-    `/cibi/tabular/update_config?exp_id=${exp_id}&config_type=${configType}`,
+    `/tabular/update_config?exp_id=${exp_id}&config_type=${configType}`,
     formData,
     {}
   );
@@ -115,7 +115,7 @@ export const UpdateConfig = async (exp_id, configType, formData) => {
 
 export const Train = async (exp_id, is_dq) => {
   return await API.post(
-    `/cibi/tabular/train`,
+    `/tabular/train`,
     { exp_id: exp_id, is_dq: is_dq },
     {
       headers: {
@@ -127,7 +127,7 @@ export const Train = async (exp_id, is_dq) => {
 
 export const DeployModel = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/deploy`,
+    `/tabular/deploy`,
     { exp_id: exp_id },
     {
       headers: {
@@ -139,7 +139,7 @@ export const DeployModel = async (exp_id) => {
 
 export const DeployloadTest = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/loadtest`,
+    `/tabular/loadtest`,
     { exp_id: exp_id },
     {
       headers: {
@@ -151,7 +151,7 @@ export const DeployloadTest = async (exp_id) => {
 
 export const TrainStatus = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/training_status`,
+    `/tabular/training_status`,
     { exp_id: exp_id },
     {
       headers: {
@@ -163,7 +163,7 @@ export const TrainStatus = async (exp_id) => {
 
 export const UpdateExp = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/update_exp`,
+    `/tabular/update_exp`,
     { exp_id: exp_id, status: "PREPARED" },
     {
       headers: {
@@ -175,30 +175,30 @@ export const UpdateExp = async (exp_id) => {
 
 export const GetExpDataSet = async (exp_id) => {
   return await API.get(
-    `/cibi/connectors/get_dataset_for_experiment?exp_id=${exp_id}`,
+    `/connectors/get_dataset_for_experiment?exp_id=${exp_id}`,
     {}
   );
 };
 
 export const GetRefreshToken = async () => {
-  return await API.post(`/cibi/tabular/extend_token`, {});
+  return await API.post(`/tabular/extend_token`, {});
 };
 
 export const GetFeatureImportance = async (exp_id) => {
-  return await API.get(`/cibi/tabular/feature_importance?exp_id=${exp_id}`, {});
+  return await API.get(`/tabular/feature_importance?exp_id=${exp_id}`, {});
 };
 
 export const GetCmpr = async (exp_id) => {
-  return await API.get(`/cibi/tabular/cmpr?exp_id=${exp_id}`, {});
+  return await API.get(`/tabular/cmpr?exp_id=${exp_id}`, {});
 };
 
 export const GetBatchStatus = async (exp_id) => {
-  return await API.get(`/cibi/tabular/batch_status?exp_id=${exp_id}`, {});
+  return await API.get(`/tabular/batch_status?exp_id=${exp_id}`, {});
 };
 
 export const GetEndPointStatus = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/sample_request`,
+    `/tabular/sample_request`,
     { exp_id: exp_id },
     {
       headers: {
@@ -209,12 +209,12 @@ export const GetEndPointStatus = async (exp_id) => {
 };
 
 export const GenerateDeployToken = async () => {
-  return await API.post(`/cibi/tabular/deployment_token`, {});
+  return await API.post(`/tabular/deployment_token`, {});
 };
 
 export const Preprocess = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/preprocess`,
+    `/tabular/preprocess`,
     { exp_id: exp_id },
     {
       headers: {
@@ -226,27 +226,27 @@ export const Preprocess = async (exp_id) => {
 
 // Connectors
 export const GetAllConnectors = async () => {
-  return await API.get(`/cibi/connectors/getAllConnectors`, {});
+  return await API.get(`/connectors/getAllConnectors`, {});
 };
 
 export const GetUserDatasets = async () => {
-  return await API.get(`/cibi/connectors/get_user_datasets`, {});
+  return await API.get(`/connectors/get_user_datasets`, {});
 };
 
 export const GetSourcesforConnector = async (source) => {
   return await API.get(
-    `/cibi/connectors/getSourcesforConnector?source=${source}`,
+    `/connectors/getSourcesforConnector?source=${source}`,
     {}
   );
 };
 
 export const GetSourceFields = async (source) => {
-  return await API.get(`/cibi/connectors/getSourceFields?source=${source}`, {});
+  return await API.get(`/connectors/getSourceFields?source=${source}`, {});
 };
 
 export const VerifyDataSource = async (exp_id, request) => {
   return await API.post(
-    `/cibi/connectors/verifyDataSource?exp_id=${exp_id}`,
+    `/connectors/verifyDataSource?exp_id=${exp_id}`,
     {
       datasourcename: request.datasourcename,
       datasource: request.datasource,
@@ -258,7 +258,7 @@ export const VerifyDataSource = async (exp_id, request) => {
 
 export const ExecuteQuery = async (dataSourceModel, Queryvalue) => {
   return await API.post(
-    `/cibi/connectors/executeQuery`,
+    `/connectors/executeQuery`,
     {
       dataSourceModel: {
         datasourcename: dataSourceModel.datasourcename,
@@ -276,7 +276,7 @@ export const ExecuteQuery = async (dataSourceModel, Queryvalue) => {
 
 export const SaveQuery = async (dataSourceModel, Queryvalue, exp_id) => {
   return await API.post(
-    `/cibi/connectors/saveQuery`,
+    `/connectors/saveQuery`,
     {
       dataSourceModel: {
         datasourcename: dataSourceModel.datasourcename,
@@ -293,42 +293,42 @@ export const SaveQuery = async (dataSourceModel, Queryvalue, exp_id) => {
 };
 
 export const ExportData = async (exp_id) => {
-  return await API.post(`/cibi/connectors/exportData?exp_id=${exp_id}`, {});
+  return await API.post(`/connectors/exportData?exp_id=${exp_id}`, {});
 };
 
 export const GetMispredictionTree = async (exp_id) => {
-  return await API.get(`/cibi/tabular/misprediction_tree?exp_id=${exp_id}`, {});
+  return await API.get(`/tabular/misprediction_tree?exp_id=${exp_id}`, {});
 };
 
 // ----------------------------shift left-------------------------------------------
 
 export const GetRawFeatureStatus = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/preprocess/raw_feature_metadata`,
+    `/tabular/preprocess/raw_feature_metadata`,
     { exp_id: exp_id },
     {}
   );
 };
 
 export const GetRawFeatureData = async (exp_id) => {
-  return await API.get(`/cibi/tabular/preprocess/raw_features/${exp_id}`, {});
+  return await API.get(`/tabular/preprocess/raw_features/${exp_id}`, {});
 };
 
 export const GetEnggFeatureStatus = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/preprocess/engg_features`,
+    `/tabular/preprocess/engg_features`,
     { exp_id: exp_id },
     {}
   );
 };
 
 export const GetEnggFeatureData = async (exp_id) => {
-  return await API.get(`/cibi/tabular/expert_features/${exp_id}`, {});
+  return await API.get(`/tabular/expert_features/${exp_id}`, {});
 };
 
 export const UserModifiedData = async (exp_id, modifiedData) => {
   return await API.post(
-    `/cibi/tabular/preprocess/user_mod_raw_feature_metadata?exp_id=${exp_id}`,
+    `/tabular/preprocess/user_mod_raw_feature_metadata?exp_id=${exp_id}`,
     {
       raw_features: modifiedData,
     },
@@ -338,7 +338,7 @@ export const UserModifiedData = async (exp_id, modifiedData) => {
 
 export const GetHistoricalQueries = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/preprocess/relevant_historical_queries`,
+    `/tabular/preprocess/relevant_historical_queries`,
     { exp_id: exp_id },
     {}
   );
@@ -346,7 +346,7 @@ export const GetHistoricalQueries = async (exp_id) => {
 
 export const FetchSqlQueries = async (exp_id) => {
   return await API.get(
-    `/cibi/tabular/preprocess/fetch_sql_queries/${exp_id}`,
+    `/tabular/preprocess/fetch_sql_queries/${exp_id}`,
     {}
   );
 };
@@ -354,7 +354,7 @@ export const FetchSqlQueries = async (exp_id) => {
 // Call populate SQL Editor
 export const PopulateSQLStatus = async (exp_id) => {
   return await API.post(
-    `/cibi/tabular/preprocess/sql_code_gen`,
+    `/tabular/preprocess/sql_code_gen`,
     { exp_id: exp_id },
     {}
   );
@@ -363,14 +363,14 @@ export const PopulateSQLStatus = async (exp_id) => {
 // Get Generated Sql
 export const GetGeneratedSQL = async (exp_id) => {
   return await API.get(
-    `/cibi/tabular/preprocess/sql_code_to_autopopulate/${exp_id}`,
+    `/tabular/preprocess/sql_code_to_autopopulate/${exp_id}`,
     {}
   );
 };
 
 export const GetSqlAssist = async (exp_id, query) => {
   return await API.post(
-    `/cibi/tabular/preprocess/sql_assist`,
+    `/tabular/preprocess/sql_assist`,
     { exp_id: exp_id, query: query },
     {}
   );
@@ -378,7 +378,7 @@ export const GetSqlAssist = async (exp_id, query) => {
 
 export const FetchSqlAssist = async (exp_id) => {
   return await API.get(
-    `/cibi/tabular/preprocess/fetch_sql_assist/${exp_id}`,
+    `/tabular/preprocess/fetch_sql_assist/${exp_id}`,
     {}
   );
 };
@@ -392,14 +392,14 @@ export const WriteS3Uris = async (
   db_name
 ) => {
   return await API.post(
-    `/cibi/tabular/preprocess/dwh_s3_uris?hostname=${hostname}&db_name=${db_name}&metadata_uri=${metadata_uri}&historical_queries_uri=${historical_queries_uri}&db_type=${db_type}`,
+    `/tabular/preprocess/dwh_s3_uris?hostname=${hostname}&db_name=${db_name}&metadata_uri=${metadata_uri}&historical_queries_uri=${historical_queries_uri}&db_type=${db_type}`,
     {}
   );
 };
 // Call Indexing
 export const CallIndexing = async (hostname, db_name) => {
   return await API.post(
-    `/cibi/tabular/preprocess/indexing?hostname=${hostname}&db_name=${db_name}`,
+    `/tabular/preprocess/indexing?hostname=${hostname}&db_name=${db_name}`,
     {}
   );
 };
@@ -407,7 +407,7 @@ export const CallIndexing = async (hostname, db_name) => {
 // Get Indexing Status
 export const GetIndexing = async (hostname, db_name) => {
   return await API.get(
-    `/cibi/tabular/preprocess/indexing_status?hostname=${hostname}&db_name=${db_name}`,
+    `/tabular/preprocess/indexing_status?hostname=${hostname}&db_name=${db_name}`,
     {}
   );
 };
@@ -415,11 +415,11 @@ export const GetIndexing = async (hostname, db_name) => {
 // ------------------------------data quality-------------------------------
 
 export const GetAnomaliesPct = async (exp_id) => {
-  return await API.get(`/cibi/tabular/anomaly_pct/${exp_id}`, {});
+  return await API.get(`/tabular/anomaly_pct/${exp_id}`, {});
 };
 
 export const Loadtest_Status = async (exp_id) => {
-  return await API.get(`/cibi/tabular/loadtest_status?exp_id=${exp_id}`, {});
+  return await API.get(`/tabular/loadtest_status?exp_id=${exp_id}`, {});
 };
 export const replica_suggestion = async (
   exp_id, NumberOfUsers
