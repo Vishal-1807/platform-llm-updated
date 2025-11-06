@@ -7,7 +7,7 @@ import {
 } from "../../services/Portals/LLMPortals";
 import styles from "./Dashboard.module.css";
 export const Dashboard = () => {
-  const GrafanaApiUrl = "https://awone-api.axiomio.com";
+  const GrafanaApiUrl = "https://awone-api.axiomio.com/cibi";
   const [active, setactive] = useState("Active");
 
   const [experimentInformation, setExperimentInformation] = useState([]);
@@ -66,11 +66,11 @@ export const Dashboard = () => {
     if (ProjectFilter === "llm") {
       const selectedValue = e.target.value.toLowerCase();
       setexpid(e.target.value);
-      const single = `https://awone-api.axiomio.com/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const single = `https://awone-api.axiomio.com/cibi/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     } else {
       const selectedValue = ProjectID.toLowerCase();
-      const single = `https://awone-api.axiomio.com/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const single = `https://awone-api.axiomio.com/cibi/grafana/d/a2159148-e5c7-4204-a1e6-fa614b5ebe6b/kubecost-llm?orgId=1&refresh=10s&var-namespace=${selectedValue}-train&var-namespace=${selectedValue}-infer&var-namespace=${selectedValue}-preprocess&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(single);
     }
   };
@@ -136,7 +136,7 @@ export const Dashboard = () => {
       const namespaces = filteredExperiments
         .map((exp) => generateNamespaces(exp))
         .join("");
-      const finalUrl = `https://awone-api.axiomio.com/grafana/goto/y9dWnjgDg?orgId=1&from=now-20d&to=now&theme=light&kiosk&width=450`;
+      const finalUrl = `https://awone-api.axiomio.com/cibi/grafana/goto/y9dWnjgDg?orgId=1&from=now-20d&to=now&theme=light&kiosk&width=450`;
       setFinalURL(finalUrl);
     } catch (error) {
       console.error("Error fetching experiments:", error);
