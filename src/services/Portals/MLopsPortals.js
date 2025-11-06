@@ -1,5 +1,5 @@
 import axios from "axios";
-import API, { ApiUrl, ConsumptionURL } from "../Api";
+import API, { ApiUrl, ConsumptionURL, ConnectorAPI } from "../Api";
 
 export const gettabularProjects = async () => {
   return await API.post(`/projects`, {});
@@ -226,11 +226,11 @@ export const Preprocess = async (exp_id) => {
 
 // Connectors
 export const GetAllConnectors = async () => {
-  return await API.get(`/connectors/getAllConnectors`, {});
+  return await ConnectorAPI.get(`/connectors/getAllConnectors`, {});
 };
 
 export const GetUserDatasets = async () => {
-  return await API.get(`/connectors/get_user_datasets`, {});
+  return await ConnectorAPI.get(`/connectors/get_user_datasets`, {});
 };
 
 export const GetSourcesforConnector = async (source) => {

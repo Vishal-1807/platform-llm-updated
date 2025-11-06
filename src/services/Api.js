@@ -19,6 +19,9 @@ console.log('Environment configuration:', {
 export const ApiUrl = TabularBaseUrls[environment];
 export const LLMApiUrl = LLMBaseUrls[environment];
 
+// Base URL without /tabular for connector endpoints
+const baseUrlWithoutTabular = TabularBaseUrls[environment].replace('/tabular', '');
+
 const API = axios.create({
   baseURL: ApiUrl,
 });
@@ -29,6 +32,11 @@ export const LLMAPI = axios.create({
 
 export const ConsumptionURL = axios.create({
   baseURL: ConsumptionBaseUrls[environment],
+});
+
+// API instance without /tabular prefix for connector endpoints
+export const ConnectorAPI = axios.create({
+  baseURL: baseUrlWithoutTabular,
 });
 
 function logoutUser() {
@@ -223,6 +231,62 @@ LLMAPI.interceptors.response.use(
           
           console.log("✅ Retrying LLMAPI request with new token");
           return LLMAPI.request(originalRequest);
+        } else {
+          console.error("❌ Invalid refresh response");
+          logoutUser();
+        }
+      } catch (refreshError) {
+        console.error("❌ Error refreshing token:", refreshError);
+        logoutUser();
+      }
+    }
+    return Promise.reject(error);
+  }
+);
+
+// ConnectorAPI interceptor
+ConnectorAPI.interceptors.request.use(
+  (config) => {
+    const id_token = sessionStorage.getItem("id_token");
+    const session_token = sessionStorage.getItem("session_token");
+    if (id_token) {
+      config.headers.Authorization = `Bearer ${id_token}`;
+      config.headers["session-token"] = session_token;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+ConnectorAPI.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async (error) => {
+    const originalRequest = error.config;
+
+    if (error.response?.status === 401 && !originalRequest._retry) {
+      originalRequest._retry = true;
+
+      try {
+        const data = await refreshToken();
+
+        if (data && data.token_response && data.token_response.id_token) {
+          // Update tokens
+          sessionStorage.setItem("id_token", data.token_response.id_token);
+          sessionStorage.setItem("access_token", data.token_response.access_token);
+          sessionStorage.setItem("refresh_token", data.token_response.refresh_token);
+          sessionStorage.setItem("session_token", data.session_token);
+          sessionStorage.setItem("token", data.token_response.id_token);
+
+          // Update headers
+          ConnectorAPI.defaults.headers.common["Authorization"] = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers.Authorization = `Bearer ${data.token_response.id_token}`;
+          originalRequest.headers["session-token"] = data.session_token;
+
+          return ConnectorAPI.request(originalRequest);
         } else {
           console.error("❌ Invalid refresh response");
           logoutUser();
