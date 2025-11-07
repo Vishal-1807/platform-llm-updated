@@ -172,7 +172,7 @@ export const UpdateExp = async (exp_id) => {
 };
 
 export const GetExpDataSet = async (exp_id) => {
-  return await API.get(
+  return await ConnectorAPI.get(
     `/connectors/get_dataset_for_experiment?exp_id=${exp_id}`,
     {}
   );
@@ -239,7 +239,7 @@ export const GetSourcesforConnector = async (source) => {
 };
 
 export const GetSourceFields = async (source) => {
-  return await API.get(`/connectors/getSourceFields?source=${source}`, {});
+  return await ConnectorAPI.get(`/connectors/getSourceFields?source=${source}`, {});
 };
 
 export const VerifyDataSource = async (exp_id, request) => {
