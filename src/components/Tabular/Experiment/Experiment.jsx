@@ -67,7 +67,15 @@ export default function Experiment() {
         }
         setEnableNext(true);
       } else {
-        setEnableNext(false);
+        // Enable next button if experiment status indicates data has been prepared
+        // This covers cases where file upload was successful but user hasn't navigated to preview yet
+        const hasDataPrepared = experimentInformation.status &&
+          (experimentInformation.status === "PREPARED" ||
+           experimentInformation.status === "PREPROCESSING" ||
+           experimentInformation.status === "TRAINING" ||
+           experimentInformation.status === "TRAINED" ||
+           experimentInformation.status === "DEPLOYED");
+        setEnableNext(hasDataPrepared);
       }
     } else if (location.pathname.includes("train")) {
       setSelectedTab("train");

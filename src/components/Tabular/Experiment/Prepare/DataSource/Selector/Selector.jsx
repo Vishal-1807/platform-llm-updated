@@ -12,6 +12,7 @@ import {
   GetAllConnectors,
   GetUserDatasets,
   UploadFileTos3,
+  UpdateExp,
 } from "../../../../../../services/Portals/MLopsPortals";
 import { useParams } from "react-router-dom";
 import AppsIcon from "../../../../../../assets/DBImages/Apps.svg?react";
@@ -80,6 +81,7 @@ export default function Selector() {
   const [fileData, setFileData] = useState("");
   const [signedUrl, setSignedUrl] = useState("");
   const [FileName, setFileName] = useState("");
+  const [isUploading, setIsUploading] = useState(false);
 
   const inputFile = useRef(null);
   const navigate = useNavigate();
@@ -94,22 +96,40 @@ export default function Selector() {
   };
 
   const UploadFileToBucket = async () => {
-    const res = await UploadFileTos3(fileData, experimentId, "uploadPage");
-    if (res.s3Res.status === 204) {
-      let urlRes = res.getUrlRes.data;
-      let url =
-        urlRes.url.replace("https", "s3").replace(".s3.amazonaws.com", "") +
-        urlRes.fields.key;
-      setSignedUrl(url);
+    setIsUploading(true);
+    try {
+      const res = await UploadFileTos3(fileData, experimentId, "uploadPage");
+      if (res.s3Res.status === 204) {
+        let urlRes = res.getUrlRes.data;
+        let url =
+          urlRes.url.replace("https", "s3").replace(".s3.amazonaws.com", "") +
+          urlRes.fields.key;
+        setSignedUrl(url);
 
-      setTimeout(() => {
-        navigate(
-          `/tabular/${projectId}/Experiment/${experimentId}/prepare/preview`,
-          {
-            state: { url: url, fileName: FileName },
-          }
-        );
-      }, 2000);
+        // Update experiment status to PREPARED after successful upload
+        try {
+          await UpdateExp(experimentId);
+          console.log("Experiment status updated to PREPARED");
+        } catch (err) {
+          console.log("Error updating experiment status:", err);
+        }
+
+        setTimeout(() => {
+          setIsUploading(false);
+          navigate(
+            `/tabular/${projectId}/Experiment/${experimentId}/prepare/preview`,
+            {
+              state: { url: url, fileName: FileName },
+            }
+          );
+        }, 2000);
+      } else {
+        setIsUploading(false);
+        console.log("Upload failed with status:", res.s3Res.status);
+      }
+    } catch (error) {
+      setIsUploading(false);
+      console.log("Upload error:", error);
     }
   };
   useEffect(() => {
@@ -379,11 +399,15 @@ export default function Selector() {
                       <Grid item>
                         <Box sx={{ display: "flex", alignItems: "center" }}>
                           <Box sx={{ width: "100%", mr: 1 }}>
-                            <LinearProgress variant="determinate" value={100} />
+                            <LinearProgress
+                              variant={isUploading ? "indeterminate" : "determinate"}
+                              value={isUploading ? undefined : 100}
+                              color={isUploading ? "primary" : "success"}
+                            />
                           </Box>
                           <Box sx={{ minWidth: 35 }}>
                             <Typography variant="body2" color="text.secondary">
-                              {100}%
+                              {isUploading ? "Uploading..." : "100%"}
                             </Typography>
                           </Box>
                         </Box>
