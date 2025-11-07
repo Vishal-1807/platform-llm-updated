@@ -95,13 +95,15 @@ export default function Selector() {
 
   const UploadFileToBucket = async () => {
     const res = await UploadFileTos3(fileData, experimentId, "uploadPage");
-    if (res.s3Res.status === 204) {
+    
+    // Check for successful upload (200-299 range, Azure returns 201)
+    if (res.s3Res.ok || res.s3Res.status === 201) {
       let urlRes = res.getUrlRes.data;
-      let url =
-        urlRes.url.replace("https", "s3").replace(".s3.amazonaws.com", "") +
-        urlRes.fields.key;
+      
+      // Azure Blob URL is already in correct format
+      let url = urlRes.url;
       setSignedUrl(url);
-
+      
       setTimeout(() => {
         navigate(
           `/tabular/${projectId}/Experiment/${experimentId}/prepare/preview`,
