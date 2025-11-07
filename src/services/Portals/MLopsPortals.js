@@ -71,30 +71,35 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
         {}
       );
     }
+    
     if (urlRes.status === 200) {
       let urlData = urlRes.data;
-      var formdata = new FormData();
-      formdata.append("key", urlData.fields["key"]);
-      formdata.append("x-amz-algorithm", urlData.fields["x-amz-algorithm"]);
-      formdata.append("x-amz-credential", urlData.fields["x-amz-credential"]);
-      formdata.append("x-amz-date", urlData.fields["x-amz-date"]);
-      formdata.append("policy", urlData.fields["policy"]);
-      formdata.append("x-amz-signature", urlData.fields["x-amz-signature"]);
-      formdata.append("file", file);
-
-      var signeddata = {
-        method: "POST",
-        body: formdata,
+      
+      // ✅ Azure Blob Storage upload using PUT
+      const uploadOptions = {
+        method: "PUT",  // Changed from POST
+        headers: {
+          "x-ms-blob-type": urlData.fields["x-ms-blob-type"] || "BlockBlob",
+          "Content-Type": file.type || "application/octet-stream"
+        },
+        body: file,  // Send raw file, not FormData
         redirect: "follow",
       };
 
-      return { s3Res: await fetch(urlData.url, signeddata), getUrlRes: urlRes };
+      const s3Res = await fetch(urlData.url, uploadOptions);
+      
+      // ✅ Azure returns 201 Created for successful uploads
+      if (s3Res.ok) {  // Checks for 200-299 range (includes 201)
+        return { s3Res, getUrlRes: urlRes };
+      } else {
+        throw new Error(`Upload failed with status ${s3Res.status}`);
+      }
     } else {
       return "Error";
-      // setMessage("File Uploaded Failed try again");
     }
   } catch (err) {
     console.log(err);
+    throw err;
   }
 };
 
