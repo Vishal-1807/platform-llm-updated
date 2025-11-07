@@ -54,7 +54,7 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
   try {
     let urlRes;
     if (uploadFilePage === "uploadPage") {
-      urlRes = await API.post(
+      urlRes = await ConnectorAPI.post(
         `/connectors/create_signed_url_experiment?filename=${file.name}&exp_id=${exp_id}`,
         {}
       );
@@ -234,7 +234,7 @@ export const GetUserDatasets = async () => {
 };
 
 export const GetSourcesforConnector = async (source) => {
-  return await API.get(
+  return await ConnectorAPI.get(
     `/connectors/getSourcesforConnector?source=${source}`,
     {}
   );
