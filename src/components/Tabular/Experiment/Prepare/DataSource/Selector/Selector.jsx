@@ -19,7 +19,7 @@ import AppsIcon from "../../../../../../assets/DBImages/Apps.svg?react";
 import TablesIcon from "../../../../../../assets/DBImages/Tables.svg?react";
 import DatabasesIcon from "../../../../../../assets/DBImages/Databases.svg?react";
 import StoragesIcon from "../../../../../../assets/DBImages/Storages.svg?react";
-import arrow from "../../../../../../assets/DBImages/arrow.png";
+
 import ChevronRightIcon from "../../../../../../assets/icons/chevronright.svg?react";
 import mySql from "../../../../../../assets/images/DataSources/mysql.png";
 import postGres from "../../../../../../assets/images/DataSources/postgres.png";
@@ -66,12 +66,9 @@ const DataSourcesList = {
   MongoDB: MongoDB,
   Cassandra: Cassandra,
 };
-import Buttons from "../../../../../Elements/Buttons";
-import cibilogo from "../../../../../../assets/LoginImages/cibiLogo.png";
-import { faX, faUpload, faFileLines } from "@fortawesome/free-solid-svg-icons";
+import { faUpload, faFileLines } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinearProgress from "@mui/material/LinearProgress";
-import { SpaRounded } from "@mui/icons-material";
 export default function Selector() {
   const { projectId, experimentId } = useParams();
   const [connectorsList, setConnectorsList] = useState([]);
@@ -99,7 +96,7 @@ export default function Selector() {
     setIsUploading(true);
     try {
       const res = await UploadFileTos3(fileData, experimentId, "uploadPage");
-      if (res.s3Res.status === 204) {
+      if (res.s3Res.status === 204 || res.s3Res.status === 201) {
         let urlRes = res.getUrlRes.data;
         let url =
           urlRes.url.replace("https", "s3").replace(".s3.amazonaws.com", "") +
@@ -281,7 +278,10 @@ export default function Selector() {
           sx={{ width: "95%", textAlign: "right", m: 1, cursor: "pointer" }}
           onClick={() => {
             setOpenModel(false);
-            onChildClick(false);
+            // Reset file data when closing modal
+            setFileData("");
+            setFileName("");
+            setIsUploading(false);
           }}
         >
           X
