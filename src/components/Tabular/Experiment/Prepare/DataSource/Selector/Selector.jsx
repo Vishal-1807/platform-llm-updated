@@ -263,7 +263,7 @@ export default function Selector() {
           sx={{ width: "95%", textAlign: "right", m: 1, cursor: "pointer" }}
           onClick={() => {
             setOpenModel(false);
-            onChildClick(false);
+            // onChildClick(false);
           }}
         >
           X
