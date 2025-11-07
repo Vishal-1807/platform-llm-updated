@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import { Button, Typography, Dialog, TextField, Checkbox, IconButton, Fade, Slide } from "@mui/material";
-import cibilogo from "../../../assets/LoginImages/cibiLogo.png";
 import "./CreateProject.css";
 import Buttons from "../../Elements/Buttons";
 import { useNavigate } from "react-router-dom";

@@ -66,7 +66,7 @@ const DataSourcesList = {
   Cassandra: Cassandra,
 };
 import Buttons from "../../../../../Elements/Buttons";
-import cibilogo from "../../../../../../assets/LoginImages/cibiLogo.png";
+// import cibilogo from "../../../../../../assets/LoginImages/cibiLogo.png";
 import { faX, faUpload, faFileLines } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -285,7 +285,7 @@ export default function Selector() {
           >
             <Box>
               <center>
-                <img src={cibilogo} style={{ width: "20%" }}></img>
+                {/* <img src={cibilogo} style={{ width: "20%" }}></img> */}
               </center>
             </Box>
             <Typography className="CreateProject">

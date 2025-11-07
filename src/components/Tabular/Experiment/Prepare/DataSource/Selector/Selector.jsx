@@ -305,7 +305,7 @@ export default function Selector() {
           >
             <Box>
               <center>
-                <img src={cibilogo} style={{ width: "20%" }}></img>
+                {/* <img src={cibilogo} style={{ width: "20%" }}></img> */}
               </center>
             </Box>
             <Typography className="CreateProject">
