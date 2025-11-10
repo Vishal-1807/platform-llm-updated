@@ -97,7 +97,7 @@ export const UploadFileTos3 = async (file, exp_id, uploadFilePage) => {
 };
 
 export const GetDataPreview = async (inputPath) => {
-  return await API.post(
+  return await ConnectorAPI.post(
     `/data_preview?input_path=${inputPath}`,
     {}
   );
