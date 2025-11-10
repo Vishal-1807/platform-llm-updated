@@ -74,7 +74,7 @@ export default function SideBar() {
         </NavLink>
         <NavLink to="/tabular" className="ta-sidebar__item">
           <TabularIcon className="ta-sidebar__icon" />
-          <span>Tabular</span>
+          <span>MLOps</span>
         </NavLink>
 
         {/* Expandable LLM Menu */}
