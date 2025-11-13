@@ -136,7 +136,7 @@ export default function Grafana({ reportItem }) {
         );
 
       case reportItem === "Training System Metrics":
-        let TSMUrl = `${ApiUrl}/cibi/grafana/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=Prometheus&var-namespace=${lowerCaseProjectId}-train&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
+        let TSMUrl = `https://awone-api.axiomio.com/cibi/grafana/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=Prometheus&var-namespace=${lowerCaseProjectId}-train&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
         return (
           <>
             <Grid sx={{ width: "100%" }}>
@@ -161,7 +161,7 @@ export default function Grafana({ reportItem }) {
           </>
         );
       case reportItem === "Preprocessing System Metrics":
-        let PSMUrl = `${ApiUrl}/cibi/grafana/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=Prometheus&var-namespace=${lowerCaseProjectId}-preprocess&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
+        let PSMUrl = `https://awone-api.axiomio.com/cibi/grafana/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=Prometheus&var-namespace=${lowerCaseProjectId}-preprocess&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
         return (
           <>
             <SelectFilter
@@ -183,7 +183,7 @@ export default function Grafana({ reportItem }) {
         );
 
       case reportItem === "Inference system Metrics":
-        let ISMUrl = `${ApiUrl}/cibi/grafana/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=Prometheus&var-namespace=${lowerCaseProjectId}-infer&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
+        let ISMUrl = `https://awone-api.axiomio.com/cibi/grafana/d/k8s_views_ns/kubernetes-views-namespaces?orgId=1&refresh=30s&var-datasource=Prometheus&var-namespace=${lowerCaseProjectId}-infer&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
         return (
           <>
             <SelectFilter
@@ -204,7 +204,7 @@ export default function Grafana({ reportItem }) {
           </>
         );
       case reportItem === "Cost":
-        let CUrl = `${ApiUrl}/cibi/grafana/d/2LaqbJ0Zk/kubecost?orgId=1&refresh=10s&var-namespace=${lowerCaseProjectId}-infer&var-namespace=${lowerCaseProjectId}-preprocess&var-namespace=${lowerCaseProjectId}-train&theme=light&kiosk&width=450&from=${CostrangeFromValue}&to=${rangeToValue}`;
+        let CUrl = `https://awone-api.axiomio.com/cibi/grafana/d/2LaqbJ0Zk/kubecost?orgId=1&refresh=10s&var-namespace=${lowerCaseProjectId}-infer&var-namespace=${lowerCaseProjectId}-preprocess&var-namespace=${lowerCaseProjectId}-train&theme=light&kiosk&width=450&from=${CostrangeFromValue}&to=${rangeToValue}`;
         return (
           <>
             <SelectFilter
@@ -226,7 +226,7 @@ export default function Grafana({ reportItem }) {
         );
 
       case reportItem === "Drift Metrics":
-        let DTUrl = `${ApiUrl}/cibi/grafana/d/d9e2bfd9-c994-4274-8869-1b4cb092f678/drift-metrics?orgId=1&refresh=30s&var-experiment=${experimentId}&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
+        let DTUrl = `https://awone-api.axiomio.com/cibi/grafana/d/d9e2bfd9-c994-4274-8869-1b4cb092f678/drift-metrics?orgId=1&refresh=30s&var-experiment=${experimentId}&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
         return (
           <>
             <SelectFilter
@@ -249,7 +249,7 @@ export default function Grafana({ reportItem }) {
       case reportItem === "Confusion Matrix":
         return <ConfusionMatrix experimentId={experimentId} />;
       case reportItem === "Load test Metrics":
-        let LSMUrl = `${ApiUrl}/cibi/grafana/d/b0e1e08e-c158-4328-917b-fdf2a42ae8e1/locust-v1?orgId=1&refresh=30s&var-TestId=${experimentId}&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
+        let LSMUrl = `https://awone-api.axiomio.com/cibi/grafana/d/b0e1e08e-c158-4328-917b-fdf2a42ae8e1/locust-v1?orgId=1&refresh=30s&var-TestId=${experimentId}&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
         return (
           <>
             {Showloading && (
