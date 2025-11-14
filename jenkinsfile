@@ -11,7 +11,7 @@ pipeline {
         AZURE_TENANT_ID       = credentials('azure-sp-tenant-id')
         AZURE_SUBSCRIPTION_ID = credentials('azure-subscription-id')
         AZURE_STORAGE_ACCOUNT = credentials('AZURE_STORAGE_ACCOUNT')
-        AKS_RESOURCE_GROUP = credentials('AKS_RESOURCE_GROUP')  // Replace with actual resource group name
+        AZURE_RESOURCE_GROUP = credentials('AKS_RESOURCE_GROUP')  
         STORAGE_CONTAINER     = '$web'
     }
     
