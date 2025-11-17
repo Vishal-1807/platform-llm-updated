@@ -56,7 +56,7 @@ pipeline {
                         
                         echo "Storage Key retrieved successfully"
                         
-                        # Method 1: Try direct upload first
+                          # Try direct upload first
                         echo "Attempting Method 1: Direct upload..."
                         if az storage blob upload-batch \
                             --account-name "${AZURE_STORAGE_ACCOUNT}" \
@@ -68,44 +68,6 @@ pipeline {
                             echo " Upload successful using Method 1"
                             exit 0
                         fi
-                        
-                        echo "Method 1 failed, trying Method 2..."
-                        
-                        # Method 2: Try with different container name format
-                        if az storage blob upload-batch \
-                            --account-name "${AZURE_STORAGE_ACCOUNT}" \
-                            --account-key "${STORAGE_KEY}" \
-                            --destination "\\\$web" \
-                            --source "./dist" \
-                            --overwrite; then
-                            
-                            echo " Upload successful using Method 2"
-                            exit 0
-                        fi
-                        
-                        echo "Method 2 failed, trying Method 3..."
-                        
-                        # Method 3: Use Azure AD authentication
-                        if az storage blob upload-batch \
-                            --account-name "${AZURE_STORAGE_ACCOUNT}" \
-                            --auth-mode login \
-                            --destination '\\$web' \
-                            --source "./dist" \
-                            --overwrite; then
-                            
-                            echo " Upload successful using Method 3"
-                            exit 0
-                        fi
-                        
-                        echo "All methods failed. Checking network connectivity..."
-                        
-                        # Network diagnostics
-                        echo "=== Network Diagnostics ==="
-                        nslookup google.com || echo "DNS resolution failed"
-                        curl -I https://microsoft.com || echo "HTTPS connectivity failed"
-                        
-                        echo " All upload methods failed. Please check network connectivity."
-                        exit 1
                     '''
                 }
             }
