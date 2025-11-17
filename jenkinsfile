@@ -53,27 +53,17 @@ pipeline {
                             --resource-group ${AZURE_RESOURCE_GROUP} \
                             --query '[0].value' \
                             --output tsv)
-
-                        #CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=${AZURE_STORAGE_ACCOUNT};AccountKey=${STORAGE_KEY};BlobEndpoint=https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net;"
                         
-                        # Generate SAS token for the container
-                        SAS_TOKEN=$(az storage container generate-sas \
-                            --name '$web' \
-                            --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --permissions acdlrw \
-                            --expiry $(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ') \
-                            --auth-mode login \
-                            --as-user \
-                            --output tsv)
+                        # Create connection string with private endpoint
+                        CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=${AZURE_STORAGE_ACCOUNT};AccountKey=${STORAGE_KEY};BlobEndpoint=https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net;"
                         
+                        # Upload directly using connection string
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
-                            --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --sas-token "${SAS_TOKEN}" \
+                            --connection-string "${CONNECTION_STRING}" \
                             --destination '$web' \
                             --source "./dist" \
-                            --overwrite \
-                            --endpoint "https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net"
+                            --overwrite
                         
                         echo "Files uploaded successfully to Azure Storage Static Website!"
                     '''
