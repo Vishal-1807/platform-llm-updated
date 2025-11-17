@@ -11,8 +11,7 @@ pipeline {
         AZURE_TENANT_ID       = credentials('azure-sp-tenant-id')
         AZURE_SUBSCRIPTION_ID = credentials('azure-subscription-id')
         AZURE_STORAGE_ACCOUNT = credentials('AZURE_STORAGE_ACCOUNT')
-        AZURE_RESOURCE_GROUP = credentials('AKS_RESOURCE_GROUP')  
-        STORAGE_CONTAINER     = '$web'
+        AZURE_RESOURCE_GROUP  = credentials('AKS_RESOURCE_GROUP')
     }
     
     stages {
@@ -38,30 +37,38 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        # Login to Azure
+                        set -e
+                        echo "🔹 Logging in to Azure..."
                         az login --service-principal \
-                            -u ${AZURE_CLIENT_ID} \
-                            -p ${AZURE_CLIENT_SECRET} \
-                            --tenant ${AZURE_TENANT_ID}
+                            -u "${AZURE_CLIENT_ID}" \
+                            -p "${AZURE_CLIENT_SECRET}" \
+                            --tenant "${AZURE_TENANT_ID}"
                         
-                        az account set --subscription ${AZURE_SUBSCRIPTION_ID}
-                        
-                        # Get storage account key
-                        echo "Getting storage account key..."
+                        az account set --subscription "${AZURE_SUBSCRIPTION_ID}"
+
+                        echo "🔹 Getting storage account key..."
                         STORAGE_KEY=$(az storage account keys list \
-                            --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --resource-group ${AZURE_RESOURCE_GROUP} \
-                            --query '[0].value' \
+                            --account-name "${AZURE_STORAGE_ACCOUNT}" \
+                            --resource-group "${AZURE_RESOURCE_GROUP}" \
+                            --query "[0].value" \
                             --output tsv)
-                        
-                        # Upload using storage key
-                        echo "Starting upload to Azure Storage..."
+
+                        if [ -z "$STORAGE_KEY" ]; then
+                            echo " ERROR: STORAGE_KEY is empty"
+                            exit 1
+                        fi
+
+                        echo "🔹 Building private endpoint connection string..."
+                        CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=${AZURE_STORAGE_ACCOUNT};AccountKey=${STORAGE_KEY};BlobEndpoint=https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net;"
+
+                        echo "🔹 Uploading files to Azure Blob Storage..."
                         az storage blob upload-batch \
-                            --connection-string "$STORAGE_CONTAINER" \
-                            --destination ${STORAGE_CONTAINER} \
-                            --source ./dist \
+                            --connection-string "$CONNECTION_STRING" \
+                            --destination "\$web" \
+                            --source "./dist" \
                             --overwrite
-                        echo "Files uploaded successfully to Azure Storage Static Website!"
+
+                        echo " Files uploaded successfully to Azure Storage Static Website!"
                     '''
                 }
             }
