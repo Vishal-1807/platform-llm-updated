@@ -56,17 +56,15 @@ pipeline {
                         
                         echo "Storage Key retrieved successfully"
                         
-                          # Try direct upload first
-                        echo "Attempting Method 1: Direct upload..."
+                        # Try with different container name format
                         if az storage blob upload-batch \
                             --account-name "${AZURE_STORAGE_ACCOUNT}" \
                             --account-key "${STORAGE_KEY}" \
-                            --destination '\\$web' \
+                            --destination '$web' \
+                            --destination "\\\$web" \
                             --source "./dist" \
+                            --overwrite
                             --overwrite; then
-                            
-                            echo " Upload successful using Method 1"
-                            exit 0
                         fi
                     '''
                 }
