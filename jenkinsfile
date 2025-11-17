@@ -61,8 +61,8 @@ pipeline {
                             --account-key "$STORAGE_KEY" \
                             --destination ${STORAGE_CONTAINER} \
                             --source ./dist \
-                            --overwrite
-                        
+                            --overwrite \
+                            --endpoint https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net
                         echo "Files uploaded successfully to Azure Storage Static Website!"
                     '''
                 }
