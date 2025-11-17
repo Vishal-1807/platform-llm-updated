@@ -60,7 +60,8 @@ pipeline {
                         # Upload directly using connection string
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
-                            --connection-string "${CONNECTION_STRING}" \
+                            --account-name ${AZURE_STORAGE_ACCOUNT} \
+                            --account-key "${STORAGE_KEY}" \
                             --destination '$web' \
                             --source "./dist" \
                             --overwrite
