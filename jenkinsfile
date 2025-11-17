@@ -54,14 +54,15 @@ pipeline {
                             --query '[0].value' \
                             --output tsv)
 
-                        CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=${AZURE_STORAGE_ACCOUNT};AccountKey=${STORAGE_KEY};BlobEndpoint=https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net;"
+                        #CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=${AZURE_STORAGE_ACCOUNT};AccountKey=${STORAGE_KEY};BlobEndpoint=https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net;"
                         
-                        # Upload using storage key
+                        # Upload using Azure AD authentication (simpler)
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
-                            --connection-string '$CONNECTION_STRING' \
+                            --account-name ${AZURE_STORAGE_ACCOUNT} \
+                            --auth-mode login \
                             --destination '$web' \
-                            --source './dist' \
+                            --source "./dist" \
                             --overwrite
                         
                         echo "Files uploaded successfully to Azure Storage Static Website!"
