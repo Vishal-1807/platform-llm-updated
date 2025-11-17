@@ -60,7 +60,7 @@ pipeline {
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
                             --connection-string "$CONNECTION_STRING" \
-                            --destination "\$web" \
+                            --destination "$web" \
                             --source "./dist" \
                             --overwrite
                         
