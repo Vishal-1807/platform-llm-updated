@@ -56,14 +56,24 @@ pipeline {
 
                         #CONNECTION_STRING="DefaultEndpointsProtocol=https;AccountName=${AZURE_STORAGE_ACCOUNT};AccountKey=${STORAGE_KEY};BlobEndpoint=https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net;"
                         
-                        # Upload using Azure AD authentication (simpler)
+                        # Generate SAS token for the container
+                        SAS_TOKEN=$(az storage container generate-sas \
+                            --name '$web' \
+                            --account-name ${AZURE_STORAGE_ACCOUNT} \
+                            --permissions acdlrw \
+                            --expiry $(date -u -d "1 hour" '+%Y-%m-%dT%H:%MZ') \
+                            --auth-mode login \
+                            --as-user \
+                            --output tsv)
+                        
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
                             --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --auth-mode login \
+                            --sas-token "${SAS_TOKEN}" \
                             --destination '$web' \
                             --source "./dist" \
-                            --overwrite
+                            --overwrite \
+                            --endpoint "https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net"
                         
                         echo "Files uploaded successfully to Azure Storage Static Website!"
                     '''
