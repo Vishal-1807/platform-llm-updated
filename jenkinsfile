@@ -12,7 +12,7 @@ pipeline {
         AZURE_SUBSCRIPTION_ID = credentials('azure-subscription-id')
         AZURE_STORAGE_ACCOUNT = credentials('AZURE_STORAGE_ACCOUNT')
         AZURE_RESOURCE_GROUP = credentials('AKS_RESOURCE_GROUP')  
-        STORAGE_CONTAINER     = '$web'
+        STORAGE_CONTAINER     = 'web'
     }
     
     stages {
