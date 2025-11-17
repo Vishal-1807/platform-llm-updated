@@ -1,77 +1,92 @@
 pipeline {
     agent any
-    
+
     tools {
         nodejs 'Node_18'
     }
-    
+
     environment {
         AZURE_CLIENT_ID       = credentials('azure-sp-client-id')
         AZURE_CLIENT_SECRET   = credentials('azure-sp-client-secret')
         AZURE_TENANT_ID       = credentials('azure-sp-tenant-id')
         AZURE_SUBSCRIPTION_ID = credentials('azure-subscription-id')
         AZURE_STORAGE_ACCOUNT = credentials('AZURE_STORAGE_ACCOUNT')
-        AZURE_RESOURCE_GROUP  = credentials('AKS_RESOURCE_GROUP')  
-        STORAGE_CONTAINER     = '$web'
+        AZURE_RESOURCE_GROUP  = credentials('AKS_RESOURCE_GROUP')  // optional, we auto-detect if blank
     }
-    
+
     stages {
         stage('Install Dependencies') {
-            steps {
-                sh 'npm install'
-            }
+            steps { sh 'npm install' }
         }
-        
+
         stage('Build') {
-            steps {
-                sh 'npm run build'
-            }
+            steps { sh 'npm run build' }
         }
-        
+
         stage('Test') {
-            steps {
-                sh 'npm test'
-            }
+            steps { sh 'npm test' }
         }
-        
+
         stage('Azure Upload') {
             steps {
                 script {
                     sh '''
-                        # Login to Azure
+                        set -euo pipefail
+
+                        echo " Login to Azure (SPN)..."
                         az login --service-principal \
-                            -u ${AZURE_CLIENT_ID} \
-                            -p ${AZURE_CLIENT_SECRET} \
-                            --tenant ${AZURE_TENANT_ID}
-                        
-                        az account set --subscription ${AZURE_SUBSCRIPTION_ID}
-                        
-                        # Get storage account key
-                        echo "Getting storage account key..."
-                        STORAGE_KEY=$(az storage account keys list \
-                            --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --resource-group ${AZURE_RESOURCE_GROUP} \
-                            --query '[0].value' \
-                            --output tsv)
-                        
-                        echo "Storage Key retrieved successfully"
-                        
-                        # Try with different container name format
-                        if az storage blob upload-batch \
-                            --account-name "${AZURE_STORAGE_ACCOUNT}" \
-                            --account-key "${STORAGE_KEY}" \
-                            --destination '$web' \
-                            --destination "\\\$web" \
-                            --source "./dist" \
-                            --overwrite
-                            --overwrite; then
+                            -u "${AZURE_CLIENT_ID}" \
+                            -p "${AZURE_CLIENT_SECRET}" \
+                            --tenant "${AZURE_TENANT_ID}" >/dev/null
+
+                        az account set --subscription "${AZURE_SUBSCRIPTION_ID}"
+
+                        # If AZURE_RESOURCE_GROUP is empty or wrong, auto-detect it
+                        if [ -z "${AZURE_RESOURCE_GROUP}" ]; then
+                          echo " AZURE_RESOURCE_GROUP is empty — detecting resource group for storage account..."
+                          STORAGE_RG=$(az storage account show \
+                            --name "${AZURE_STORAGE_ACCOUNT}" \
+                            --query resourceGroup -o tsv) || true
+                        else
+                          STORAGE_RG="${AZURE_RESOURCE_GROUP}"
                         fi
+
+                        if [ -z "${STORAGE_RG}" ]; then
+                          echo " Could not determine resource group for storage account ${AZURE_STORAGE_ACCOUNT}"
+                          az storage account list --query '[].{name:name,resourceGroup:resourceGroup}' -o table || true
+                          exit 1
+                        fi
+
+                        echo " Storage account is in resource group: ${STORAGE_RG}"
+
+                        echo "🔹 Getting connection string..."
+                        CONNECTION_STRING=$(az storage account show-connection-string \
+                          --name "${AZURE_STORAGE_ACCOUNT}" \
+                          --resource-group "${STORAGE_RG}" \
+                          --output tsv)
+
+                        if [ -z "$CONNECTION_STRING" ]; then
+                          echo " Failed to obtain connection string. Check SPN permissions."
+                          exit 1
+                        fi
+
+                        # Replace public endpoint with privatelink endpoint (for private storage accounts)
+                        CONNECTION_STRING="${CONNECTION_STRING/core.windows.net/privatelink.blob.core.windows.net}"
+
+                        echo "🔹 Uploading files via private endpoint..."
+                        az storage blob upload-batch \
+                          --connection-string "$CONNECTION_STRING" \
+                          --destination "\\\$web" \
+                          --source "./dist" \
+                          --overwrite
+
+                        echo " Upload completed"
                     '''
                 }
             }
         }
     }
-    
+
     post {
         always {
             sh 'az logout || true'
