@@ -59,9 +59,9 @@ pipeline {
                         # Upload using storage key
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
-                            --connection-string "$CONNECTION_STRING" \
-                            --destination "$web" \
-                            --source "./dist" \
+                            --connection-string '$CONNECTION_STRING' \
+                            --destination '$web' \
+                            --source './dist' \
                             --overwrite
                         
                         echo "Files uploaded successfully to Azure Storage Static Website!"
