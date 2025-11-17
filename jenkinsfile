@@ -57,12 +57,10 @@ pipeline {
                         # Upload using storage key
                         echo "Starting upload to Azure Storage..."
                         az storage blob upload-batch \
-                            --account-name ${AZURE_STORAGE_ACCOUNT} \
-                            --account-key "$STORAGE_KEY" \
+                            --connection-string "$CONNECTION_STRING" \
                             --destination ${STORAGE_CONTAINER} \
                             --source ./dist \
-                            --overwrite \
-                            --endpoint https://${AZURE_STORAGE_ACCOUNT}.privatelink.blob.core.windows.net
+                            --overwrite
                         echo "Files uploaded successfully to Azure Storage Static Website!"
                     '''
                 }
