@@ -1,13 +1,13 @@
 export const TabularBaseUrls = {
-  development: `https://awone-api.axiomio.com/tabular`,
-  stage: `https://awone-api.axiomio.com/tabular`,
-  production: `https://awone-api.axiomio.com/tabular`,
+  development: `https://api.workbenchai.aubrant.com/tabular`,
+  stage: `https://api.workbenchai.aubrant.com/tabular`,
+  production: `https://api.workbenchai.aubrant.com/tabular`,
 };
 
 export const LLMBaseUrls = {
-  development: `https://awone-api.axiomio.com/cibi/llm-dev`,
-  stage: `https://awone-api.axiomio.com/cibi/llm-test`,
-  production: `https://awone-api.axiomio.com/cibi/llm`,
+  development: `https://api.workbenchai.aubrant.com/cibi/llm-dev`,
+  stage: `https://api.workbenchai.aubrant.com/cibi/llm-test`,
+  production: `https://api.workbenchai.aubrant.com/cibi/llm`,
 };
 
 export const ConsumptionBaseUrls = {

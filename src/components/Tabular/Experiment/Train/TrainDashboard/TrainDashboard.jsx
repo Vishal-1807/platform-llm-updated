@@ -10,7 +10,7 @@ export const TrainDashboard = ({ experimentId, experimentStatus, message}) =>{
     useEffect(() => {
         console.log(experimentId);
         if(experimentId){
-            const url = `https://awone-api.axiomio.com/cibi/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/model-metrics-optuna?orgId=1&var-experiment=${experimentId}&theme=light&kiosk&width=450&refresh=2s`;
+            const url = `https://api.workbenchai.aubrant.com/cibi/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/model-metrics-optuna?orgId=1&var-experiment=${experimentId}&theme=light&kiosk&width=450&refresh=2s`;
             setDashboardUrl(url);
         }
     }, [experimentId]);

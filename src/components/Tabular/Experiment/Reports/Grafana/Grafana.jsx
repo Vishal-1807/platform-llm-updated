@@ -95,7 +95,7 @@ export default function Grafana({ reportItem }) {
     switch (true) {
       case reportItem === "Training Metrics":
         // let TMUrl = `${ApiUrl}/cibi/grafana/d/d83e760a-ce8d-4ba1-a289-4cff0909c7ff/model-metrics?orgId=1&refresh=30s&var-experiment=${experimentId}&theme=light&kiosk&width=450&from=${rangeFromValue}&to=${rangeToValue}`;
-        let TMUrl = `https://awone-api.axiomio.com/cibi/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/model-metrics-optuna?orgId=1&var-experiment=${experimentId}&theme=light&kiosk&width=450`;
+        let TMUrl = `https://api.workbenchai.aubrant.com/cibi/grafana/d/a91763bb-d009-4be3-b378-2187a01e08bd/model-metrics-optuna?orgId=1&var-experiment=${experimentId}&theme=light&kiosk&width=450`;
         return (
           <>
             <Grid sx={{ width: "100%" }}>

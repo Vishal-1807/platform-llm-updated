@@ -82,7 +82,7 @@ export default function LLMReports() {
                 }}>
                     <iframe
                         src={
-                            "https://awone-api.axiomio.com/cibi/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&var-experiment=" +
+                            "https://api.workbenchai.aubrant.com/cibi/grafana/d/ecddfeaf-d0de-4b10-8007-41143c53ec40/llm-valuation-and-evaluation-metrics?orgId=1&var-experiment=" +
                             experimentId +
                             "&kiosk&refresh=5s&theme=light"
                           }
@@ -129,7 +129,7 @@ export default function LLMReports() {
                         display: "flex"
                     }}>
                         <iframe
-                            src={"https://awone-api.axiomio.com/cibi/grafana/d/b711bbe2-1728-4234-977c-24f08947e994/model-metrics-llm?orgId=1&var-experiment="+experimentId+"&kiosk&theme=light&panelId=5"}
+                            src={"https://api.workbenchai.aubrant.com/cibi/grafana/d/b711bbe2-1728-4234-977c-24f08947e994/model-metrics-llm?orgId=1&var-experiment="+experimentId+"&kiosk&theme=light&panelId=5"}
                             width="100%"
                             height="100%"
                             style={{
