@@ -60,45 +60,39 @@ export default function PreTrain() {
     seterrorMesg("");
     setShowLoader(true);
     let tempS3Location = s3Location;
+    
     if (fileData) {
       let res = await UploadFileTos3(fileData, experimentId, "PreparePage");
-      if (!res?.s3Res?.ok) {
+      
+      // ✅ Fix: Accept 2xx status codes (Azure returns 201)
+      if (!res?.s3Res?.ok && (res?.s3Res?.status < 200 || res?.s3Res?.status >= 300)) {
         setShowLoader(false);
         console.log("Error in uploading file", res);
         seterrorMesg("Upload failed please try again");
         return;
       }
-      tempS3Location = decodeURIComponent(
-        res.s3Res.url
-          .split("?")[0]
-          .replace(".s3.amazonaws.com", "")
-          .replace("https://", "s3://")
-      );
-      setS3Location(tempS3Location);
+      
+      // ✅ Fix: Keep Azure URL as-is (remove SAS token only)
+      tempS3Location = res.s3Res.url.split("?")[0];
     }
+    
     if (
       tempS3Location.endsWith(".csv") ||
       tempS3Location.endsWith(".parquet")
     ) {
       await UpdateConfig(experimentId, "data", {
-        input: tempS3Location,
-        // text:"sentence",
+        input: tempS3Location,  // ✅ Now stores proper Azure HTTPS URL
         type: taskType == "pretrain" ? "pretrain" : "sft",
       });
       await UpdateExp(experimentId, "PREPARED");
       navigate("preview");
-      //setGetdataAPI(true);
-      // await Preprocess(experimentId)
-      // await isReady()
-      // console.log("Preprocessing Done", experimentData)
-      // await UpdateConfig()
     } else {
       console.log("Folder");
       setShowLoader(true);
       const data = {
-        data_uri: s3Location,
+        data_uri: tempS3Location,  // ✅ Proper Azure URL for folders too
       };
-
+  
       UpdateConfig(experimentId, "train", data)
         .then((res) => {
           console.log("UpdataTrain", res);
@@ -124,7 +118,7 @@ export default function PreTrain() {
         });
     }
   };
-
+  
   const Datapreview = () => {
     GetDataPreview(experimentId, "")
       .then((DataRes) => {
