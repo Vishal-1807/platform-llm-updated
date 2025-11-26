@@ -62,7 +62,7 @@ export default function PreTrain() {
     let tempS3Location = s3Location;
     if (fileData) {
       let res = await UploadFileTos3(fileData, experimentId, "PreparePage");
-      if (res?.s3Res?.status != 200) {
+      if (!res?.s3Res?.ok) {
         setShowLoader(false);
         console.log("Error in uploading file", res);
         seterrorMesg("Upload failed please try again");
