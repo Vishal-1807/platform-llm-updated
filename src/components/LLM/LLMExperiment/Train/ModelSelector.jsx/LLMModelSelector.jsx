@@ -115,13 +115,8 @@ export default function LLMModelSelector() {
     if (getmodels) {
       Models("hugging-face").then((modelres) => {
         let filteredModels;
-        if (taskType === "pretrain") {
-          filteredModels = modelres.data["hugging-face"].filter(
-            (item) => item.applies_to !== "finetune"
-          );
-        } else {
-          filteredModels = modelres.data["hugging-face"];
-        }
+        // For now, show all models for pretrain since API returns only 'finetune' applies_to
+        filteredModels = modelres.data["hugging-face"];
         setModelsnew(filteredModels);
       });
     }
