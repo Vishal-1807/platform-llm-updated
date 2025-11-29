@@ -7,6 +7,7 @@
   line-height: 34.2px;
   margin: 10px !important;
 }
+
 .ReportName {
   color: var(--Shades-Black-4, #8d8dac);
   font-family: "Plus Jakarta Sans";
@@ -16,7 +17,9 @@
   line-height: normal;
   cursor: pointer;
   width: auto;
+  white-space: nowrap;
 }
+
 .activeReport {
   color: var(--Primary-Blue, #1E90FF) !important;
   font-family: "Plus Jakarta Sans";
@@ -28,22 +31,31 @@
   width: auto;
   border-bottom: 2px solid #1E90FF;
   padding-bottom: 10px;
+  white-space: nowrap;
 }
+
 .ReportList {
-  width: auto;
-  overflow-x: scroll;
+  width: 100%;
+  overflow-x: auto;
   overflow-y: hidden;
+  display: flex;
+  flex-wrap: nowrap;
+  -webkit-overflow-scrolling: touch;
 }
+
 .ReportBox {
   float: left;
   width: auto;
   padding: 5px;
   margin: 5px;
+  flex-shrink: 0;
 }
+
 ::-webkit-scrollbar {
   width: 3px;
-  height: 0px !important;
+  height: 4px !important;
 }
+
 .scrollRight {
   float: right;
   right: 29px;
@@ -54,13 +66,90 @@
   padding-top: 4px;
   color: #5420e8;
 }
+
 .scrollLeft {
   float: left;
   left: 111px;
   margin-top: 4px;
   z-index: 99999;
   cursor: pointer;
-
   padding-top: 4px;
   color: #5420e8;
+}
+
+/* Reports container */
+.reports-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .ReportTitle {
+    font-size: 18px;
+    line-height: 28px;
+    margin: 8px !important;
+  }
+
+  .ReportName,
+  .activeReport {
+    font-size: 13px;
+  }
+
+  .ReportBox {
+    padding: 4px;
+    margin: 4px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .ReportTitle {
+    font-size: 16px;
+    line-height: 24px;
+    margin: 6px !important;
+  }
+
+  .ReportName,
+  .activeReport {
+    font-size: 12px;
+  }
+
+  .activeReport {
+    padding-bottom: 8px;
+  }
+
+  .ReportBox {
+    padding: 3px;
+    margin: 3px;
+  }
+
+  .scrollRight,
+  .scrollLeft {
+    margin-top: 2px;
+    padding-top: 2px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .ReportTitle {
+    font-size: 14px;
+    line-height: 22px;
+    margin: 5px !important;
+  }
+
+  .ReportName,
+  .activeReport {
+    font-size: 11px;
+  }
+
+  .activeReport {
+    padding-bottom: 6px;
+  }
+
+  .ReportBox {
+    padding: 2px;
+    margin: 2px;
+  }
 }

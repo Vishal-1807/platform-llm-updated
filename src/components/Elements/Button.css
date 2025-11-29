@@ -9,13 +9,41 @@
   border-radius: 8px;
   color: #fff;
   font-size: 14px;
-  border:0px;
-  /* background: var(
-    --Primary-Gradient,
-    linear-gradient(80deg, #5b32d0 0%, #e04ef8 96.35%)
-  ); */
+  border: 0px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
 }
-.query-preview{
-  
 
+.query-preview {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .submitBnt {
+    height: 32px;
+    padding: 7px 18px;
+    font-size: 13px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .submitBnt {
+    height: 30px;
+    padding: 6px 14px;
+    font-size: 12px;
+    border-radius: 6px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .submitBnt {
+    height: 28px;
+    padding: 5px 12px;
+    font-size: 11px;
+  }
 }

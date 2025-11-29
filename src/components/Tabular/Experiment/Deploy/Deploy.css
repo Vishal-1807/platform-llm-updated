@@ -1,6 +1,5 @@
 .top-text {
   color: #3f3f50;
-  /* Label-Forms/Medium/16 */
   font-family: "Plus Jakarta Sans";
   font-size: 16px;
   font-style: normal;
@@ -9,13 +8,57 @@
   margin: 10px;
   padding: 10px 0;
 }
+
 .tablabel {
   color: var(--Primary-Blue, #5420e8);
-
-  /* H4/Bold/18 */
   font-family: "Plus Jakarta Sans";
   font-size: 18px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+}
+
+/* Deploy container */
+.deploy-container {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .top-text {
+    font-size: 15px;
+    margin: 8px;
+    padding: 8px 0;
+  }
+
+  .tablabel {
+    font-size: 16px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .top-text {
+    font-size: 14px;
+    margin: 6px;
+    padding: 6px 0;
+  }
+
+  .tablabel {
+    font-size: 15px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .top-text {
+    font-size: 13px;
+    margin: 5px;
+    padding: 5px 0;
+  }
+
+  .tablabel {
+    font-size: 14px;
+  }
 }

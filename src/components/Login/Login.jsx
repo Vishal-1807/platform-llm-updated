@@ -79,86 +79,21 @@ export default function Login({ updateToken }) {
     }
   };
   return (
-    <div style={{
-      height: "100vh",
-      overflow: "hidden",
-      display: "flex",
-      margin: 0,
-      padding: 0,
-      position: "fixed",
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      boxSizing: "border-box"
-    }}>
-      <div style={{
-        width: "50%",
-        height: "100%",
-        backgroundColor: "#000000",
-        overflow: "hidden",
-        boxSizing: "border-box"
-      }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100%",
-            backgroundColor: "white",
-            padding: "20px",
-            width: "100%",
-            boxSizing: "border-box",
-            overflow: "hidden"
-          }}
-        >
+    <div className="login-container">
+      <div className="login-left-panel">
+        <Box className="login-logo-container">
           <img
             src={aubrantLogo}
             alt="Aubrant Digital"
-            style={{
-              width: "400px",
-              height: "auto",
-              objectFit: "contain",
-              display: "block",
-              margin: "0 auto"
-            }}
+            className="login-logo"
           />
-          {/* <Typography
-            variant="h6"
-            sx={{
-              color: "#1E90FF",
-              fontWeight: 500,
-              textAlign: "center",
-              fontSize: "18px",
-              fontFamily: "'Plus Jakarta Sans', sans-serif",
-            }}
-          >
-            Creating Digital Businesses
-          </Typography> */}
         </Box>
       </div>
 
       {/* Vertical separation line in the exact middle */}
-      <div style={{
-        position: "absolute",
-        left: "50%",
-        top: "20px",
-        bottom: "20px",
-        width: "2px",
-        background: "linear-gradient(to bottom, #1E90FF, #FF6B35)",
-        transform: "translateX(-50%)",
-        zIndex: 10,
-        boxShadow: "0 0 10px rgba(30, 144, 255, 0.3)"
-      }}></div>
+      <div className="login-divider"></div>
 
-      <div style={{
-        width: "50%",
-        height: "100%",
-        backgroundColor: "white",
-        overflow: "hidden",
-        boxSizing: "border-box"
-      }}>
+      <div className="login-right-panel">
         <Box className="Login-right">
           <Box className="welcome-box">
             <center>

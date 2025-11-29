@@ -86,3 +86,81 @@
     box-shadow: 0 0 0 0 rgba(84, 32, 232, 0);
   }
 }
+
+/* Responsive modal/dialog styles */
+.create-modal-container {
+  width: 100%;
+  max-width: 600px;
+  padding: 24px;
+  box-sizing: border-box;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .CreateProject {
+    font-size: 24px;
+  }
+
+  .Text_creExp {
+    font-size: 14px;
+  }
+
+  .FormLabels {
+    font-size: 13px;
+  }
+
+  .AddExp {
+    font-size: 14px;
+  }
+
+  .create-modal-container {
+    padding: 20px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .CreateProject {
+    font-size: 20px;
+  }
+
+  .Text_creExp {
+    font-size: 13px;
+  }
+
+  .FormLabels {
+    font-size: 12px;
+  }
+
+  .AddExp {
+    font-size: 13px;
+  }
+
+  .create-modal-container {
+    padding: 16px;
+    max-width: 100%;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .CreateProject {
+    font-size: 18px;
+  }
+
+  .Text_creExp {
+    font-size: 12px;
+  }
+
+  .FormLabels {
+    font-size: 11px;
+  }
+
+  .AddExp {
+    font-size: 12px;
+  }
+
+  .create-modal-container {
+    padding: 12px;
+  }
+}

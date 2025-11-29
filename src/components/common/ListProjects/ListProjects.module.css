@@ -5,12 +5,12 @@
   backdrop-filter: blur(16px) saturate(180%);
   -webkit-backdrop-filter: blur(16px) saturate(180%);
   box-shadow: 0 8px 32px rgba(0,0,0,0.08);
-  /* width: 23%; */
   width: calc(25% - 20px);
-  /* margin: 10px; */
+  min-width: 250px;
   position: relative;
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-sizing: border-box;
 }
 
 .card-ctn::before {
@@ -26,21 +26,23 @@
   box-shadow: 0 16px 48px rgba(0,0,0,0.12);
   border: 1px solid rgba(255,255,255,0.6);
 }
+
 .card-header {
   color: #101016;
-  /* H3/Semi-Bold/24 */
   font-family: Plus Jakarta Sans;
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  height: 40px;
+  height: auto;
+  min-height: 40px;
   padding: 20px !important;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .card-data-bold {
   color: #3f3f50;
-  /* P/14/bold */
   font-family: Plus Jakarta Sans;
   font-size: 14px;
   font-style: normal;
@@ -50,24 +52,22 @@
 
 .card-label {
   color: #3f3f50;
-  /* Text/Medium/12 */
   font-family: Plus Jakarta Sans;
   font-size: 12px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
+
 .card-description {
   color: var(--Shades-Black-3, #6e6e88);
-
-  /* P/Regular/12 */
   font-family: "Plus Jakarta Sans";
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
-  line-height: 141%; /* 16.92px */
-  /* white-space: nowrap; */
+  line-height: 141%;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .card-button {
@@ -76,14 +76,15 @@
   border-radius: 8px;
   border: 1px solid #d3d3ea;
   width: 100%;
-  color: #1E90FF;
-  /* Label-Forms/Medium/16 */
   font-family: Plus Jakarta Sans;
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
   text-transform: capitalize;
+  padding: 8px 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
 }
 
 .card-ctn:hover .card-button {
@@ -93,6 +94,7 @@
   fill: #fff;
   border: none;
 }
+
 .expicon {
   display: flex;
   width: 20px;
@@ -105,12 +107,122 @@
   border-radius: 10px;
   margin-right: 5px;
 }
+
 .viewprojects {
   color: var(--Primary-Blue, #1E90FF);
-  /* Label-Forms/Medium/16 */
   font-family: "Plus Jakarta Sans";
   font-size: 16px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
+}
+
+/* Project cards container */
+.cardsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  width: 100%;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .card-ctn {
+    width: calc(33.333% - 16px);
+    min-width: 220px;
+  }
+
+  .card-header {
+    font-size: 20px;
+    padding: 16px !important;
+  }
+
+  .card-button {
+    font-size: 14px;
+    padding: 6px 12px;
+  }
+
+  .card-description {
+    font-size: 13px;
+  }
+}
+
+/* Mobile landscape / Small tablet breakpoint */
+@media (max-width: 767px) {
+  .card-ctn {
+    width: calc(50% - 12px);
+    min-width: 180px;
+    border-radius: 16px;
+  }
+
+  .card-header {
+    font-size: 18px;
+    padding: 14px !important;
+    min-height: 36px;
+  }
+
+  .card-data-bold {
+    font-size: 13px;
+  }
+
+  .card-label {
+    font-size: 11px;
+  }
+
+  .card-description {
+    font-size: 12px;
+  }
+
+  .card-button {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  .viewprojects {
+    font-size: 14px;
+  }
+
+  .cardsContainer {
+    gap: 12px;
+  }
+}
+
+/* Mobile portrait breakpoint */
+@media (max-width: 479px) {
+  .card-ctn {
+    width: 100%;
+    min-width: unset;
+    border-radius: 12px;
+  }
+
+  .card-header {
+    font-size: 16px;
+    padding: 12px !important;
+    min-height: 32px;
+  }
+
+  .card-data-bold {
+    font-size: 12px;
+  }
+
+  .card-label {
+    font-size: 10px;
+  }
+
+  .card-description {
+    font-size: 11px;
+  }
+
+  .card-button {
+    font-size: 12px;
+    padding: 5px 8px;
+  }
+
+  .viewprojects {
+    font-size: 13px;
+  }
+
+  .cardsContainer {
+    gap: 10px;
+  }
 }

@@ -5,30 +5,76 @@
   font-weight: 1 1000;
   src: local("Plus Jakarta Sans"),
     url(./assets/fonts/PlusJakartaSans-VariableFont_wght.ttf) format("truetype");
-  /* other formats include: 'woff2', 'truetype, 'opentype',
-                            'embedded-opentype', and 'svg' */
 }
 
-/* @font-face{
-  font-family: Plus Jakarta Sans;
-  font-weight: bold;
-  src: local('Plus Jakarta Sans'), url(./assets/fonts/PlusJakartaSans-Bold.ttf) format('truetype');
-}
-
-@ */
+/* ===========================================
+   RESPONSIVE DESIGN SYSTEM
+   Breakpoints:
+   - xs: 0-479px (mobile portrait)
+   - sm: 480-767px (mobile landscape / small tablet)
+   - md: 768-1023px (tablet)
+   - lg: 1024-1279px (laptop)
+   - xl: 1280px+ (desktop)
+   =========================================== */
 
 :root {
   font-family: Plus Jakarta Sans;
   line-height: 1.5;
   font-weight: 500;
-
-  /* color-scheme: light dark; */
-  /* color: rgba(255, 255, 255, 0.87); */
   background-color: #242424;
   font-synthesis: none;
-  /* text-rendering: optimizeLegibility; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
+  /* Responsive spacing variables */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+
+  /* Sidebar width variables */
+  --sidebar-width: 230px;
+  --sidebar-collapsed-width: 70px;
+
+  /* Header height */
+  --header-height: 70px;
+
+  /* Content padding */
+  --content-padding: 32px;
+  --content-margin: 24px;
+
+  /* Border radius */
+  --border-radius-sm: 8px;
+  --border-radius-md: 16px;
+  --border-radius-lg: 20px;
+}
+
+/* Medium devices (tablets) */
+@media (max-width: 1023px) {
+  :root {
+    --sidebar-width: 200px;
+    --content-padding: 24px;
+    --content-margin: 16px;
+  }
+}
+
+/* Small devices (mobile landscape / small tablet) */
+@media (max-width: 767px) {
+  :root {
+    --sidebar-width: 0px;
+    --content-padding: 16px;
+    --content-margin: 12px;
+    --header-height: 60px;
+  }
+}
+
+/* Extra small devices (mobile portrait) */
+@media (max-width: 479px) {
+  :root {
+    --content-padding: 12px;
+    --content-margin: 8px;
+  }
 }
 
 a {
@@ -97,7 +143,6 @@ body,
 
 .page-title {
   color: #3f3f50;
-  /* H3/Semi-Bold/24 */
   font-family: Plus Jakarta Sans;
   font-size: 24px;
   font-style: normal;
@@ -106,23 +151,26 @@ body,
 }
 
 .page-title-ctn {
-  /* border-radius: 16px; */
   border: 1px solid #eeeef8;
   background: #fff;
   padding: 23px 24px;
   margin: 10px;
-  width: "-webkit-fill-available";
-  /* transform: translate(-20px, -20px); */
+  width: -webkit-fill-available;
 }
+
 .page-root {
   /* padding:10px; */
 }
+
 .page-action {
   text-align: end;
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 8px;
 }
+
 .page-action-btn {
   padding: 9px 23px;
   border-radius: 8px;
@@ -131,8 +179,6 @@ body,
   margin: 10px 0 2px 0;
   text-transform: capitalize;
   gap: 5px;
-  color: #fff;
-  /* Label-Forms/Medium/16 */
   font-family: Plus Jakarta Sans;
   font-size: 16px;
   font-style: normal;
@@ -143,6 +189,7 @@ body,
 button:focus {
   /* border: none; */
 }
+
 .gradient-background {
   color: #fff;
   background: linear-gradient(80deg, #1E90FF 0%, #FFA500 96.35%);
@@ -150,4 +197,92 @@ button:focus {
 
 .gradient-background:disabled {
   opacity: 0.3;
+}
+
+/* ===========================================
+   RESPONSIVE UTILITY CLASSES
+   =========================================== */
+
+/* Hide on mobile */
+.hide-mobile {
+  display: block;
+}
+
+/* Show only on mobile */
+.show-mobile {
+  display: none !important;
+}
+
+/* Responsive text */
+.text-responsive {
+  font-size: clamp(14px, 2vw, 16px);
+}
+
+/* Responsive containers */
+.responsive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--spacing-lg);
+}
+
+.responsive-flex {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+/* Mobile-first responsive breakpoints */
+@media (max-width: 1023px) {
+  .page-title {
+    font-size: 20px;
+  }
+
+  .page-title-ctn {
+    padding: 16px 20px;
+    margin: 8px;
+  }
+
+  .page-action-btn {
+    padding: 8px 16px;
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  .hide-mobile {
+    display: none !important;
+  }
+
+  .show-mobile {
+    display: block !important;
+  }
+
+  .page-title {
+    font-size: 18px;
+  }
+
+  .page-title-ctn {
+    padding: 12px 16px;
+    margin: 6px;
+  }
+
+  .page-action {
+    justify-content: center;
+  }
+
+  .page-action-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 479px) {
+  .page-title {
+    font-size: 16px;
+  }
+
+  .page-title-ctn {
+    padding: 10px 12px;
+    margin: 4px;
+  }
 }

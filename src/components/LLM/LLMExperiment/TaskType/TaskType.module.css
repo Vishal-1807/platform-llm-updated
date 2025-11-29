@@ -2,7 +2,6 @@
   border-radius: 20px;
   width: 100%;
   margin: 0px;
-  /* Glassmorphism styling applied via liquid-glass-card-neutral class */
 }
 
 .type-page-caption {
@@ -13,6 +12,7 @@
   font-weight: 600;
   text-align: center;
 }
+
 .cus-box {
   padding: 24px;
   width: 100%;
@@ -30,48 +30,45 @@
   cursor: pointer;
   position: relative;
   overflow: hidden;
-  /* Glassmorphism styling applied via liquid-glass-card-neutral class */
-
-  .img-box svg {
-    path {
-      fill: #8d8dac;
-      stroke: none;
-      transition: all 0.3s ease;
-    }
-  }
-
-  &:hover .img-box svg {
-    path {
-      fill: #5420E8;
-      stroke: none;
-    }
-    &.stroke-only path {
-      fill: none;
-      stroke: #5420E8;
-    }
-  }
-
-  .cus-ctn {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 16px;
-    height: auto;
-    flex: 1;
-  }
-
-  svg {
-    path {
-      stroke: #8d8dac;
-      transition: all 0.3s ease;
-    }
-    &.stroke-only path {
-      fill: none;
-      stroke: #8d8dac;
-    }
-  }
+  box-sizing: border-box;
 }
+
+.cus-box .img-box svg path {
+  fill: #8d8dac;
+  stroke: none;
+  transition: all 0.3s ease;
+}
+
+.cus-box:hover .img-box svg path {
+  fill: #5420E8;
+  stroke: none;
+}
+
+.cus-box:hover .img-box svg.stroke-only path {
+  fill: none;
+  stroke: #5420E8;
+}
+
+.cus-box .cus-ctn {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 16px;
+  height: auto;
+  flex: 1;
+}
+
+.cus-box svg path {
+  stroke: #8d8dac;
+  transition: all 0.3s ease;
+}
+
+.cus-box svg.stroke-only path {
+  fill: none;
+  stroke: #8d8dac;
+}
+
 .img-box {
   width: 64px;
   height: 64px;
@@ -93,4 +90,98 @@
   border: 1px solid rgba(84,32,232,0.3);
   transform: scale(1.05);
   box-shadow: 0 8px 24px rgba(84,32,232,0.2);
+}
+
+/* Task type cards container */
+.task-type-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .type-page-caption {
+    font-size: 16px;
+  }
+
+  .cus-box {
+    padding: 20px;
+    max-width: 280px;
+    min-height: 100px;
+    font-size: 15px;
+  }
+
+  .img-box {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+  }
+
+  .cus-box .cus-ctn {
+    gap: 14px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .type-title-ctn {
+    border-radius: 16px;
+  }
+
+  .type-page-caption {
+    font-size: 14px;
+  }
+
+  .cus-box {
+    padding: 16px;
+    max-width: 100%;
+    min-height: 90px;
+    font-size: 14px;
+    border-radius: 16px;
+  }
+
+  .img-box {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+  }
+
+  .cus-box .cus-ctn {
+    gap: 12px;
+  }
+
+  .task-type-container {
+    gap: 12px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .type-page-caption {
+    font-size: 13px;
+  }
+
+  .cus-box {
+    padding: 14px;
+    min-height: 80px;
+    font-size: 13px;
+    border-radius: 14px;
+  }
+
+  .img-box {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+  }
+
+  .cus-box .cus-ctn {
+    gap: 10px;
+  }
+
+  .task-type-container {
+    gap: 10px;
+  }
 }

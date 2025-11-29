@@ -1,75 +1,170 @@
-.no-data-ctn{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    gap: 21px;
-    .no-data-label{
-        color:  #3F3F50 ;
-        font-size: 20px;
-        font-weight: 600;
-       
-    }
-    .no-data-sub-label{
-        width: 30%;
-        color:  #6E6E88 ;
-        text-align: center;
-        font-size: 12px;
-        font-weight: 400;
-    }
+.no-data-ctn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  gap: 21px;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.table-title{
-    color:  #3F3F50 ;
-    text-align: center;
-
-    /* Label-Forms/Medium/16 */
-    font-family: Plus Jakarta Sans;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    
+.no-data-ctn .no-data-label {
+  color: #3F3F50;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: center;
 }
 
-.table-title-ctn{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 23px;
-    margin-bottom: 21px;
+.no-data-ctn .no-data-sub-label {
+  width: 80%;
+  max-width: 400px;
+  color: #6E6E88;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 400;
 }
 
-.table-title-action-btn{
-    padding: 9px 23px;
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    /* gap: 10px; */
-    color:  #3F3F50 ;
-    /* Button-Small/Medium/14 */
-    font-family: Plus Jakarta Sans;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: normal;
-    border-radius: 6px;
-    border: 1px solid  #B7B7D2 ;
-    background: transparent;
+.table-title {
+  color: #3F3F50;
+  text-align: center;
+  font-family: Plus Jakarta Sans;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.table-title-ctn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 23px;
+  margin-bottom: 21px;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.table-title-action-btn {
+  padding: 9px 23px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: #3F3F50;
+  font-family: Plus Jakarta Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  border-radius: 6px;
+  border: 1px solid #B7B7D2;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.table-title-action-btn:hover {
+  background: #f6f7fb;
+  border-color: #1E90FF;
+  color: #1E90FF;
 }
 
 .hidden-select {
-    /* display: none; */
-    height: 0px;
-    width:0px;
-    overflow: hidden;
-    svg{
-        display: none;
-    }
-    .MuiSelect-select{
-        display: none;
-    }
+  height: 0px;
+  width: 0px;
+  overflow: hidden;
+}
+
+.hidden-select svg {
+  display: none;
+}
+
+.hidden-select .MuiSelect-select {
+  display: none;
+}
+
+/* Experiments list container */
+.experimentsListContainer {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .table-title-ctn {
+    margin-bottom: 16px;
+  }
+
+  .table-title {
+    font-size: 15px;
+  }
+
+  .table-title-action-btn {
+    padding: 8px 18px;
+    font-size: 13px;
+  }
+
+  .no-data-ctn .no-data-label {
+    font-size: 18px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .table-title-ctn {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+
+  .table-title {
+    font-size: 14px;
+  }
+
+  .table-title-action-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+    width: 100%;
+  }
+
+  .no-data-ctn {
+    gap: 14px;
+    padding: 16px;
+  }
+
+  .no-data-ctn .no-data-label {
+    font-size: 16px;
+  }
+
+  .no-data-ctn .no-data-sub-label {
+    width: 90%;
+    font-size: 11px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .table-title-ctn {
+    margin-bottom: 10px;
+  }
+
+  .table-title {
+    font-size: 13px;
+  }
+
+  .table-title-action-btn {
+    padding: 6px 12px;
+    font-size: 11px;
+  }
+
+  .no-data-ctn .no-data-label {
+    font-size: 14px;
+  }
+
+  .no-data-ctn .no-data-sub-label {
+    font-size: 10px;
+  }
 }

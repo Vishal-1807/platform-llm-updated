@@ -1,5 +1,6 @@
 .ta-sidebar {
-  width: 230px;
+  width: var(--sidebar-width, 230px);
+  min-width: var(--sidebar-width, 230px);
   height: 100vh;
   background: #fff;
   border-radius: 18px;
@@ -10,6 +11,24 @@
   padding: 0 0 16px 0;
   margin: 0;
   overflow-y: auto;
+  overflow-x: hidden;
+  transition: all 0.3s ease;
+  z-index: 999;
+  flex-shrink: 0;
+}
+
+/* Hide scrollbar but allow scroll */
+.ta-sidebar::-webkit-scrollbar {
+  width: 4px;
+}
+
+.ta-sidebar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.ta-sidebar::-webkit-scrollbar-thumb {
+  background: #d3d3ea;
+  border-radius: 4px;
 }
 
 .ta-sidebar__nav {
@@ -29,13 +48,16 @@
   justify-content: center;
   padding: 0 24px 16px 24px;
 }
+
 .ta-sidebar__logo {
   width: auto;
   height: 40px;
   max-width: 120px;
   object-fit: contain;
   padding: 1vh 0 0 0;
+  transition: all 0.3s ease;
 }
+
 .ta-sidebar__brand {
   font-size: 22px;
   font-weight: 700;
@@ -50,6 +72,9 @@
   margin: 24px 0 10px 24px;
   text-transform: uppercase;
   letter-spacing: 1.2px;
+  white-space: nowrap;
+  overflow: hidden;
+  transition: all 0.3s ease;
 }
 
 .ta-sidebar__nav {
@@ -66,13 +91,24 @@
   border-radius: 8px;
   margin: 2px 12px;
   text-decoration: none;
-  transition: background 0.18s, color 0.18s;
+  transition: all 0.2s ease;
   position: relative;
+  white-space: nowrap;
+  overflow: hidden;
 }
+
+.ta-sidebar__item-text {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
 .ta-sidebar__icon {
   margin-right: 14px;
   font-size: 18px;
+  flex-shrink: 0;
+  min-width: 18px;
 }
+
 .ta-sidebar__item.active,
 .ta-sidebar__item:active,
 .ta-sidebar__item--active {
@@ -80,10 +116,12 @@
   color: #1E90FF;
   font-weight: 600;
 }
+
 .ta-sidebar__item:hover {
   background: #f6f7fb;
   color: #1E90FF;
 }
+
 .ta-sidebar__item--new .ta-sidebar__badge {
   margin-left: 10px;
   background: #e6f8ec;
@@ -94,13 +132,16 @@
   padding: 2px 8px;
   letter-spacing: 0.5px;
 }
+
 .ta-sidebar__item--logout {
   color: #f43f5e;
 }
+
 .ta-sidebar__item--logout:hover {
   background: #fef2f2;
   color: #b91c1c;
 }
+
 .ta-sidebar__bottom {
   margin-top: 32px;
 }
@@ -121,6 +162,8 @@
   transition: all 0.2s ease;
   color: #666;
   position: relative;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .ta-sidebar__sub-item::before {
@@ -153,4 +196,102 @@
 
 .ta-sidebar__sub-item:hover:not(.ta-sidebar__sub-item--active)::before {
   background-color: #666;
+}
+
+/* Close button for mobile */
+.ta-sidebar__close-btn {
+  display: none;
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #f6f7fb;
+  border: none;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  z-index: 10;
+}
+
+.ta-sidebar__close-btn:hover {
+  background: #e6f3ff;
+}
+
+.ta-sidebar__close-btn svg {
+  width: 18px;
+  height: 18px;
+  color: #666;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .ta-sidebar {
+    width: 200px;
+    min-width: 200px;
+  }
+
+  .ta-sidebar__item {
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+
+  .ta-sidebar__section-label {
+    margin: 20px 0 8px 16px;
+    font-size: 10px;
+  }
+
+  .ta-sidebar__logo-section {
+    padding: 0 16px 12px 16px;
+  }
+
+  .ta-sidebar__logo {
+    height: 36px;
+  }
+}
+
+/* Mobile breakpoint - Drawer mode */
+@media (max-width: 767px) {
+  .ta-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 280px;
+    min-width: 280px;
+    max-width: 85vw;
+    height: 100vh;
+    border-radius: 0 18px 18px 0;
+    transform: translateX(-100%);
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .ta-sidebar.open {
+    transform: translateX(0);
+  }
+
+  .ta-sidebar__close-btn {
+    display: flex;
+  }
+
+  .ta-sidebar__logo-section {
+    padding: 16px 24px;
+    padding-top: 48px; /* Space for close button */
+  }
+
+  .ta-sidebar__item {
+    padding: 12px 24px;
+    font-size: 15px;
+    margin: 4px 12px;
+  }
+
+  .ta-sidebar__section-label {
+    margin: 24px 0 12px 24px;
+  }
+
+  .ta-sidebar__sub-item {
+    padding: 10px 12px 10px 52px;
+    font-size: 14px;
+  }
 }

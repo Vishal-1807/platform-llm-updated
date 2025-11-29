@@ -1,32 +1,32 @@
 .CreateProject {
   color: #000;
-
-  /* H3/Semi-Bold/24 */
   font-family: "Plus Jakarta Sans";
   font-size: 24px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-.Text_creExp{
+
+.Text_creExp {
   color: var(--Shades-Black-2, #3F3F50);
-/* Button-Small/Medium/16 */
-font-family: "Plus Jakarta Sans";
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
+  font-family: "Plus Jakarta Sans";
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
 }
+
 .FormLabels {
-  color:  #3f3f50 ;
+  color: #3f3f50;
   font-family: Plus Jakarta Sans;
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
+
 .AddExp {
-  color:  #1E90FF ;
+  color: #1E90FF;
   font-family: Plus Jakarta Sans;
   font-size: 14px;
   font-style: normal;
@@ -65,4 +65,61 @@ line-height: normal;
   background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, transparent 50%, rgba(84,32,232,0.05) 100%);
   border-radius: 24px;
   pointer-events: none;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .CreateProject {
+    font-size: 20px;
+  }
+
+  .Text_creExp {
+    font-size: 13px;
+  }
+
+  .FormLabels {
+    font-size: 13px;
+  }
+
+  .AddExp {
+    font-size: 13px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .CreateProject {
+    font-size: 18px;
+  }
+
+  .Text_creExp {
+    font-size: 12px;
+  }
+
+  .FormLabels {
+    font-size: 12px;
+  }
+
+  .AddExp {
+    font-size: 12px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .CreateProject {
+    font-size: 16px;
+  }
+
+  .Text_creExp {
+    font-size: 11px;
+  }
+
+  .FormLabels {
+    font-size: 11px;
+  }
+
+  .AddExp {
+    font-size: 11px;
+  }
 }

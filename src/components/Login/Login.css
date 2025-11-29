@@ -2,8 +2,10 @@
   background: #000000;
   height: 100vh;
 }
+
 .Login-right {
-  width: 60%;
+  width: 80%;
+  max-width: 400px;
   margin: 0 auto;
   background-color: #fff;
   display: flex;
@@ -12,7 +14,7 @@
   align-items: center;
   gap: 10px;
   height: 100%;
-  padding: 0;
+  padding: 20px;
   box-sizing: border-box;
   overflow-y: auto;
   max-height: 100%;
@@ -26,53 +28,243 @@
   line-height: normal;
   margin: 5px;
 }
+
+.welcome-box {
+  width: 100%;
+  text-align: center;
+}
+
 .loginform-box {
   margin: 0;
-  width: 320px;
-  max-width: 90%;
+  width: 100%;
+  max-width: 320px;
   box-sizing: border-box;
 }
+
 .Login-input {
   padding: 10px;
   width: 100%;
   border-radius: 8px;
   border: 1px solid var(--Shades-Black-6, #D3D3EA);
   box-sizing: border-box;
+  font-size: 14px;
 }
+
 .eyeicon {
   position: relative;
   right: 0;
   top: -28px;
   left: 90%;
+  cursor: pointer;
 }
+
 .donthaveaccount {
   color: var(--Shades-Black-3, #6E6E88);
-  /* Button-Small/Medium/16 */
   font-family: "Plus Jakarta Sans";
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
   line-height: normal;
 }
+
 .signup {
   color: var(--Primary-Blue, #5420E8);
-  /* Body/Bold/16 */
   font-family: "Plus Jakarta Sans";
   font-size: 16px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  cursor: pointer;
 }
-.credentials{
+
+.credentials {
   color: var(--Shades-Black-3, #6E6E88);
-text-align: center;
-/* Body/Regular/16 */
-font-family: "Plus Jakarta Sans";
-font-size: 16px;
-font-style: normal;
-font-weight: 400;
-line-height: 24px; /* 150% */
+  text-align: center;
+  font-family: "Plus Jakarta Sans";
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
 }
-.page-root{
+
+.page-root {
   padding: 0;
+}
+
+/* Login page container styles */
+.login-container {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-sizing: border-box;
+}
+
+.login-left-panel {
+  width: 50%;
+  height: 100%;
+  background-color: #000000;
+  overflow: hidden;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login-logo-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  background-color: white;
+  padding: 20px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+.login-logo {
+  width: 80%;
+  max-width: 400px;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
+}
+
+.login-divider {
+  position: absolute;
+  left: 50%;
+  top: 20px;
+  bottom: 20px;
+  width: 2px;
+  background: linear-gradient(to bottom, #1E90FF, #FF6B35);
+  transform: translateX(-50%);
+  z-index: 10;
+  box-shadow: 0 0 10px rgba(30, 144, 255, 0.3);
+}
+
+.login-right-panel {
+  width: 50%;
+  height: 100%;
+  background-color: white;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .welcome {
+    font-size: 26px;
+  }
+
+  .credentials {
+    font-size: 14px;
+  }
+
+  .login-logo {
+    width: 70%;
+    max-width: 300px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .login-container {
+    flex-direction: column;
+  }
+
+  .login-left-panel {
+    width: 100%;
+    height: 30vh;
+    min-height: 150px;
+  }
+
+  .login-right-panel {
+    width: 100%;
+    height: 70vh;
+  }
+
+  .login-divider {
+    display: none;
+  }
+
+  .login-logo-container {
+    padding: 16px;
+  }
+
+  .login-logo {
+    width: 60%;
+    max-width: 200px;
+  }
+
+  .Login-right {
+    width: 90%;
+    padding: 16px;
+    gap: 8px;
+  }
+
+  .loginform-box {
+    max-width: 100%;
+  }
+
+  .welcome {
+    font-size: 24px;
+    margin: 3px;
+  }
+
+  .credentials {
+    font-size: 14px;
+    line-height: 20px;
+  }
+
+  .donthaveaccount {
+    font-size: 12px;
+  }
+
+  .signup {
+    font-size: 14px;
+  }
+}
+
+/* Extra small mobile */
+@media (max-width: 479px) {
+  .login-left-panel {
+    height: 25vh;
+    min-height: 120px;
+  }
+
+  .login-right-panel {
+    height: 75vh;
+  }
+
+  .Login-right {
+    width: 95%;
+    padding: 12px;
+  }
+
+  .welcome {
+    font-size: 20px;
+  }
+
+  .credentials {
+    font-size: 13px;
+  }
+
+  .Login-input {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .loginform-box {
+    margin-bottom: 4px;
+  }
 }
