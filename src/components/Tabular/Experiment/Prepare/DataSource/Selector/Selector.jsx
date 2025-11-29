@@ -267,10 +267,16 @@ export default function Selector() {
 
       <Dialog
         open={openModel}
+        maxWidth="sm"
+        fullWidth
         PaperProps={{
-          style: {
-            height: "500px", // Set the desired height here
-            // Add any other styles as needed
+          sx: {
+            height: { xs: "auto", sm: "500px" },
+            maxHeight: { xs: "calc(100vh - 32px)", sm: "calc(100vh - 48px)" },
+            margin: { xs: "16px", sm: "24px", md: "32px" },
+            borderRadius: { xs: "16px", sm: "20px" },
+            width: { xs: "calc(100% - 32px)", sm: "auto" },
+            overflowY: "auto",
           },
         }}
       >
@@ -290,9 +296,11 @@ export default function Selector() {
           sx={{
             display: "flex",
             flexDirection: "column",
-            width: "450px",
+            width: { xs: "100%", sm: "450px" },
+            maxWidth: "100%",
             background: "#fff",
-            borderRadius: "20px",
+            borderRadius: { xs: "16px", sm: "20px" },
+            boxSizing: "border-box",
           }}
         >
           <Box

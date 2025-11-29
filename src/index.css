@@ -286,3 +286,96 @@ button:focus {
     margin: 4px;
   }
 }
+
+/* ===========================================
+   GLOBAL DIALOG/MODAL RESPONSIVE STYLES
+   Makes all MUI Dialogs responsive and scrollable
+   =========================================== */
+
+/* Base dialog styles for responsiveness */
+.MuiDialog-paper {
+  max-height: calc(100vh - 64px) !important;
+  overflow-y: auto !important;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .MuiDialog-paper {
+    margin: 24px !important;
+    max-height: calc(100vh - 48px) !important;
+    border-radius: 20px !important;
+  }
+
+  .MuiDialogTitle-root {
+    font-size: 18px !important;
+    padding: 16px 20px !important;
+  }
+
+  .MuiDialogContent-root {
+    padding: 16px 20px !important;
+  }
+
+  .MuiDialogActions-root {
+    padding: 12px 20px !important;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .MuiDialog-paper {
+    margin: 16px !important;
+    max-height: calc(100vh - 32px) !important;
+    width: calc(100% - 32px) !important;
+    max-width: calc(100% - 32px) !important;
+    border-radius: 16px !important;
+  }
+
+  .MuiDialogTitle-root {
+    font-size: 16px !important;
+    padding: 14px 16px !important;
+  }
+
+  .MuiDialogContent-root {
+    padding: 12px 16px !important;
+  }
+
+  .MuiDialogActions-root {
+    padding: 10px 16px !important;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .MuiDialogActions-root > button {
+    flex: 1 1 auto;
+    min-width: 100px;
+  }
+}
+
+/* Mobile portrait breakpoint */
+@media (max-width: 479px) {
+  .MuiDialog-paper {
+    margin: 12px !important;
+    max-height: calc(100vh - 24px) !important;
+    width: calc(100% - 24px) !important;
+    max-width: calc(100% - 24px) !important;
+    border-radius: 14px !important;
+  }
+
+  .MuiDialogTitle-root {
+    font-size: 15px !important;
+    padding: 12px 14px !important;
+  }
+
+  .MuiDialogContent-root {
+    padding: 10px 14px !important;
+  }
+
+  .MuiDialogActions-root {
+    padding: 8px 14px !important;
+    flex-direction: column;
+  }
+
+  .MuiDialogActions-root > button {
+    width: 100%;
+  }
+}

@@ -142,3 +142,155 @@
   background-color: #fff;
   border-radius: 6px;
 }
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .Selector-title,
+  .step,
+  .tagline {
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  .DB-Details {
+    height: 65px;
+    padding: 8px;
+  }
+
+  .DB-Details .db-icon {
+    height: 48px;
+    width: 48px;
+  }
+
+  .DB-Details p {
+    font-size: 14px;
+    width: 100px;
+  }
+
+  .DataConList {
+    padding: 12px;
+    height: 110px;
+  }
+
+  .ds-name {
+    font-size: 14px;
+  }
+
+  .database,
+  .dbname {
+    font-size: 11px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .Selector-title,
+  .step,
+  .tagline {
+    font-size: 13px;
+    line-height: 24px;
+  }
+
+  .DB-Details {
+    height: 60px;
+    padding: 6px;
+  }
+
+  .DB-Details .db-icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .DB-Details p {
+    font-size: 13px;
+    width: 90px;
+    line-height: 20px;
+    margin-left: 6px;
+  }
+
+  .arrow {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .icons {
+    width: 20px;
+    height: 20px;
+  }
+
+  .DataConList {
+    padding: 10px;
+    height: auto;
+    min-height: 90px;
+  }
+
+  .ds-name {
+    font-size: 13px;
+    margin: 3px;
+  }
+
+  .database {
+    font-size: 10px;
+    margin: 3px;
+    width: 55px;
+  }
+
+  .dbname {
+    font-size: 11px;
+    margin: 2px;
+  }
+
+  .img-bg {
+    width: 30px;
+    height: 30px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .Selector-title,
+  .step,
+  .tagline {
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .DB-Details {
+    height: 55px;
+    padding: 5px;
+  }
+
+  .DB-Details .db-icon {
+    height: 36px;
+    width: 36px;
+  }
+
+  .DB-Details p {
+    font-size: 12px;
+    width: 80px;
+    line-height: 18px;
+    margin-top: 15px;
+    margin-left: 4px;
+  }
+
+  .DataConList {
+    padding: 8px;
+    min-height: 80px;
+  }
+
+  .ds-name {
+    font-size: 12px;
+    margin: 2px;
+  }
+
+  .database,
+  .dbname {
+    font-size: 10px;
+    margin: 2px;
+  }
+
+  .img-bg {
+    width: 28px;
+    height: 28px;
+  }
+}

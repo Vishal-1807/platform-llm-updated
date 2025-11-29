@@ -52,8 +52,8 @@
         }
         &:hover{
             box-shadow: 0px 11px 20px 0px rgba(5, 16, 55, 0.10);
-            border-color: transparent; 
-            border-image: linear-gradient(to right, #5B32D0, #e048fe); 
+            border-color: transparent;
+            border-image: linear-gradient(to right, #5B32D0, #e048fe);
             border-image-slice: 1;
             .item-icon{
                 path {
@@ -61,5 +61,99 @@
                   }
             }
         }
+    }
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+    .grid-container {
+        --grid-columns: 2;
+        gap: 16px;
+        padding: 3%;
+    }
+
+    .grid-container .grid-item {
+        padding: 14px;
+    }
+
+    .grid-container .grid-item .item-icon-ctn {
+        padding: 9px;
+    }
+
+    .grid-container .grid-item .item-icon-ctn .item-icon {
+        width: 32px;
+        height: 32px;
+    }
+
+    .grid-container .grid-item .item-text .item-label {
+        font-size: 15px;
+    }
+
+    .grid-container .grid-item .item-text .item-description {
+        font-size: 11px;
+    }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+    .grid-container {
+        --grid-columns: 1;
+        gap: 12px;
+        padding: 4%;
+    }
+
+    .grid-container .grid-item {
+        padding: 12px;
+    }
+
+    .grid-container .grid-item .item-icon-ctn {
+        padding: 8px;
+    }
+
+    .grid-container .grid-item .item-icon-ctn .item-icon {
+        width: 28px;
+        height: 28px;
+    }
+
+    .grid-container .grid-item .item-text .item-label {
+        font-size: 14px;
+    }
+
+    .grid-container .grid-item .item-text .item-description {
+        font-size: 11px;
+    }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+    .grid-container {
+        gap: 10px;
+        padding: 3%;
+    }
+
+    .grid-container .grid-item {
+        padding: 10px;
+        gap: 10px;
+    }
+
+    .grid-container .grid-item .item-icon-ctn {
+        padding: 6px;
+    }
+
+    .grid-container .grid-item .item-icon-ctn .item-icon {
+        width: 24px;
+        height: 24px;
+    }
+
+    .grid-container .grid-item .item-text {
+        gap: 4px;
+    }
+
+    .grid-container .grid-item .item-text .item-label {
+        font-size: 13px;
+    }
+
+    .grid-container .grid-item .item-text .item-description {
+        font-size: 10px;
     }
 }

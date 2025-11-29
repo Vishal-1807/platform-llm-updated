@@ -1,17 +1,19 @@
 import React, { useState } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ExperimentListSidebar from "./ExperimentListSidebar";
 import ExperimentDetailsFull from "./ExperimentDetailsFull";
 import "../../../styles/liquidGlass.css";
 
-export default function ListExperimentsWithSidebar({ 
-  experiments, 
+export default function ListExperimentsWithSidebar({
+  experiments,
   onViewExperiment,
-  onClickAdd 
+  onClickAdd
 }) {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [filtered, setFiltered] = useState(experiments);
+  const [mobileView, setMobileView] = useState('list'); // 'list' or 'details'
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   const handleFilter = (search) => {
     if (!search) {
@@ -24,7 +26,7 @@ export default function ListExperimentsWithSidebar({
         const description = experiment.description || experiment.desc || '';
         const expId = experiment.exp_id || '';
         const status = experiment.status || '';
-        
+
         return (
           name.toLowerCase().includes(s) ||
           description.toLowerCase().includes(s) ||
@@ -37,55 +39,83 @@ export default function ListExperimentsWithSidebar({
     }
   };
 
+  const handleSelectExperiment = (index) => {
+    setSelectedIndex(index);
+    if (isMobile) {
+      setMobileView('details');
+    }
+  };
+
+  const handleBackToList = () => {
+    setMobileView('list');
+  };
+
   // Update filtered experiments when experiments prop changes
   React.useEffect(() => {
     setFiltered(experiments);
     setSelectedIndex(0);
   }, [experiments]);
 
+  // Reset mobile view when switching between mobile and desktop
+  React.useEffect(() => {
+    if (!isMobile) {
+      setMobileView('list');
+    }
+  }, [isMobile]);
+
   return (
     <Box sx={{ display: "flex", width: "100%", height: "100%" }}>
-      <ExperimentListSidebar
-        items={filtered}
-        selectedIndex={selectedIndex}
-        setSelectedIndex={setSelectedIndex}
-        onFilter={handleFilter}
-      />
-      <Box sx={{ flex: 1, p: 0, height: "100%", overflowY: "auto" }}>
-        {filtered.length > 0 ? (
-          <ExperimentDetailsFull 
-            experiment={filtered[selectedIndex]} 
-            onViewExperiment={onViewExperiment}
-          />
-        ) : (
-          <Box sx={{ 
-            p: 5, 
-            color: '#8D8DAC',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            justifyContent: 'center',
-            height: '95%'
-          }}>
-            <Typography variant="h6" fontWeight={600} mb={2}>
-              No experiments found
-            </Typography>
-            <Typography variant="body1" textAlign="center" mb={3}>
-              Try adjusting your search terms or create a new experiment to get started.
-            </Typography>
-            {onClickAdd && (
-              <Button
-                variant="contained"
-                className="liquid-glass-btn"
-                onClick={onClickAdd}
-                startIcon={<AddIcon />}
-              >
-                Create Experiment
-              </Button>
-            )}
-          </Box>
-        )}
-      </Box>
+      {/* Sidebar - show on desktop always, on mobile only when mobileView is 'list' */}
+      {(!isMobile || mobileView === 'list') && (
+        <ExperimentListSidebar
+          items={filtered}
+          selectedIndex={selectedIndex}
+          setSelectedIndex={handleSelectExperiment}
+          onFilter={handleFilter}
+          isMobile={isMobile}
+        />
+      )}
+
+      {/* Details - show on desktop always, on mobile only when mobileView is 'details' */}
+      {(!isMobile || mobileView === 'details') && (
+        <Box sx={{ flex: 1, p: 0, height: "100%", overflowY: "auto" }}>
+          {filtered.length > 0 ? (
+            <ExperimentDetailsFull
+              experiment={filtered[selectedIndex]}
+              onViewExperiment={onViewExperiment}
+              isMobile={isMobile}
+              onBack={isMobile ? handleBackToList : undefined}
+            />
+          ) : (
+            <Box sx={{
+              p: isMobile ? 3 : 5,
+              color: '#8D8DAC',
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
+              height: '95%'
+            }}>
+              <Typography variant="h6" fontWeight={600} mb={2}>
+                No experiments found
+              </Typography>
+              <Typography variant="body1" textAlign="center" mb={3}>
+                Try adjusting your search terms or create a new experiment to get started.
+              </Typography>
+              {onClickAdd && (
+                <Button
+                  variant="contained"
+                  className="liquid-glass-btn"
+                  onClick={onClickAdd}
+                  startIcon={<AddIcon />}
+                >
+                  Create Experiment
+                </Button>
+              )}
+            </Box>
+          )}
+        </Box>
+      )}
     </Box>
   );
 }

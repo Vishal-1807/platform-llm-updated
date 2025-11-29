@@ -1,4 +1,4 @@
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 import DocumentIcon from "../../../assets/icons/document.svg?react";
 import TimeCircleIcon from "../../../assets/icons/timecircle.svg?react";
 import PlusCircleIcon from "../../../assets/icons/pluscircle.svg?react";
@@ -6,12 +6,13 @@ import BackIcon from "../../../assets/icons/back.svg?react";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/liquidGlass.css";
 
-export default function ExperimentHeader({ 
-  projectData, 
+export default function ExperimentHeader({
+  projectData,
   onAddExperiment,
-  showCreateDialog 
+  showCreateDialog
 }) {
   const navigate = useNavigate();
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   const formatDate = (timeStamp) => {
     if (!timeStamp) return "N/A";
@@ -19,27 +20,29 @@ export default function ExperimentHeader({
   };
 
   return (
-    <Box sx={{ 
-      display: "flex", 
-      gap: 3, 
-      mb: 3, 
+    <Box sx={{
+      display: "flex",
+      gap: isMobile ? 2 : 3,
+      mb: 3,
       flexWrap: "wrap",
-      alignItems: "stretch"
+      alignItems: "stretch",
+      flexDirection: isMobile ? "column" : "row"
     }}>
       {/* Back Button and Project Info Card */}
-      <Box 
-        className="liquid-glass-card-neutral" 
-        sx={{ 
-          flex: "1 1 300px",
-          p: 3,
+      <Box
+        className="liquid-glass-card-neutral"
+        sx={{
+          flex: isMobile ? "1 1 auto" : "1 1 300px",
+          p: isMobile ? 2 : 3,
           display: "flex",
           alignItems: "center",
           gap: 2,
-          minWidth: 300
+          minWidth: isMobile ? 'auto' : 300,
+          width: isMobile ? '100%' : 'auto'
         }}
       >
-        <Box 
-          sx={{ 
+        <Box
+          sx={{
             cursor: "pointer",
             p: 1,
             borderRadius: "8px",
@@ -55,113 +58,131 @@ export default function ExperimentHeader({
         >
           <BackIcon style={{ width: "20px", height: "20px", color: "#5420E8" }} />
         </Box>
-        
+
         <Box sx={{ flex: 1, position: 'relative', zIndex: 1 }}>
-          <Typography 
-            variant="h6" 
-            fontWeight={700} 
+          <Typography
+            variant={isMobile ? "subtitle1" : "h6"}
+            fontWeight={700}
             sx={{ color: '#1F1F29', mb: 0.5, lineHeight: 1.2 }}
           >
             {projectData.proj_name || "Project"}
           </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ color: '#6E6E88', lineHeight: 1.3 }}
+          <Typography
+            variant="body2"
+            sx={{
+              color: '#6E6E88',
+              lineHeight: 1.3,
+              fontSize: isMobile ? 12 : 14,
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              display: '-webkit-box',
+              WebkitLineClamp: isMobile ? 1 : 2,
+              WebkitBoxOrient: 'vertical',
+            }}
           >
             {projectData.description || "No description available"}
           </Typography>
         </Box>
       </Box>
 
-      {/* Experiments Count Card */}
-      <Box 
-        className="liquid-glass-card-neutral" 
-        sx={{ 
-          flex: "0 1 200px",
-          p: 3,
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          minWidth: 180
-        }}
-      >
-        <Box sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#eee9fd",
-          borderRadius: "50%",
-          padding: "12px",
-          flexShrink: 0
-        }}>
-          <DocumentIcon style={{ width: "20px", height: "20px", color: "#5420E8" }} />
-        </Box>
-        
-        <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography 
-            variant="h5" 
-            fontWeight={700} 
-            sx={{ color: '#1F1F29', lineHeight: 1 }}
-          >
-            {projectData.experiments?.length || 0}
-          </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ color: '#6E6E88', fontSize: 12, fontWeight: 500 }}
-          >
-            Experiments
-          </Typography>
-        </Box>
-      </Box>
+      {/* Stats Row - on mobile, show count and date side by side */}
+      <Box sx={{
+        display: 'flex',
+        gap: isMobile ? 2 : 3,
+        width: isMobile ? '100%' : 'auto',
+        flex: isMobile ? '1 1 auto' : '0 1 auto'
+      }}>
+        {/* Experiments Count Card */}
+        <Box
+          className="liquid-glass-card-neutral"
+          sx={{
+            flex: isMobile ? 1 : "0 1 200px",
+            p: isMobile ? 2 : 3,
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            minWidth: isMobile ? 'auto' : 180
+          }}
+        >
+          <Box sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "#eee9fd",
+            borderRadius: "50%",
+            padding: isMobile ? "10px" : "12px",
+            flexShrink: 0
+          }}>
+            <DocumentIcon style={{ width: isMobile ? "18px" : "20px", height: isMobile ? "18px" : "20px", color: "#5420E8" }} />
+          </Box>
 
-      {/* Created Date Card */}
-      <Box 
-        className="liquid-glass-card-neutral" 
-        sx={{ 
-          flex: "0 1 220px",
-          p: 3,
-          display: "flex",
-          alignItems: "center",
-          gap: 2,
-          minWidth: 200
-        }}
-      >
-        <Box sx={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#eee9fd",
-          borderRadius: "50%",
-          padding: "12px",
-          flexShrink: 0
-        }}>
-          <TimeCircleIcon style={{ width: "20px", height: "20px", color: "#5420E8" }} />
+          <Box sx={{ position: 'relative', zIndex: 1 }}>
+            <Typography
+              variant={isMobile ? "h6" : "h5"}
+              fontWeight={700}
+              sx={{ color: '#1F1F29', lineHeight: 1 }}
+            >
+              {projectData.experiments?.length || 0}
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: '#6E6E88', fontSize: isMobile ? 11 : 12, fontWeight: 500 }}
+            >
+              Experiments
+            </Typography>
+          </Box>
         </Box>
-        
-        <Box sx={{ position: 'relative', zIndex: 1 }}>
-          <Typography 
-            variant="body1" 
-            fontWeight={600} 
-            sx={{ color: '#1F1F29', fontSize: 14, lineHeight: 1.2 }}
-          >
-            Created
-          </Typography>
-          <Typography 
-            variant="body2" 
-            sx={{ color: '#6E6E88', fontSize: 12, fontWeight: 500 }}
-          >
-            {formatDate(projectData.ts)}
-          </Typography>
+
+        {/* Created Date Card */}
+        <Box
+          className="liquid-glass-card-neutral"
+          sx={{
+            flex: isMobile ? 1 : "0 1 220px",
+            p: isMobile ? 2 : 3,
+            display: "flex",
+            alignItems: "center",
+            gap: 2,
+            minWidth: isMobile ? 'auto' : 200
+          }}
+        >
+          <Box sx={{
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            background: "#eee9fd",
+            borderRadius: "50%",
+            padding: isMobile ? "10px" : "12px",
+            flexShrink: 0
+          }}>
+            <TimeCircleIcon style={{ width: isMobile ? "18px" : "20px", height: isMobile ? "18px" : "20px", color: "#5420E8" }} />
+          </Box>
+
+          <Box sx={{ position: 'relative', zIndex: 1 }}>
+            <Typography
+              variant="body1"
+              fontWeight={600}
+              sx={{ color: '#1F1F29', fontSize: isMobile ? 13 : 14, lineHeight: 1.2 }}
+            >
+              Created
+            </Typography>
+            <Typography
+              variant="body2"
+              sx={{ color: '#6E6E88', fontSize: isMobile ? 11 : 12, fontWeight: 500 }}
+            >
+              {formatDate(projectData.ts)}
+            </Typography>
+          </Box>
         </Box>
       </Box>
 
       {/* Add Experiment Button Card */}
-      <Box 
-        sx={{ 
-          flex: "0 1 200px",
+      <Box
+        sx={{
+          flex: isMobile ? "1 1 auto" : "0 1 200px",
           display: "flex",
           alignItems: "center",
-          minWidth: 180
+          minWidth: isMobile ? 'auto' : 180,
+          width: isMobile ? '100%' : 'auto'
         }}
       >
         <Button
@@ -169,13 +190,14 @@ export default function ExperimentHeader({
           onClick={onAddExperiment}
           sx={{
             width: "100%",
-            height: "100%",
-            minHeight: "80px",
+            height: isMobile ? "auto" : "100%",
+            minHeight: isMobile ? "56px" : "80px",
             display: "flex",
-            flexDirection: "column",
+            flexDirection: isMobile ? "row" : "column",
             gap: 1,
             position: 'relative',
             overflow: 'hidden',
+            py: isMobile ? 1.5 : 2,
             '&::before': {
               content: '""',
               position: 'absolute',
@@ -189,7 +211,7 @@ export default function ExperimentHeader({
             '&:hover': {
               background: 'linear-gradient(135deg, rgba(84,32,232,0.20) 0%, rgba(224,78,248,0.25) 50%, rgba(255,255,255,0.15) 100%)',
               color: '#5420E8',
-              transform: 'translateY(-2px) scale(1.02)',
+              transform: isMobile ? 'none' : 'translateY(-2px) scale(1.02)',
               boxShadow: '0 10px 32px rgba(84,32,232,0.35), inset 0 1px 0 rgba(255,255,255,0.8), inset 0 -1px 0 rgba(84,32,232,0.2)',
               border: '1px solid rgba(255,255,255,0.6)',
               '&::before': {
@@ -202,11 +224,11 @@ export default function ExperimentHeader({
             },
           }}
         >
-          <PlusCircleIcon style={{ width: "24px", height: "24px" }} />
-          <Typography 
-            variant="body2" 
+          <PlusCircleIcon style={{ width: isMobile ? "20px" : "24px", height: isMobile ? "20px" : "24px" }} />
+          <Typography
+            variant="body2"
             fontWeight={600}
-            sx={{ textTransform: "none", fontSize: 14 }}
+            sx={{ textTransform: "none", fontSize: isMobile ? 13 : 14 }}
           >
             Add Experiment
           </Typography>

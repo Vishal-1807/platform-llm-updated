@@ -34,7 +34,7 @@
     height: 517px;
 
     .feat-imp-header {
-        text-align: center; 
+        text-align: center;
         width:-webkit-fill-available;
         padding: 20px 22px;
     }
@@ -45,9 +45,107 @@
     height: 517px;
 
     .cfn-header {
-        text-align: center; 
+        text-align: center;
         width:-webkit-fill-available;
         padding: 20px 22px;
     }
-    
+
   }
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+    .label {
+        font-size: 15px;
+        padding: 14px 20px 0px 20px;
+    }
+
+    .chart-ctn {
+        border-radius: 10px;
+    }
+
+    .p-f-ctn {
+        height: 350px;
+    }
+
+    .feat-imp-ctn {
+        height: 450px;
+    }
+
+    .feat-imp-ctn .feat-imp-header {
+        padding: 16px 18px;
+    }
+
+    .cfn-ctn {
+        height: 450px;
+    }
+
+    .cfn-ctn .cfn-header {
+        padding: 16px 18px;
+    }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+    .label {
+        font-size: 14px;
+        padding: 12px 16px 0px 16px;
+    }
+
+    .chart-ctn {
+        border-radius: 8px;
+    }
+
+    .p-f-ctn {
+        height: 300px;
+    }
+
+    .feat-imp-ctn {
+        height: auto;
+        min-height: 350px;
+    }
+
+    .feat-imp-ctn .feat-imp-header {
+        padding: 14px 14px;
+    }
+
+    .cfn-ctn {
+        height: auto;
+        min-height: 350px;
+    }
+
+    .cfn-ctn .cfn-header {
+        padding: 14px 14px;
+    }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+    .label {
+        font-size: 13px;
+        padding: 10px 12px 0px 12px;
+    }
+
+    .chart-ctn {
+        border-radius: 6px;
+    }
+
+    .p-f-ctn {
+        height: 250px;
+    }
+
+    .feat-imp-ctn {
+        min-height: 300px;
+    }
+
+    .feat-imp-ctn .feat-imp-header {
+        padding: 12px 10px;
+    }
+
+    .cfn-ctn {
+        min-height: 300px;
+    }
+
+    .cfn-ctn .cfn-header {
+        padding: 12px 10px;
+    }
+}

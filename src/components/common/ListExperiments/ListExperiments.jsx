@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Box, Typography, Button } from "@mui/material";
+import { Box, Typography, Button, useMediaQuery } from "@mui/material";
 import styles from "./ListExperiments.module.css";
 import NoDataImageUrl from "../../../assets/images/nodata.svg?url";
 import PlusCircleIcon from "../../../assets/icons/pluscircle.svg?react";
@@ -13,6 +13,8 @@ export default function ListExperiments({
   onClickRow,
   projectData = {}
 }) {
+  const isMobile = useMediaQuery('(max-width: 767px)');
+
   // Handle experiment view navigation
   const handleViewExperiment = (experiment) => {
     if (onClickRow) {
@@ -25,7 +27,7 @@ export default function ListExperiments({
   };
 
   return (
-    <div style={{ padding: "24px", height: "100%", display: "flex", flexDirection: "column" }}>
+    <div style={{ padding: isMobile ? "16px" : "24px", height: "100%", display: "flex", flexDirection: "column" }}>
       {/* Horizontal Cards Header */}
       <ExperimentHeader
         projectData={projectData}
@@ -39,15 +41,16 @@ export default function ListExperiments({
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          gap: 3
+          gap: isMobile ? 2 : 3,
+          px: isMobile ? 2 : 0
         }}>
-          <img src={NoDataImageUrl} width="336" alt="No data" />
+          <img src={NoDataImageUrl} width={isMobile ? "240" : "336"} alt="No data" />
           <Box sx={{
             textAlign: "center",
             maxWidth: 400
           }}>
             <Typography
-              variant="h6"
+              variant={isMobile ? "subtitle1" : "h6"}
               fontWeight={600}
               sx={{ color: '#3F3F50', mb: 1 }}
             >
@@ -55,7 +58,7 @@ export default function ListExperiments({
             </Typography>
             <Typography
               variant="body2"
-              sx={{ color: '#6E6E88', mb: 3 }}
+              sx={{ color: '#6E6E88', mb: 3, fontSize: isMobile ? 13 : 14 }}
             >
               Currently, there are no experiments to display. Create your first experiment to get started with machine learning.
             </Typography>
@@ -66,8 +69,10 @@ export default function ListExperiments({
             sx={{
               display: "flex",
               gap: "8px",
-              px: 4,
-              py: 1.5
+              px: isMobile ? 3 : 4,
+              py: 1.5,
+              width: isMobile ? '100%' : 'auto',
+              maxWidth: isMobile ? 300 : 'none'
             }}
           >
             <PlusCircleIcon />
@@ -78,7 +83,7 @@ export default function ListExperiments({
         <Box sx={{
           flex: 1,
           border: "1px solid #eeeef8",
-          borderRadius: "16px",
+          borderRadius: isMobile ? "12px" : "16px",
           overflow: "hidden",
           minHeight: 0,
           display: "flex",

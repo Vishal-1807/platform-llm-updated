@@ -1,23 +1,25 @@
 import { useState } from "react";
-import { 
-  Box, 
-  List, 
-  ListItem, 
-  ListItemText, 
-  Divider, 
-  Typography, 
-  TextField, 
+import {
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+  Divider,
+  Typography,
+  TextField,
   InputAdornment,
   Chip
 } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import "../.././../styles/liquidGlass.css";
 
-export default function ExperimentListSidebar({ 
-  items, 
-  selectedIndex, 
-  setSelectedIndex, 
-  onFilter 
+export default function ExperimentListSidebar({
+  items,
+  selectedIndex,
+  setSelectedIndex,
+  onFilter,
+  isMobile = false
 }) {
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -35,10 +37,10 @@ export default function ExperimentListSidebar({
 
   const getStatusBadge = (status) => {
     if (!status) return null;
-    
+
     const statusLower = status.toLowerCase();
     let badgeClass = "experiment-status-badge ";
-    
+
     if (statusLower.includes("running") || statusLower.includes("training")) {
       badgeClass += "running";
     } else if (statusLower.includes("completed") || statusLower.includes("finished") || statusLower.includes("success")) {
@@ -67,8 +69,8 @@ export default function ExperimentListSidebar({
   return (
     <Box
       sx={{
-        width: 400,
-        minWidth: 400,
+        width: isMobile ? '100%' : 400,
+        minWidth: isMobile ? '100%' : 400,
         height: "100%",
         display: "flex",
         flexDirection: "column",
@@ -77,9 +79,9 @@ export default function ExperimentListSidebar({
     >
       {/* Search Header */}
       <Box sx={{ p: 2, bgcolor: "transparent" }}>
-        <Typography 
-          variant="h6" 
-          fontWeight={700} 
+        <Typography
+          variant={isMobile ? "subtitle1" : "h6"}
+          fontWeight={700}
           sx={{ mb: 2, color: '#1F1F29' }}
         >
           Experiments ({items.length})
@@ -106,7 +108,8 @@ export default function ExperimentListSidebar({
             },
             '& .MuiInputBase-input': {
               color: '#1F1F29',
-              fontSize: '14px',
+              fontSize: isMobile ? '16px' : '14px',
+              py: isMobile ? 1.5 : 1,
               '&::placeholder': {
                 color: '#8D8DAC',
                 opacity: 1,
@@ -122,9 +125,9 @@ export default function ExperimentListSidebar({
           }}
         />
       </Box>
-      
+
       <Divider sx={{ borderColor: 'rgba(255,255,255,0.2)' }} />
-      
+
       {/* Experiments List */}
       <Box sx={{
         flex: 1,
@@ -145,9 +148,9 @@ export default function ExperimentListSidebar({
                 alignItems: 'flex-start',
                 cursor: "pointer",
                 mb: 0.75,
-                py: 1.25,
+                py: isMobile ? 2 : 1.25,
                 px: 1.5,
-                borderLeft: selectedIndex === idx ? "4px solid #5420E8" : "none",
+                borderLeft: !isMobile && selectedIndex === idx ? "4px solid #5420E8" : "none",
                 bgcolor: 'transparent !important',
                 '&.liquid-glass-list-item-premium': {
                   bgcolor: 'transparent !important',
@@ -167,7 +170,7 @@ export default function ExperimentListSidebar({
                       fontWeight={selectedIndex === idx ? 700 : 600}
                       sx={{
                         color: '#1F1F29',
-                        fontSize: '15px',
+                        fontSize: isMobile ? '16px' : '15px',
                         position: 'relative',
                         zIndex: 1,
                         lineHeight: 1.2
@@ -182,7 +185,7 @@ export default function ExperimentListSidebar({
                       <Typography
                         sx={{
                           color: '#8D8DAC',
-                          fontSize: '11px',
+                          fontSize: isMobile ? '12px' : '11px',
                           fontWeight: 500,
                           position: 'relative',
                           zIndex: 1
@@ -197,7 +200,7 @@ export default function ExperimentListSidebar({
                   <Typography
                     sx={{
                       color: '#6E6E88',
-                      fontSize: '12px',
+                      fontSize: isMobile ? '13px' : '12px',
                       mt: 0.5,
                       position: 'relative',
                       zIndex: 1,
@@ -208,6 +211,9 @@ export default function ExperimentListSidebar({
                   </Typography>
                 }
               />
+              {isMobile && (
+                <ChevronRightIcon sx={{ color: '#8D8DAC', fontSize: 24, alignSelf: 'center' }} />
+              )}
             </ListItem>
           ))}
         </List>

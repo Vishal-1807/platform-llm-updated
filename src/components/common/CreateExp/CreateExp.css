@@ -84,6 +84,15 @@
   .AddExp {
     font-size: 13px;
   }
+
+  .liquid-glass-modal {
+    padding: 28px !important;
+    max-width: 420px !important;
+  }
+
+  .liquid-glass-modal::before {
+    border-radius: 20px;
+  }
 }
 
 /* Mobile breakpoint */
@@ -103,6 +112,16 @@
   .AddExp {
     font-size: 12px;
   }
+
+  .liquid-glass-modal {
+    padding: 20px !important;
+    max-width: 100% !important;
+    border-radius: 16px !important;
+  }
+
+  .liquid-glass-modal::before {
+    border-radius: 16px;
+  }
 }
 
 /* Mobile portrait */
@@ -121,5 +140,14 @@
 
   .AddExp {
     font-size: 11px;
+  }
+
+  .liquid-glass-modal {
+    padding: 16px !important;
+    border-radius: 14px !important;
+  }
+
+  .liquid-glass-modal::before {
+    border-radius: 14px;
   }
 }

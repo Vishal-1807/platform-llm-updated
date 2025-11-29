@@ -6,3 +6,32 @@
   background: "#5420E8" !important;
   color: "#fff" !important;
 }
+
+/* Preview container */
+.preview-container {
+  width: 100%;
+  overflow-x: auto;
+}
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .data-table {
+    border-radius: 8px 8px 0px 0px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .data-table {
+    border-radius: 6px 6px 0px 0px;
+    font-size: 12px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .data-table {
+    border-radius: 4px 4px 0px 0px;
+    font-size: 11px;
+  }
+}

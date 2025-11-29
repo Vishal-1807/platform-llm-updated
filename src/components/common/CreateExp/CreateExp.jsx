@@ -47,11 +47,22 @@ export default function CreateExp({ onChildClick, projectId, CreateExperiment}) 
           '& .MuiDialog-paper': {
             background: 'transparent',
             boxShadow: 'none',
-            overflow: 'visible'
+            overflow: 'visible',
+            margin: { xs: '16px', sm: '24px', md: '32px' },
+            maxHeight: { xs: 'calc(100vh - 32px)', sm: 'calc(100vh - 48px)', md: 'calc(100vh - 64px)' },
+            width: { xs: 'calc(100% - 32px)', sm: 'auto' },
           }
         }}
       >
-        <div className="liquid-glass-modal" style={{ padding: "32px", width: "460px", position: "relative" }}>
+        <div className="liquid-glass-modal" style={{
+          padding: "32px",
+          width: "100%",
+          maxWidth: "460px",
+          boxSizing: "border-box",
+          position: "relative",
+          maxHeight: "calc(100vh - 64px)",
+          overflowY: "auto"
+        }}>
 
         <Box
             sx={{

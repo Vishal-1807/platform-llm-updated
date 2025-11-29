@@ -109,12 +109,15 @@ export default function CreateProject({
         fullWidth
         PaperProps={{
           sx: {
-            borderRadius: "24px",
+            borderRadius: { xs: "16px", sm: "20px", md: "24px" },
             padding: 0,
             overflow: "hidden",
             background: "linear-gradient(135deg, #ffffff 0%, #f8f9ff 100%)",
             boxShadow: "0 32px 64px rgba(84, 32, 232, 0.15), 0 16px 32px rgba(0, 0, 0, 0.1)",
             border: "1px solid rgba(84, 32, 232, 0.08)",
+            margin: { xs: "16px", sm: "24px", md: "32px" },
+            maxHeight: { xs: "calc(100vh - 32px)", sm: "calc(100vh - 48px)", md: "calc(100vh - 64px)" },
+            width: { xs: "calc(100% - 32px)", sm: "auto" },
           }
         }}
         TransitionComponent={Slide}
@@ -123,7 +126,12 @@ export default function CreateProject({
           timeout: 400
         }}
       >
-        <Box sx={{ position: "relative", padding: "40px" }}>
+        <Box sx={{
+          position: "relative",
+          padding: { xs: "24px 16px", sm: "32px 24px", md: "40px" },
+          overflowY: "auto",
+          maxHeight: { xs: "calc(100vh - 64px)", sm: "calc(100vh - 96px)", md: "calc(100vh - 128px)" },
+        }}>
           {/* Close Button */}
           <IconButton
             onClick={() => {
@@ -132,10 +140,10 @@ export default function CreateProject({
             }}
             sx={{
               position: "absolute",
-              top: "20px",
-              right: "20px",
-              width: "40px",
-              height: "40px",
+              top: { xs: "12px", sm: "16px", md: "20px" },
+              right: { xs: "12px", sm: "16px", md: "20px" },
+              width: { xs: "32px", sm: "36px", md: "40px" },
+              height: { xs: "32px", sm: "36px", md: "40px" },
               backgroundColor: "rgba(84, 32, 232, 0.08)",
               color: "#5420E8",
               "&:hover": {
@@ -149,17 +157,17 @@ export default function CreateProject({
           </IconButton>
 
           {/* Header Section */}
-          <Box sx={{ textAlign: "center", marginBottom: "32px" }}>
+          <Box sx={{ textAlign: "center", marginBottom: { xs: "20px", sm: "26px", md: "32px" } }}>
             <Box
               sx={{
-                width: "80px",
-                height: "80px",
-                margin: "0 auto 20px",
+                width: { xs: "60px", sm: "70px", md: "80px" },
+                height: { xs: "60px", sm: "70px", md: "80px" },
+                margin: { xs: "0 auto 14px", sm: "0 auto 18px", md: "0 auto 20px" },
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
                 background: "linear-gradient(135deg, #5420E8 0%, #E04EF8 100%)",
-                borderRadius: "24px",
+                borderRadius: { xs: "16px", sm: "20px", md: "24px" },
                 boxShadow: "0 8px 32px rgba(84, 32, 232, 0.3)",
                 position: "relative",
                 "&::before": {
@@ -167,7 +175,7 @@ export default function CreateProject({
                   position: "absolute",
                   inset: "-2px",
                   background: "linear-gradient(135deg, #5420E8, #E04EF8)",
-                  borderRadius: "26px",
+                  borderRadius: { xs: "18px", sm: "22px", md: "26px" },
                   zIndex: -1,
                   opacity: 0.3,
                   filter: "blur(8px)",
@@ -180,7 +188,7 @@ export default function CreateProject({
               variant="h4"
               sx={{
                 fontFamily: "Plus Jakarta Sans",
-                fontSize: "28px",
+                fontSize: { xs: "22px", sm: "25px", md: "28px" },
                 fontWeight: 700,
                 color: "#1F1F29",
                 marginBottom: "8px",
@@ -196,25 +204,26 @@ export default function CreateProject({
               variant="body2"
               sx={{
                 fontFamily: "Plus Jakarta Sans",
-                fontSize: "16px",
+                fontSize: { xs: "13px", sm: "14px", md: "16px" },
                 color: "#6E6E88",
                 fontWeight: 400,
+                px: { xs: 1, sm: 0 },
               }}
             >
               Set up your project and start building amazing experiments
             </Typography>
           </Box>
           {/* Form Section */}
-          <Box sx={{ display: "flex", flexDirection: "column", gap: "24px" }}>
+          <Box sx={{ display: "flex", flexDirection: "column", gap: { xs: "16px", sm: "20px", md: "24px" } }}>
             {/* Project Name Field */}
             <Box>
               <Typography
                 sx={{
                   fontFamily: "Plus Jakarta Sans",
-                  fontSize: "14px",
+                  fontSize: { xs: "13px", sm: "14px" },
                   fontWeight: 600,
                   color: "#1F1F29",
-                  marginBottom: "8px",
+                  marginBottom: { xs: "6px", sm: "8px" },
                   display: "flex",
                   alignItems: "center",
                   gap: "4px",
@@ -230,14 +239,14 @@ export default function CreateProject({
                 onChange={onProjectChange}
                 sx={{
                   "& .MuiOutlinedInput-root": {
-                    height: "56px",
-                    borderRadius: "16px",
+                    height: { xs: "48px", sm: "52px", md: "56px" },
+                    borderRadius: { xs: "12px", sm: "14px", md: "16px" },
                     backgroundColor: "#FFFFFF",
                     border: "2px solid transparent",
                     backgroundImage: "linear-gradient(white, white), linear-gradient(135deg, #E8E8F5 0%, #F0F0F8 100%)",
                     backgroundOrigin: "border-box",
                     backgroundClip: "content-box, border-box",
-                    fontSize: "16px",
+                    fontSize: { xs: "14px", sm: "15px", md: "16px" },
                     fontFamily: "Plus Jakarta Sans",
                     fontWeight: 500,
                     transition: "all 0.3s ease",
@@ -256,7 +265,7 @@ export default function CreateProject({
                     },
                   },
                   "& .MuiInputBase-input": {
-                    padding: "16px 20px",
+                    padding: { xs: "12px 14px", sm: "14px 18px", md: "16px 20px" },
                     color: "#1F1F29",
                     "&::placeholder": {
                       color: "#8D8DAC",
@@ -500,19 +509,19 @@ export default function CreateProject({
           )}
 
           {/* Action Button */}
-          <Box sx={{ marginTop: "40px" }}>
+          <Box sx={{ marginTop: { xs: "24px", sm: "32px", md: "40px" } }}>
             <Button
               fullWidth
               onClick={onCreateProject}
               disabled={disableCreateButton}
               sx={{
-                height: "64px",
-                borderRadius: "20px",
+                height: { xs: "52px", sm: "58px", md: "64px" },
+                borderRadius: { xs: "14px", sm: "17px", md: "20px" },
                 background: disableCreateButton
                   ? "linear-gradient(135deg, #E8E8F5 0%, #F0F0F8 100%)"
                   : "linear-gradient(135deg, #5420E8 0%, #E04EF8 100%)",
                 color: disableCreateButton ? "#8D8DAC" : "#FFFFFF",
-                fontSize: "18px",
+                fontSize: { xs: "15px", sm: "16px", md: "18px" },
                 fontWeight: 700,
                 fontFamily: "Plus Jakarta Sans",
                 textTransform: "none",
