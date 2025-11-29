@@ -372,3 +372,132 @@
   color: #d97706;
   box-shadow: 0 2px 8px rgba(245,158,11,0.2);
 }
+
+/* ===========================================
+   RESPONSIVE STYLES FOR LIQUID GLASS
+   =========================================== */
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .liquid-glass-btn {
+    border-radius: 16px;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .liquid-glass-btn::after {
+    border-radius: 15px;
+  }
+
+  .liquid-glass-btn-sm {
+    border-radius: 14px;
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+
+  .liquid-glass-btn-lg {
+    border-radius: 20px;
+    font-size: 16px;
+    padding: 14px 28px;
+  }
+
+  .liquid-glass-card {
+    border-radius: 16px;
+  }
+
+  .liquid-glass-input {
+    padding: 10px 14px;
+    font-size: 13px;
+    border-radius: 10px;
+  }
+
+  .experiment-status-badge {
+    padding: 3px 10px;
+    font-size: 11px;
+    border-radius: 10px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .liquid-glass-btn {
+    border-radius: 14px;
+    font-size: 13px;
+    padding: 8px 16px;
+  }
+
+  .liquid-glass-btn::after {
+    border-radius: 13px;
+  }
+
+  .liquid-glass-btn-sm {
+    border-radius: 12px;
+    font-size: 12px;
+    padding: 5px 12px;
+  }
+
+  .liquid-glass-btn-lg {
+    border-radius: 18px;
+    font-size: 15px;
+    padding: 12px 24px;
+  }
+
+  .liquid-glass-card {
+    border-radius: 14px;
+  }
+
+  .liquid-glass-input {
+    padding: 8px 12px;
+    font-size: 12px;
+    border-radius: 8px;
+  }
+
+  .experiment-status-badge {
+    padding: 2px 8px;
+    font-size: 10px;
+    border-radius: 8px;
+    letter-spacing: 0.3px;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .liquid-glass-btn {
+    border-radius: 12px;
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+
+  .liquid-glass-btn::after {
+    border-radius: 11px;
+  }
+
+  .liquid-glass-btn-sm {
+    border-radius: 10px;
+    font-size: 11px;
+    padding: 4px 10px;
+  }
+
+  .liquid-glass-btn-lg {
+    border-radius: 16px;
+    font-size: 14px;
+    padding: 10px 20px;
+  }
+
+  .liquid-glass-card {
+    border-radius: 12px;
+  }
+
+  .liquid-glass-input {
+    padding: 7px 10px;
+    font-size: 11px;
+    border-radius: 8px;
+  }
+
+  .experiment-status-badge {
+    padding: 2px 6px;
+    font-size: 9px;
+    border-radius: 6px;
+    letter-spacing: 0.2px;
+  }
+}

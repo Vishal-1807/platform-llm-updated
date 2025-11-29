@@ -221,3 +221,181 @@
     opacity: 0;
   }
 }
+
+/* ===========================================
+   RESPONSIVE STYLES
+   =========================================== */
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .Selector-title,
+  .step,
+  .tagline {
+    font-size: 14px;
+    line-height: 28px;
+  }
+
+  .DB-Details {
+    padding: 12px;
+    height: 70px;
+    border-radius: 14px;
+  }
+
+  .DB-Details .db-icon {
+    height: 48px;
+    width: 48px;
+  }
+
+  .DB-Details p {
+    font-size: 14px;
+    line-height: 20px;
+    margin-left: 10px;
+  }
+
+  .expanded-ctn {
+    padding: 20px;
+    border-radius: 14px;
+
+    .field-ctn {
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .label {
+      font-size: 13px;
+      gap: 6px;
+    }
+
+    .input-field {
+      height: 40px;
+      border-radius: 10px;
+      padding: 0px 12px;
+
+      input {
+        font-size: 13px;
+      }
+    }
+  }
+
+  .selectexp {
+    width: 200px;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .Selector-title,
+  .step,
+  .tagline {
+    font-size: 12px;
+    line-height: 22px;
+  }
+
+  .DB-Details {
+    padding: 10px;
+    height: 60px;
+    border-radius: 12px;
+  }
+
+  .DB-Details .db-icon {
+    height: 40px;
+    width: 40px;
+  }
+
+  .DB-Details p {
+    font-size: 13px;
+    line-height: 18px;
+    margin-left: 8px;
+  }
+
+  .arrow {
+    width: 14px !important;
+    height: 14px !important;
+  }
+
+  .expanded-ctn {
+    padding: 16px;
+    border-radius: 12px;
+
+    .field-ctn {
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .label {
+      font-size: 12px;
+      gap: 4px;
+    }
+
+    .input-field {
+      height: 38px;
+      border-radius: 8px;
+      padding: 0px 10px;
+
+      input {
+        font-size: 12px;
+      }
+    }
+  }
+
+  .selectexp {
+    width: 100%;
+  }
+}
+
+/* Mobile portrait */
+@media (max-width: 479px) {
+  .Selector-title,
+  .step,
+  .tagline {
+    font-size: 11px;
+    line-height: 20px;
+  }
+
+  .DB-Details {
+    padding: 8px;
+    height: 55px;
+    border-radius: 10px;
+  }
+
+  .DB-Details .db-icon {
+    height: 36px;
+    width: 36px;
+  }
+
+  .DB-Details p {
+    font-size: 12px;
+    line-height: 16px;
+    margin-left: 6px;
+  }
+
+  .arrow {
+    width: 12px !important;
+    height: 12px !important;
+  }
+
+  .expanded-ctn {
+    padding: 12px;
+    border-radius: 10px;
+
+    .field-ctn {
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+
+    .label {
+      font-size: 11px;
+      gap: 3px;
+    }
+
+    .input-field {
+      height: 36px;
+      border-radius: 8px;
+      padding: 0px 8px;
+
+      input {
+        font-size: 11px;
+      }
+    }
+  }
+}

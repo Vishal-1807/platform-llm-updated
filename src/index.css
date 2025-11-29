@@ -112,6 +112,33 @@ button {
   cursor: pointer;
   transition: border-color 0.25s;
 }
+
+/* Tablet - smaller buttons */
+@media (max-width: 1023px) {
+  button {
+    padding: 0.5em 1em;
+    font-size: 0.9em;
+    border-radius: 7px;
+  }
+}
+
+/* Mobile - even smaller buttons */
+@media (max-width: 767px) {
+  button {
+    padding: 0.45em 0.9em;
+    font-size: 0.85em;
+    border-radius: 6px;
+  }
+}
+
+/* Mobile portrait - smallest buttons */
+@media (max-width: 479px) {
+  button {
+    padding: 0.4em 0.8em;
+    font-size: 0.8em;
+    border-radius: 6px;
+  }
+}
 /* button:hover {
   border-color: #646cff;
 } */
@@ -377,5 +404,137 @@ button:focus {
 
   .MuiDialogActions-root > button {
     width: 100%;
+  }
+}
+
+/* ===========================================
+   GLOBAL INPUT/TEXTFIELD/SELECT RESPONSIVE STYLES
+   Makes all MUI inputs smaller on medium to small screens
+   =========================================== */
+
+/* Tablet breakpoint */
+@media (max-width: 1023px) {
+  .MuiTextField-root .MuiInputBase-root,
+  .MuiOutlinedInput-root,
+  .MuiInputBase-root {
+    font-size: 14px !important;
+  }
+
+  .MuiTextField-root .MuiInputBase-input,
+  .MuiOutlinedInput-input,
+  .MuiInputBase-input {
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+  }
+
+  .MuiInputLabel-root {
+    font-size: 13px !important;
+  }
+
+  .MuiSelect-select {
+    padding: 12px 14px !important;
+    font-size: 14px !important;
+  }
+
+  .MuiMenuItem-root {
+    font-size: 14px !important;
+    padding: 10px 16px !important;
+  }
+
+  .MuiChip-root {
+    font-size: 12px !important;
+    height: 28px !important;
+  }
+
+  .MuiFormHelperText-root {
+    font-size: 11px !important;
+  }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 767px) {
+  .MuiTextField-root .MuiInputBase-root,
+  .MuiOutlinedInput-root,
+  .MuiInputBase-root {
+    font-size: 13px !important;
+  }
+
+  .MuiTextField-root .MuiInputBase-input,
+  .MuiOutlinedInput-input,
+  .MuiInputBase-input {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .MuiInputLabel-root {
+    font-size: 12px !important;
+  }
+
+  .MuiSelect-select {
+    padding: 10px 12px !important;
+    font-size: 13px !important;
+  }
+
+  .MuiMenuItem-root {
+    font-size: 13px !important;
+    padding: 8px 14px !important;
+  }
+
+  .MuiChip-root {
+    font-size: 11px !important;
+    height: 26px !important;
+  }
+
+  .MuiFormHelperText-root {
+    font-size: 10px !important;
+  }
+
+  /* Search icons smaller */
+  .MuiInputAdornment-root .MuiSvgIcon-root {
+    font-size: 20px !important;
+  }
+}
+
+/* Mobile portrait breakpoint */
+@media (max-width: 479px) {
+  .MuiTextField-root .MuiInputBase-root,
+  .MuiOutlinedInput-root,
+  .MuiInputBase-root {
+    font-size: 12px !important;
+  }
+
+  .MuiTextField-root .MuiInputBase-input,
+  .MuiOutlinedInput-input,
+  .MuiInputBase-input {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .MuiInputLabel-root {
+    font-size: 11px !important;
+  }
+
+  .MuiSelect-select {
+    padding: 8px 10px !important;
+    font-size: 12px !important;
+  }
+
+  .MuiMenuItem-root {
+    font-size: 12px !important;
+    padding: 7px 12px !important;
+  }
+
+  .MuiChip-root {
+    font-size: 10px !important;
+    height: 24px !important;
+  }
+
+  .MuiFormHelperText-root {
+    font-size: 9px !important;
+  }
+
+  /* Search icons smaller */
+  .MuiInputAdornment-root .MuiSvgIcon-root {
+    font-size: 18px !important;
   }
 }
