@@ -16,16 +16,7 @@ import Experiment from "./components/Tabular/Experiment/Experiment";
 import Project from "./components/Tabular/Project/Project";
 import Tabular from "./components/Tabular/Tabular";
 
-// Set to true to bypass login for UI testing
-const BYPASS_LOGIN = true;
-
 function App() {
-  // Auto-set token if bypassing login
-  if (BYPASS_LOGIN && !sessionStorage.getItem("access_token")) {
-    sessionStorage.setItem("access_token", "test-token-for-ui-testing");
-    sessionStorage.setItem("username", "Test User");
-    sessionStorage.setItem("email", "test@test.com");
-  }
 
   // CHANGED: Use "access_token" instead of "token"
   const [token, setToken] = useState(sessionStorage.getItem("access_token"));
